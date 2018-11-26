@@ -1,0 +1,20 @@
+.chat-wrapper {
+  height: calc(100vh - 99px);
+  position: relative;
+  background: #f7f7f7;
+  overflow-y: scroll;
+
+  .chat-form-wrapper {
+    z-index: 100;
+    position: fixed;
+    bottom: 0;
+    width: 80%;
+    border-top: #ccc solid 1px;
+    padding: 7px 0;
+    background: #FFF;
+  }
+}
+
+.chat-room-wrapper {
+
+}

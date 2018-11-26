@@ -1,0 +1,15 @@
+<div class="chat-form-input">
+
+  <a class="chat-button-attachment" (click)="send()">
+    <i class="material-icons" role="presentation">image</i>
+  </a>
+
+  <input
+    class="chatInput" [(ngModel)]="message"
+    (keydown)="handleSubmit($event)" />
+
+  <a class="chat-button" (click)="send()">
+    <i class="material-icons" role="presentation">send</i>
+  </a>
+  <div class="clearfix"></div>
+</div>

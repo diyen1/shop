@@ -1,0 +1,8 @@
+<div *ngIf="chatService.feed" class="feed">
+  <div *ngFor="let message of chatService.feed | async, let i=index" class="message">
+
+    <div class="mdl-typography--text-center">{{ getDateHeading(message, i) }}</div>
+
+    <app-message [chatMessage]="message"></app-message>
+  </div>
+</div>

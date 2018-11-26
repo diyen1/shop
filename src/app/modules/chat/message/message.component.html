@@ -1,0 +1,29 @@
+<div *ngIf="isValidMessage">
+  <div *ngIf="!isOwnMessage" class="chat-message-item-wrapper" id="chat-{{ chatMessage.$key }}">
+    <div class="chat-message-item-content">
+      <!--<p>{{ chatMessage.email }}</p>-->
+      <div>{{ chatMessage.message }}</div>
+    </div>
+
+    <!--<div class="xx-small-space horizontal"></div>-->
+
+    <span>{{ getFormattedTime(chatMessage.timestamp) }}</span>
+  </div>
+
+
+  <div *ngIf="isOwnMessage" class="chat-message-item-wrapper own-message" id="chat-{{ chatMessage.$key }}">
+
+    <div class="chat-message-item-content">
+      <!--<p>{{ chatMessage.email }}</p>-->
+      <div>{{ chatMessage.message }}</div>
+    </div>
+
+    <!--<div class="xx-small-space horizontal"></div>-->
+
+    <span>{{ getFormattedTime(chatMessage.timestamp) }}</span>
+
+  </div>
+
+
+  <div class="x-small-space"></div>
+</div>

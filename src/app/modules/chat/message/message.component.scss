@@ -1,0 +1,27 @@
+.chat-message-item-wrapper {
+  display: inline-block;
+  width: 100%;
+
+  > * {
+    float: left;
+    padding: 10px 25px;
+  }
+
+  .chat-message-item-content {
+    background: lightgray;
+    display: inline-block;
+    border-radius: 25px;
+  }
+
+  &.own-message {
+    > * {
+      float: right;
+    }
+  }
+
+  &:after {
+    clear: both;
+  }
+
+}
+

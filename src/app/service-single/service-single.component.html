@@ -1,0 +1,42 @@
+<!--<mdl-card class="shop-service full-width" mdl-shadow="2">-->
+  <div *ngIf="loading" class="mdl-typography--text-center">
+    <div class="medium-space"></div>
+    <mdl-spinner [active]="true"></mdl-spinner>
+  </div>
+
+  <div *ngIf="service" class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone graybox">
+      <div>
+        <mdl-card class="shop-service full-width" mdl-shadow="2">
+        <img class="full-width" src="{{ service.mainPhotoUrl }}" />
+        </mdl-card>
+      </div>
+
+      <div class="mdl-grid mdlc-row">
+        <div
+          *ngFor="let image of service.imageUrl"
+          class="mdl-cell mdl-cell--3-col mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone graybox">
+          <div class="service-image" [style.backgroundImage]="'url(' + image+ ')'"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone graybox">
+    <div class="page-section-wrapper">
+      <div class="service-title">{{ service.service }}</div>
+      <div><strong>Price: {{ service.price | currency }}</strong></div>
+      <div class="small-space"></div>
+      <p>
+        {{ service.description }}
+      </p>
+
+      <div class="small-space"></div>
+
+      <button mdl-button mdl-button-type="raised" mdl-colored="accent" (click)="viewSellerProfile()">
+        View Seller Profile
+      </button>
+    </div>
+    </div>
+  </div>
+
+<!--</mdl-card>-->

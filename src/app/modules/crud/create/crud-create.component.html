@@ -1,0 +1,90 @@
+<form novalidate [formGroup]="form" (submit)="onSubmit(form.value)">
+  <!--<p>
+    <i class="material-icons" role="presentation">account_circle</i>
+    &lt;!&ndash;<mdl-textfield label="Full Names" name="fullNames" type="text" formControlName="fullNames" floating-label></mdl-textfield>&ndash;&gt;
+  </p>-->
+  <p *ngFor="let field of fields">
+  <span [ngSwitch]="field.type">
+    <mdl-textfield
+      *ngSwitchCase="'text_area'"
+      label="{{ field.name }}"
+      name="{{ field.key }}"
+      type="text"
+      formControlName="{{ field.key }}"
+      rows="3"
+      floating-label></mdl-textfield>
+
+    <input
+      *ngSwitchCase="'hidden'"
+      name="{{ field.key }}"
+      type="hidden"
+      formControlName="{{ field.key }}"
+      floating-label />
+
+    <!--<dmfb-file-upload
+      *ngSwitchCase="'image'"
+      (change)="fileAddedCallback()"
+      formControlName="{{ field.key }}"></dmfb-file-upload>-->
+
+
+    <span *ngSwitchCase="'image'" class="dmfb-crud-image">
+      <label class="dmfb-crud-image-label">{{ field.name }}</label>
+      <div class="small-space"></div>
+      <dmfb-file-upload
+        (change)="fileAddedCallback()"
+        formControlName="{{ field.key }}"></dmfb-file-upload>
+    </span>
+
+    <span *ngSwitchCase="'image_array'">
+      <label>{{ field.name }}</label>
+      <div class="small-space"></div>
+      <span *ngFor="let imageField of [].constructor(field.image_count); let i = index">
+        <dmfb-file-upload
+          (change)="fileAddedCallback()"
+          formControlName="{{ field.key + '_' + i }}"></dmfb-file-upload>
+        <span *ngIf="i !== field.image_count -1" class="x-small-space horizontal"></span>
+      </span>
+    </span>
+
+    <mdl-textfield
+      *ngSwitchDefault
+      label="{{ field.name }}"
+      name="{{ field.key }}"
+      type="{{ field.type }}"
+      formControlName="{{ field.key }}"
+      floating-label></mdl-textfield>
+  </span>
+  </p>
+
+  <!--<p>
+    <mdl-textfield label="Full Names" name="fullNames" type="text" formControlName="fullNames"
+                   floating-label></mdl-textfield>
+  </p>
+  <p>
+    <mdl-textfield label="Mobile phone" name="mobilePhone" type="phone" formControlName="mobilePhone"
+                   floating-label></mdl-textfield>
+  </p>
+  <p>
+    <mdl-textfield label="Home phone" name="homePhone" type="phone" formControlName="homePhone"
+                   floating-label></mdl-textfield>
+  </p>
+  <p>
+    <mdl-textfield label="Town" name="town" type="text" formControlName="town" floating-label></mdl-textfield>
+  </p>
+  <p>
+    <mdl-textfield label="City" name="city" type="text" formControlName="city" floating-label></mdl-textfield>
+  </p>
+  <p>
+    <mdl-textfield label="State" name="state" type="text" formControlName="state"
+                   floating-label></mdl-textfield>
+  </p>
+  <p>
+    <mdl-textfield label="Country" name="country" type="text" formControlName="country"
+                   floating-label></mdl-textfield>
+  </p>-->
+  <p>
+    <button mdl-button [disabled]="!form.valid" mdl-button-type="raised" mdl-ripple mdl-colored="primary">
+      {{ submitButtonText }}
+    </button>
+  </p>
+</form>

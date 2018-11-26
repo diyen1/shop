@@ -1,0 +1,17 @@
+.chat-user-wrapper {
+  border-top: #ccc solid 1px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.active {
+    background: #ccc;
+  }
+}
+
+.chat-user-wrapper {
+  img {
+    border-radius: 50%;
+  }
+}

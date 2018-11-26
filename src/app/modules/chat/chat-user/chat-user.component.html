@@ -1,0 +1,15 @@
+<div [class]="activeClass" (click)="chatService.changeChat(user.uid)">
+  <div class="mdl-grid">
+    <div
+      class="mdl-cell mdl-cell--2-col mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--1-col-phone graybox">
+      <img class="full-width" src="/assets/images/pic_square.jpeg"/>
+      <!--<img class="full-width" src="{{ user.profileImage }}"/>-->
+    </div>
+    <div
+      class="mdl-cell mdl-cell--10-col mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone graybox">
+      <div>{{ user.fullNames }}</div>
+      <div>Hello</div>
+      <div></div>
+    </div>
+  </div>
+</div>

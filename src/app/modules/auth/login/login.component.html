@@ -1,0 +1,55 @@
+<h1 class="mdl-typography--text-center">Login</h1>
+
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone graybox">
+
+  </div>
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone graybox">
+    <mdl-card class="shop-service full-width" mdl-shadow="2">
+
+      <div class="page-section-wrapper">
+
+        <app-crud-create
+          class="mdl-typography--text-center"
+          [submitButtonText]="'Login'"
+          [fields]="fields" (outputData)="login($event)"
+        ></app-crud-create>
+
+        <div class="small-space"></div>
+
+        <div class="mdl-typography--text-center">
+          <span>Don't have an account?</span>&nbsp;
+          <a href="/register"><strong>Register</strong></a>
+        </div>
+        <div class="small-space"></div>
+      </div>
+
+    </mdl-card>
+
+  </div>
+  <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone graybox">
+
+  </div>
+</div>
+
+<!--<div class="container">
+  <div class="loginCard">
+    <h2 class="heading">Log In</h2>
+    <input
+      [(ngModel)]="email"
+      type="email"
+      name="email"
+      class="formInput" />
+    <input type="password"
+           [(ngModel)]="password"
+           name="password"
+           class="formInput" />
+    <button class="btn"
+            id="btn-login"
+            (click)="login()">
+      Log In
+    </button>
+  </div>
+</div>-->
+
+

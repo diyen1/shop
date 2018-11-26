@@ -1,0 +1,80 @@
+<div *ngIf="!isFullScreenTemplate && !isCleanTemplate" class="demo-container" mdl-shadow="2">
+  <mdl-layout #shopMdlLayout="mdlLayout" mdl-layout-fixed-drawer mdl-layout-fixed-header mdl-layout-fixed-drawer>
+
+    <!--header-->
+    <mdl-layout-header>
+      <mdl-layout-header-row>
+        <mdl-layout-title>{{ appService.pageTitle }}</mdl-layout-title>
+        <mdl-layout-spacer></mdl-layout-spacer>
+        <button
+          *ngIf="displayPostButton()" [routerLink]="['/add-service']"
+          mdl-button mdl-button-type="raised" mdl-colored="accent" class="mdl-cell--hide-tablet mdl-cell--hide-phone">
+          POST
+        </button>
+        <mdl-textfield
+          *ngIf="displayPostButton()" type="text" icon="search"
+          [(ngModel)]="servicesService.searchKey" (input)="search($event)"></mdl-textfield>
+      </mdl-layout-header-row>
+    </mdl-layout-header>
+
+    <!--Drawer-->
+    <mdl-layout-drawer class="sidebar-content mdl-color-text--blue-grey-50">
+      <nav class="demo-navigation mdl-navigation">
+        <a class="mdl-navigation__link" [routerLink]="['/shop']" [routerLinkActive]="['is-active']"
+           (click)="shopMdlLayout.closeDrawer()">
+          <i class="material-icons" role="presentation">store</i>
+          Shop
+        </a>
+        <a class="mdl-navigation__link" [routerLink]="['/search']" [routerLinkActive]="['is-active']"
+           (click)="shopMdlLayout.closeDrawer()">
+          <i class="material-icons" role="presentation">search</i>
+          Search
+        </a>
+        <a class="mdl-navigation__link" [routerLink]="['/chat']" [routerLinkActive]="['is-active']"
+           (click)="shopMdlLayout.closeDrawer()">
+          <i class="material-icons" role="presentation">comment</i>
+          Chat<!--chat_bubble_o-->
+        </a>
+        <a class="mdl-navigation__link" [routerLink]="['/profile']" [routerLinkActive]="['is-active']"
+           (click)="shopMdlLayout.closeDrawer()">
+          <i class="material-icons" role="presentation">account_circle</i>
+          Profile
+        </a>
+        <a class="mdl-navigation__link" [routerLinkActive]="['is-active']"
+           (click)="logout()">
+          <i class="material-icons" role="presentation">power_settings_new</i>
+          {{ logOutOrInButtonText }}
+        </a>
+      </nav>
+    </mdl-layout-drawer>
+
+    <mdl-layout-content>
+      <!-- Your content goes here -->
+      <main class="mdl-layout__content mdl-color--white-100 full-width">
+        <div *ngIf="displayPostButton()" class="page-section-wrapper mdl-cell--hide-desktop">
+          <button [routerLink]="['/add-service']" mdl-button mdl-button-type="raised" mdl-colored="accent">
+            POST
+          </button>
+        </div>
+        <div class="page-section-wrapper">
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+    </mdl-layout-content>
+  </mdl-layout>
+</div>
+
+<div *ngIf="!isFullScreenTemplate && isCleanTemplate">
+  <router-outlet></router-outlet>
+</div>
+
+
+<div *ngIf="isFullScreenTemplate">
+  <main class="mdl-layout__content mdl-color--grey-100 full-width full-height">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<dialog-outlet></dialog-outlet>
+
+<div *ngIf="onlineStatus == 0" class="offline-notification-bar" style="">You are offline</div>

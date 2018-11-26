@@ -1,0 +1,47 @@
+<div *ngIf="loading" class="mdl-typography--text-center">
+  <div class="medium-space"></div>
+  <mdl-spinner [active]="true"></mdl-spinner>
+</div>
+
+<div *ngIf="!loading && user && user != null"  class="page-section-wrapper">
+  <div class="avatar">
+    <i *ngIf="!(user.profileImage && user.profileImage !== '')"class="material-icons" role="presentation">account_circle</i>
+    <img *ngIf="user.profileImage && user.profileImage !== ''" style="border-radius: 50%; width: 10em; height: 10em;"
+         src="{{ user.profileImage }}"/>
+  </div>
+
+  <div id="view-profile">
+    <div><!--class="mdl-typography--text-center"-->
+      <h3>User Details</h3>
+      <p>
+        Full names: {{ user.fullNames }}
+      </p>
+      <p>
+        Mobile phone: {{ user.mobilePhone }}
+      </p>
+      <p>
+        Home phone: {{ user.mobilePhone }}
+      </p>
+      <p>
+        City: {{ user.city }}
+      </p>
+      <p>
+        Country: {{ user.country }}
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <a class="profile-action" (click)="openChat()">
+      <div style="display: inline-block; float: left">
+        <i class="material-icons" role="presentation">comment</i>
+      </div>
+      <div style="display: inline-block; float: left">
+        <div class="xx-small-space horizontal"></div>
+        Chat with the seller
+      </div>
+      <div class="clearfix"></div>
+    </a>
+  </div>
+
+</div>

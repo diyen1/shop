@@ -1,0 +1,27 @@
+.chat-form-input {
+
+  input {
+    width: calc(100% - 8em);
+    padding: 5px;
+    border: none;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+
+  .chat-button-attachment {
+    //padding: 3px;
+    float: left;
+    color: black;
+  }
+
+  .chat-button {
+    //padding: 3px;
+    float: right;
+    color: black;
+  }
+
+}
+

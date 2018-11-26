@@ -1,0 +1,25 @@
+<app-chat-nav
+  [back]="'/shop'"
+  [title]="appService.pageTitle"></app-chat-nav>
+
+<div class="chat-room-wrapper">
+  <div class="" style="width: 20%; position: fixed; left: 0; height: 100vh; border-right: #ccc solid 1px;">
+    <div class="userListWrapper" >
+      <app-chat-user-list></app-chat-user-list>
+    </div>
+  </div>
+  <div class="" style="width: 80%; position: fixed; right: 0;">
+    <div class="chat-wrapper">
+      <div class="main-chat-content">
+        <div #scroller class="feed-wrapper page-section-wrapper">
+          <app-chat-feed></app-chat-feed>
+          <div class="small-space"></div>
+        </div>
+      </div>
+
+      <div class="chat-form-wrapper">
+        <app-chat-form></app-chat-form>
+      </div>
+    </div>
+  </div>
+</div>

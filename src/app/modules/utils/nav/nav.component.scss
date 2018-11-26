@@ -1,0 +1,29 @@
+.nav-wrapper {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.nav-back, .nav-title {
+  float: left;
+}
+
+.nav-title {
+  font-size: 20px;
+  display: inline-block;
+  float: left;
+  margin: 0;
+}
+
+.nav-menu {
+  float: right;
+}
+
+.bar {
+
+
+}
+
+.bar-space {
+  height: 60px;
+}

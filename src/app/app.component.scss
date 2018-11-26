@@ -1,0 +1,11 @@
+.offline-notification-bar {
+  font-weight: bold;
+  position: absolute;
+  z-index: 999;
+  padding: 10px;
+  bottom: 0;
+  width: 100%;
+  background: rgba(247, 0, 46, 0.9);
+  color: #fff;
+  text-align: center;
+}
