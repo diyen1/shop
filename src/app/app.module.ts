@@ -24,6 +24,8 @@ import {DmfbCrudModule} from './modules/crud/dmfb-crud.module';
 import {DmfbAuthModule} from './modules/auth/dmfb-auth.module';
 import {DmfbChatModule} from './modules/chat/dmfb-chat.module';
 import {EditServiceComponent} from './edit-service/edit-service.component';
+import {ServicesListComponent} from './services-list/services-list.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 // import {OnlineStatusModule} from 'ngx-online-status';
 
 @NgModule({
@@ -39,6 +41,7 @@ import {EditServiceComponent} from './edit-service/edit-service.component';
     SellerProfileComponent,
     AddServiceComponent,
     EditServiceComponent,
+    ServicesListComponent,
   ],
   imports: [
     DmfbCrudModule,
@@ -49,6 +52,7 @@ import {EditServiceComponent} from './edit-service/edit-service.component';
     FormsModule,
     ReactiveFormsModule,
     UtilsModule,
+    InfiniteScrollModule,
     // OnlineStatusModule,
     RouterModule.forRoot(routes),
     AngularFireModule.initializeApp(environment.firebase),

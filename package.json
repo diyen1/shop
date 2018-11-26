@@ -27,6 +27,7 @@
     "firebase": "^5.5.7",
     "ng2-slim-loading-bar": "latest",
     "ngx-online-status": "^1.0.0",
+    "ngx-infinite-scroll": "^6.0.1",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },

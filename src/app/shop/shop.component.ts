@@ -18,16 +18,5 @@ export class ShopComponent implements OnInit {
   ngOnInit() {
     this.appService.pageTitle = 'Shop';
     this.servicesService.searchKey = '';
-    this.servicesService.initializeServicesList();
-    /*this.fs.getServices().subscribe((data: ShopService[]) => {
-        console.log('success', data);
-        this.services = data;
-        this.loading = false;
-    },
-      (error) => {
-        console.log('error', error);
-        this.loading = false;
-    });*/
   }
-
 }

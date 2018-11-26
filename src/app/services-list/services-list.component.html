@@ -1,0 +1,35 @@
+<div *ngIf="servicesService.loading" class="mdl-typography--text-center">
+  <div class="medium-space"></div>
+  <mdl-spinner [active]="true"></mdl-spinner>
+</div>
+
+<div >
+  <!--<div
+    *ngFor="let service of servicesService.services"
+    class="mdl-cell mdl-cell&#45;&#45;3-col mdl-cell&#45;&#45;3-col-desktop mdl-cell&#45;&#45;4-col-tablet mdl-cell&#45;&#45;4-col-phone graybox">
+    <app-service [service]="service"></app-service>
+  </div>
+-->
+  <div class="services-wrapper mdl-grid mdlc-row" *ngIf="!servicesService.loading && (servicesService.services && servicesService.services.length > 0)"
+       infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollThrottle]="50"
+       [scrollWindow]="false"
+       (scrolled)="onScroll()">
+    <div
+      *ngFor="let service of servicesService.services; let i = index"
+      class="mdl-cell mdl-cell--3-col mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone graybox">
+      <app-service *ngIf="i < offset" [service]="service"></app-service>
+    </div>
+    <div *ngIf="servicesService.loading" class="loading-wrapper">
+      <mdl-spinner [active]="true"></mdl-spinner>
+    </div>
+  </div>
+
+
+
+</div>
+
+<div *ngIf="!servicesService.loading && !(servicesService.services && servicesService.services.length > 0)">
+  There are currently no products or services available
+</div>
