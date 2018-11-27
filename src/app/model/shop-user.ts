@@ -1,3 +1,5 @@
+import {ChatMessage} from '../modules/chat/chat-message.model';
+
 export class ShopUser {
   active = false;
   email = '';
@@ -11,9 +13,11 @@ export class ShopUser {
   homePhone = '';
   mobilePhone = '';
   profileImage = '';
+  lastChatMessage: ChatMessage = new ChatMessage();
 
   constructor(active?: boolean, email?: string, fcm_token?: string, fullNames?: string, lastSeen?: number, sign_in_type?: string,
-              uid?: string, city?: string, country?: string, homePhone?: string, mobilePhone?: string, profileImage?: string) {
+              uid?: string, city?: string, country?: string, homePhone?: string, mobilePhone?: string,
+              profileImage?: string, lastChatMessage?: ChatMessage) {
     this.active = active;
     this.email = email;
     this.fcm_token = fcm_token;
@@ -26,5 +30,6 @@ export class ShopUser {
     this.homePhone = homePhone;
     this.mobilePhone = mobilePhone;
     this.profileImage = profileImage;
+    this.lastChatMessage = lastChatMessage;
   }
 }

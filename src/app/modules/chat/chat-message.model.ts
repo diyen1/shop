@@ -18,7 +18,7 @@ export class ChatMessage {
   type = 'text';
 
 
-  constructor(message: string, destination: string, sender: string, type: string = 'text') {
+  constructor(message: string = '', destination: string = '', sender: string = '', type: string = 'text') {
     this.type = type;
     this.id = generateFirebaseId();
     this.destination = destination;

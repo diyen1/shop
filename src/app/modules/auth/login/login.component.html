@@ -18,6 +18,21 @@
         <div class="small-space"></div>
 
         <div class="mdl-typography--text-center">
+          <button class="google-login-button" (click)="authService.loginGoogle()">
+            <img src="./assets/images/google_logo_300.png">
+            <span class="xx-small-space horizontal"></span>
+            Login With Google
+          </button>
+          <button class="facebook-login-button" (click)="authService.loginFb()">
+            <img src="./assets/images/facebook_logo_300.png">
+            <span class="xx-small-space horizontal"></span>
+            Login With Facebook
+          </button>
+        </div>
+
+        <div class="small-space"></div>
+
+        <div class="mdl-typography--text-center">
           <span>Don't have an account?</span>&nbsp;
           <a href="/register"><strong>Register</strong></a>
         </div>

@@ -1,0 +1,25 @@
+.facebook-login-button, .google-login-button {
+  color: #fff;
+  padding: 7px 15px;
+  margin: 0 10px;
+
+  img {
+    height: 25px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.facebook-login-button {
+  background: #4267b2;
+  border: #4267b2 solid 1px;
+}
+
+.google-login-button {
+  background: #FFF;
+  //border: #F6002C solid 1px;
+  border: #ccc solid 1px;
+  color: #000;
+}

@@ -13,25 +13,10 @@ import {AuthService} from '../../auth/services/auth.service';
 export class ChatService {
 
   chatMessages: any;
-  chatMessage: ChatMessage;
   private user: any;
-  username: Observable<string>;
   initializedChatUserList = false;
-
   feed: any;
-
-  chatUserList: any[] = [
-    /*{
-      active: true,
-      email: 'ace@yahoo.com',
-      fcm_token: '',
-      fullNames: 'Diyen Ace',
-      id: 'NHpxjZmVMFQYLMFAjY9POMFmQAv1',
-      lastSeen: 'November 18, 2018 at 9:21:23 PM UTC+1',
-      sign_in_type: '',
-      uid: 'NHpxjZmVMFQYLMFAjY9POMFmQAv1',
-    }*/
-  ];
+  chatUserList: any[] = [];
 
   private _currentChatUser: ShopUser;
 
@@ -78,6 +63,16 @@ export class ChatService {
       this.chatMessages = this.getMessagesForUser(messageToSend.destination);
       this.chatMessages.push(messageToSend);
       console.log('send message', messageToSend);
+
+      // Move user to the top of the list
+      for (let i = 0; i < this.chatUserList.length; i++) {
+        if (this.chatUserList[i].uid === messageToSend.destination) {
+          /*delete this.chatUserList[i];
+          this.chatUserList.unshift(this.chatUserList[i]);*/
+          this.chatUserList.push(...this.chatUserList.splice(0, i));
+          return;
+        }
+      }
     } else {
       console.log('failed to send message');
     }
@@ -90,8 +85,6 @@ export class ChatService {
     const path = 'chats/' + this.user.uid;
 
     // messages = this.db.list(path, ref => ref.orderByKey());
-
-    console.log(path);
 
     if (this._currentChatUser) {
       // messages = this.db.list(path, ref => ref.orderByChild('destination').equalTo(this._currentChatUser.uid));
@@ -108,17 +101,18 @@ export class ChatService {
   }
 
 
-
   initializeChatUserList() {
 
     const path = 'chats/' + this.user.uid;
     const tmpUserList = [];
+    const tmpLastMessageList = [];
 
     // we are about to reinitialize
     this.initializedChatUserList = false;
 
     for (let i = 0; i < this.chatUserList.length; i++) {
       tmpUserList.push(this.chatUserList[i].uid);
+      tmpLastMessageList.push(new ChatMessage());
     }
 
     const userListListener = this.db.list(path, ref => ref).valueChanges();
@@ -129,38 +123,41 @@ export class ChatService {
       if (!this.initializedChatUserList) {
         let currentUserId;
 
-        for (let i = 0; i < chats.length; i++) {
+        for (let i = chats.length - 1; i >= 0; i--) {
           if (chats[i].sender === this.user.uid) {
             currentUserId = chats[i].destination;
           } else {
             currentUserId = chats[i].sender;
           }
 
-          if (tmpUserList.indexOf(currentUserId) === -1) {
+          const tmpIndex = tmpUserList.indexOf(currentUserId);
+
+          if (tmpIndex === -1) {
             tmpUserList.push(currentUserId);
+            tmpLastMessageList.push(chats[i]);
           }
+          /*else {
+            tmpLastMessageList[tmpIndex] = chats[i];
+          }*/
         }
 
         if (tmpUserList.length > 0) {
           // this.chatUserList = [];
-          for (let i = tmpUserList.length - 1; i >= 0; i--) {
+          for (let i = 0; i < tmpUserList.length; i++) {
 
             const tmpUserId = tmpUserList[i];
-
-            console.log('tmpUserId', tmpUserId);
             this.authService.getUserFromAuth(tmpUserId).subscribe((user: ShopUser) => {
-              console.log('user', user);
               if (!this.userInChatUserList(tmpUserId)) {
+                user.lastChatMessage = tmpLastMessageList[i];
                 this.chatUserList.push(user);
               }
-              if (i === tmpUserList.length - 1) {
+              if (i === 0) {
                 this._currentChatUser = user;
                 this.feed = this.getMessages().valueChanges();
               }
             });
           }
         }
-
         this.initializedChatUserList = true;
       }
     });
@@ -171,9 +168,6 @@ export class ChatService {
     for (let i = 0; i < this.chatUserList.length; i++) {
       if (this.chatUserList[i].uid === chatUserId) {
         this._currentChatUser = this.chatUserList[i];
-
-        // Move user to the top of the list
-        // this.chatUserList.remove(this.chatUserList[i]); this.chatUserList.unshift(this.chatUserList[i]);
         return;
       }
     }
@@ -188,5 +182,13 @@ export class ChatService {
       }
     }
     return false;
+  }
+
+  isValidMessage(chatMessage) {
+    return (this.user && chatMessage
+      && (
+        this.currentChatUser.uid === chatMessage.sender
+        || this.currentChatUser.uid === chatMessage.destination
+      ));
   }
 }

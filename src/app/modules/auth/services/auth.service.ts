@@ -62,11 +62,10 @@ export class AuthService {
 
     const userRef = firebase.firestore().collection('users');
 
-    console.log('about to fetch user');
+    console.log('about to fetch user', authId);
 
     return new Observable((observer) => {
       userRef.doc(authId).get().then((doc: any) => {
-        console.log('authId', doc);
         const data = doc.data();
         observer.next({
           id: doc.id,
@@ -91,15 +90,33 @@ export class AuthService {
   login(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((user) => {
-        this.getUserFromAuth(user.user.uid).subscribe((authUser) => {
-          if (authUser !== undefined && authUser !== null) {
-            this.authState = authUser;
-            // this.setUserStatus('online');
-            this.saveAuthUser();
-            // this.router.navigate(['shop']);
-          }
-        });
+        this.prepareAuthAfterLogin(user);
       });
+  }
+
+  loginFb() {
+    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .then((user) => {
+        this.prepareAuthAfterLogin(user);
+      });
+  }
+
+  loginGoogle() {
+    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then((user) => {
+        this.prepareAuthAfterLogin(user);
+      });
+  }
+
+  prepareAuthAfterLogin(user) {
+    this.getUserFromAuth(user.user.uid).subscribe((authUser) => {
+      if (authUser !== undefined && authUser !== null) {
+        this.authState = authUser;
+        // this.setUserStatus('online');
+        this.saveAuthUser();
+        // TODO save the user's information if it does not exits
+      }
+    });
   }
 
   logout() {
@@ -132,16 +149,12 @@ export class AuthService {
     this.authState = data;
     this.saveAuthUser();
 
-    console.log('firestore', currentUserId);
-
     // save to firestore
     const newDocRef = firebase.firestore().collection('users').doc(currentUserId);
     newDocRef.set(data).then((newDoc) => {
     }).catch(error => console.log(error));
 
     // save to realtime db
-
-    console.log('realtime', currentUserId);
 
     const path = `users/${currentUserId}`;
 

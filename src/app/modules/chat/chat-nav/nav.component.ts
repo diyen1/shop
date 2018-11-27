@@ -23,7 +23,11 @@ export class ChatNavComponent implements OnInit {
   }
 
   get userName(): string {
-    return this.chatService.currentChatUser.fullNames;
+    return (this.chatService.currentChatUser) ? this.chatService.currentChatUser.fullNames : '';
+  }
+
+  get profileImage(): string {
+    return (this.chatService.currentChatUser) ? this.chatService.currentChatUser.profileImage : '';
   }
 
   goBack() {

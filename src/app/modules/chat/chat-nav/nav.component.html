@@ -6,8 +6,8 @@
         <mdl-icon>arrow_backward</mdl-icon>
       </button>
 
-      <h4 *ngIf="title && title != null" class="nav-title mdl-color-text--white">
-        <img class="" style="width: 35px; height: 35px; border-radius: 50%;" src="/assets/images/pic_square.jpeg"/>
+      <h4 *ngIf="title && title != null && profileImage && profileImage !== ''" class="nav-title mdl-color-text--white">
+        <img class="" style="width: 35px; height: 35px; border-radius: 50%;" src="{{ profileImage }}"/>
         {{ userName }}
       </h4>
 

@@ -5,7 +5,7 @@ import {AuthService} from '../services/auth.service';
 @Component({
   selector: 'app-login-form',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   email: string;
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     },
   ];
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn) {
