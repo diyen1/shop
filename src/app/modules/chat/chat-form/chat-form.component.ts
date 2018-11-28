@@ -16,14 +16,15 @@ export class ChatFormComponent implements OnInit {
   }
 
   send() {
-    this.chat.sendMessage(this.message);
-    this.message = '';
+    if (this.message && this.message != null && this.message.trim() !== '') {
+      this.chat.sendMessage(this.message);
+      this.message = '';
+    }
   }
 
   handleSubmit(event) {
-    if (event.keyCode === 13 && this.message && this.message != null && this.message !== '') {
-      this.chat.sendMessage(this.message);
-      this.message = '';
+    if (event.keyCode === 13) {
+      this.send();
     }
   }
 

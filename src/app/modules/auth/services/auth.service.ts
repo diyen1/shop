@@ -110,6 +110,9 @@ export class AuthService {
 
   prepareAuthAfterLogin(user) {
     this.getUserFromAuth(user.user.uid).subscribe((authUser) => {
+
+      console.log('authUser', authUser);
+
       if (authUser !== undefined && authUser !== null) {
         this.authState = authUser;
         // this.setUserStatus('online');

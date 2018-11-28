@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DmfbFileUploadComponent } from './dmfb-file-upload.component';
+import { ChatMessageFileUploadComponent } from './chat-message-file-upload.component';
 
 describe('ChatMessageFileUploadComponent', () => {
-  let component: DmfbFileUploadComponent;
-  let fixture: ComponentFixture<DmfbFileUploadComponent>;
+  let component: ChatMessageFileUploadComponent;
+  let fixture: ComponentFixture<ChatMessageFileUploadComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DmfbFileUploadComponent ]
+      declarations: [ ChatMessageFileUploadComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DmfbFileUploadComponent);
+    fixture = TestBed.createComponent(ChatMessageFileUploadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

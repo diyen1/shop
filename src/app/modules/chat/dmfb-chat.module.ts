@@ -11,6 +11,7 @@ import {ChatUserListComponent} from './chat-user-list/chat-user-list.component';
 import {MessageComponent} from './message/message.component';
 import {DmfbAuthModule} from '../auth/dmfb-auth.module';
 import {ChatUserComponent} from './chat-user/chat-user.component';
+import {ChatMessageFileUploadComponent} from './chat-message-file-upload/chat-message-file-upload.component';
 
 
 
@@ -23,6 +24,7 @@ import {ChatUserComponent} from './chat-user/chat-user.component';
     ChatUserListComponent,
     MessageComponent,
     ChatUserComponent,
+    ChatMessageFileUploadComponent,
   ],
   imports: [
     BrowserModule,
