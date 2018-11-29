@@ -5,7 +5,7 @@
   <input formControlName="fileField" type="hidden" />
   <label for="{{ fileToUploadId }}">
     <img *ngIf="downloadURL && downloadURL != null && downloadURL.trim() !== ''" class="uploaded-image-message" [src]="downloadURL" />
-    <i *ngIf="!(downloadURL && downloadURL != null && downloadURL.trim() !== '')" class="material-icons" role="presentation">image</i>
+    <i *ngIf="!(downloadURL && downloadURL != null && downloadURL.trim() !== '')" class="material-icons dm-hover" role="presentation">image</i>
   </label>
 </form>
 

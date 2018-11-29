@@ -1,14 +1,16 @@
 <div class="chat-form-input">
 
   <a class="chat-button-attachment" (click)="send()">
+    <i class="material-icons dm-hover" role="presentation" (click)="clearFields()">close</i>
     <app-chat-messaged-file-upload [(ngModel)]="imageMessage"></app-chat-messaged-file-upload>
   </a>
 
   <input
+    *ngIf="!(imageMessage && imageMessage != null && imageMessage.trim() != '')"
     class="chatInput" [(ngModel)]="message"
     (keydown)="handleSubmit($event)" />
 
-  <a class="chat-button" (click)="send()">
+  <a class="chat-button dm-hover" (click)="send()">
     <i class="material-icons" role="presentation">send</i>
   </a>
   <div class="clearfix"></div>

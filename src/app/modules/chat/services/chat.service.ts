@@ -69,6 +69,8 @@ export class ChatService {
         if (this.chatUserList[i].uid === messageToSend.destination) {
           /*delete this.chatUserList[i];
           this.chatUserList.unshift(this.chatUserList[i]);*/
+          this.chatUserList[i].lastChatMessage = messageToSend;
+          console.log('this.chatUserList', this.chatUserList);
           this.chatUserList.push(...this.chatUserList.splice(0, i));
           return;
         }

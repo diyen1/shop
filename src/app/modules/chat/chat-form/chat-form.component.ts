@@ -22,13 +22,11 @@ export class ChatFormComponent implements OnInit {
     if (this.imageMessage && this.imageMessage != null && this.imageMessage.trim() !== '') {
       messageToSend = new ChatMessage(this.imageMessage, this.chat.currentChatUser.uid, this.chat.getUser().uid, 'image');
       this.chat.sendMessage(messageToSend);
-      this.message = '';
-      this.imageMessage = '';
+      this.clearFields();
     } else if (this.message && this.message != null && this.message.trim() !== '') {
       messageToSend = new ChatMessage(this.message, this.chat.currentChatUser.uid, this.chat.getUser().uid, 'text');
       this.chat.sendMessage(messageToSend);
-      this.message = '';
-      this.imageMessage = '';
+      this.clearFields();
     }
   }
 
@@ -36,6 +34,11 @@ export class ChatFormComponent implements OnInit {
     if (event.keyCode === 13) {
       this.send();
     }
+  }
+
+  clearFields() {
+    this.message = '';
+    this.imageMessage = '';
   }
 
 }
