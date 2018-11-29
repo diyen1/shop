@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ShopUser} from '../model/shop-user';
+import {DmfbUser} from '../model/dmfb-user';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AppService} from '../angular-services/app.service';
-import {UsersService} from '../angular-services/users.service';
+import {UsersService} from '../modules/auth/services/users.service';
 import {ChatService} from '../modules/chat/services/chat.service';
 
 @Component({
@@ -12,7 +12,7 @@ import {ChatService} from '../modules/chat/services/chat.service';
 })
 export class SellerProfileComponent implements OnInit {
 
-  user: ShopUser = new ShopUser();
+  user: DmfbUser = new DmfbUser();
   loading = false;
   shopUserId = '';
 
@@ -34,7 +34,7 @@ export class SellerProfileComponent implements OnInit {
         this.shopUserId = params['id'];
 
         this.usersService.getUser(this.shopUserId).subscribe(
-          (user: ShopUser) => {
+          (user: DmfbUser) => {
             this.user = user;
             console.log('this.user', this.user);
             this.appService.pageTitle = user.fullNames;

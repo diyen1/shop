@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChatService} from '../services/chat.service';
-import {ShopUser} from '../../../model/shop-user';
+import {DmfbUser} from '../../../model/dmfb-user';
 
 @Component({
   selector: 'app-chat-user',
@@ -9,7 +9,7 @@ import {ShopUser} from '../../../model/shop-user';
 })
 export class ChatUserComponent implements OnInit {
 
-  @Input() user: ShopUser;
+  @Input() user: DmfbUser;
 
   constructor(public chatService: ChatService) {
   }

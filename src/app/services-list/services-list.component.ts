@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { ServicesService } from '../angular-services/services.service';
 import {ShopService} from '../model/shop-service.model';
 import {AppService} from '../angular-services/app.service';
-import {ShopUser} from '../model/shop-user';
+import {DmfbUser} from '../model/dmfb-user';
 
 @Component({
   selector: 'app-services-list',
@@ -13,7 +13,7 @@ export class ServicesListComponent implements OnInit {
 
   offset = 20;
   services: ShopService[];
-  @Input() user: ShopUser;
+  @Input() user: DmfbUser;
 
   constructor(public servicesService: ServicesService, private appService: AppService) {
   }

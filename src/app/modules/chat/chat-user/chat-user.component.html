@@ -8,7 +8,8 @@
     <div
       class="mdl-cell mdl-cell--10-col mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone graybox">
       <div>{{ user.fullNames }}</div>
-      <div>{{ user.lastChatMessage.message }}</div>
+      <div *ngIf="user.lastChatMessage.type == 'image'">Image attachment</div>
+      <div *ngIf="user.lastChatMessage.type != 'image'">{{ user.lastChatMessage.message }}</div>
       <div></div>
     </div>
   </div>

@@ -15,7 +15,8 @@
 
     <div class="chat-message-item-content">
       <!--<p>{{ chatMessage.email }}</p>-->
-      <div>{{ chatMessage.message }}</div>
+      <div *ngIf="chatMessage.type == 'image'"><img style="max-height: 200px; width: auto; margin: 10px 0;" src="{{ chatMessage.message }}"/></div>
+      <div *ngIf="chatMessage.type != 'image'">{{ chatMessage.message }}</div>
     </div>
 
     <!--<div class="xx-small-space horizontal"></div>-->

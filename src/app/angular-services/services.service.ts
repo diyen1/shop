@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import * as firebase from 'firebase';
 import firestore from 'firebase/firestore';
 import {ShopService} from '../model/shop-service.model';
-import {ShopUser} from '../model/shop-user';
+import {DmfbUser} from '../model/dmfb-user';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class ServicesService {
    this.initializeServicesList();
   }
 
-  initializeServicesList(user: ShopUser = null) {
+  initializeServicesList(user: DmfbUser = null) {
     this.getServices(user).subscribe((data: ShopService[]) => {
         console.log('success', data);
         this.services = data;
@@ -32,7 +32,7 @@ export class ServicesService {
       });
   }
 
-  getServices(user: ShopUser = null): Observable<any> {
+  getServices(user: DmfbUser = null): Observable<any> {
 
     this.loading = true;
 

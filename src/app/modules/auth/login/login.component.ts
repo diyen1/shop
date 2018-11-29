@@ -33,10 +33,34 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login(formData) {
-    console.log('login() called from login-form component');
-    this.authService.login(formData.email, formData.password)
-      .then((user) => { this.router.navigate(['shop']);  /*window.location.reload();*/ })
-      .catch(error => this.errorMsg = error.message);
+  login(loginType = 'email', formData: any = {}) {
+    switch (loginType) {
+      case 'google':
+        this.authService.loginGoogle()
+          .then((user) => { this.actionAfterLogin(user); })
+          .catch(error => this.errorMsg = error.message);
+        break;
+      case 'facebook':
+        this.authService.loginFb()
+          .then((user) => { this.actionAfterLogin(user); })
+          .catch(error => this.errorMsg = error.message);
+        break;
+      case 'email':
+      default:
+        this.authService.login(formData.email, formData.password)
+          .then((user) => { this.actionAfterLogin(user); })
+          .catch(error => this.errorMsg = error.message);
+        break;
+    }
+
+  }
+
+  actionAfterLogin(user) {
+    /*if (user.active) {
+      this.router.navigate(['shop']);
+    } else {
+      this.router.navigate(['profile']);
+    }
+    window.location.reload();*/
   }
 }

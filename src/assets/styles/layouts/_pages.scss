@@ -54,3 +54,13 @@
     display: none;
   }
 }
+
+.mdl-navigation__link.is-active {
+  background: unquote("rgb(#{$color-primary})");
+  color: #fff;
+}
+
+.mdl-navigation__link.is-active {
+  color: #fff !important;
+}
+

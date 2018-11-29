@@ -1,6 +1,6 @@
 import {ChatMessage} from '../modules/chat/chat-message.model';
 
-export class ShopUser {
+export class DmfbUser {
   active = false;
   email = '';
   fcm_token = '';

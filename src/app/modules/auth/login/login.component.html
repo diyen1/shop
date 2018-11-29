@@ -12,18 +12,18 @@
         <app-crud-create
           class="mdl-typography--text-center"
           [submitButtonText]="'Login'"
-          [fields]="fields" (outputData)="login($event)"
+          [fields]="fields" (outputData)="login('email', $event)"
         ></app-crud-create>
 
         <div class="small-space"></div>
 
         <div class="mdl-typography--text-center">
-          <button class="google-login-button" (click)="authService.loginGoogle()">
+          <button class="google-login-button" (click)="login('google')">
             <img src="./assets/images/google_logo_300.png">
             <span class="xx-small-space horizontal"></span>
             Login With Google
           </button>
-          <!--<button class="facebook-login-button" (click)="authService.loginFb()">
+          <!--<button class="facebook-login-button" (click)="login('facebook')">
             <img src="./assets/images/facebook_logo_300.png">
             <span class="xx-small-space horizontal"></span>
             Login With Facebook

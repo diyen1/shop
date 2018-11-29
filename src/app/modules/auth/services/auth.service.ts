@@ -4,6 +4,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase} from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs';
+import {DmfbUser} from '../../../model/dmfb-user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth,
               private db: AngularFireDatabase,
-              private router: Router) {
+              private router: Router,
+  ) {
 
     this._user = this.afAuth.authState;
     this._user.subscribe((auth) => {
@@ -62,26 +64,71 @@ export class AuthService {
 
     const userRef = firebase.firestore().collection('users');
 
-    console.log('about to fetch user', authId);
-
     return new Observable((observer) => {
       userRef.doc(authId).get().then((doc: any) => {
         const data = doc.data();
-        observer.next({
-          id: doc.id,
-          active: data.active,
-          email: data.email,
-          fcm_token: data.fcm_token,
-          fullNames: data.fullNames,
-          lastSeen: data.lastSeen,
-          sign_in_type: data.sign_in_type,
-          uid: data.uid,
-          city: data.city,
-          country: data.country,
-          homePhone: data.homePhone,
-          mobilePhone: data.mobilePhone,
-          profileImage: data.profileImage,
+        if (data && data != null) {
+          observer.next({
+            id: doc.id,
+            active: data.active,
+            email: data.email,
+            fcm_token: data.fcm_token,
+            fullNames: data.fullNames,
+            lastSeen: data.lastSeen,
+            sign_in_type: data.sign_in_type,
+            uid: data.uid,
+            city: data.city,
+            country: data.country,
+            homePhone: data.homePhone,
+            mobilePhone: data.mobilePhone,
+            profileImage: data.profileImage,
+          });
+        } else {
+          observer.error({'message': 'failed to fetch user' });
+        }
+        observer.complete();
+      });
+    });
+  }
+
+  getUserFromAuthEmail(authEmail, authUid) {
+    /*const userId = auth.uid;
+    const path = `/users/${userId}`;
+    return this.db.object(path).valueChanges();*/
+
+    const userRef = firebase.firestore().collection('users');
+
+    console.log('about to fetch user', authEmail);
+
+    return new Observable((observer) => {
+      userRef.where('email', '==', authEmail).get().then((querySnapshot: any) => {
+
+        querySnapshot.forEach((doc: any) => {
+          const data = doc.data();
+          const user = {
+            id: doc.id,
+            active: data.active,
+            email: data.email,
+            fcm_token: data.fcm_token,
+            fullNames: data.fullNames,
+            lastSeen: data.lastSeen,
+            sign_in_type: data.sign_in_type,
+            uid: data.uid,
+            city: data.city,
+            country: data.country,
+            homePhone: data.homePhone,
+            mobilePhone: data.mobilePhone,
+            profileImage: data.profileImage,
+          };
+          observer.next(user);
+          observer.complete();
         });
+      }).catch((error) => {
+        const user = new DmfbUser();
+        user.email = authEmail;
+        user.sign_in_type = 'google';
+        user.uid = authUid;
+        observer.next(user);
         observer.complete();
       });
     });
@@ -90,34 +137,36 @@ export class AuthService {
   login(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((user) => {
-        this.prepareAuthAfterLogin(user);
+        this.setUpLoginAuth(user.user);
       });
   }
 
   loginFb() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then((user) => {
-        this.prepareAuthAfterLogin(user);
+        this.setUpLoginAuth(user.user);
       });
   }
 
   loginGoogle() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then((user) => {
-        this.prepareAuthAfterLogin(user);
+        this.setUpLoginAuth(user.user);
       });
   }
 
-  prepareAuthAfterLogin(user) {
-    this.getUserFromAuth(user.user.uid).subscribe((authUser) => {
-
-      console.log('authUser', authUser);
-
+  setUpLoginAuth(user) {
+    this.getUserFromAuthEmail(user.email, user.uid).subscribe((authUser: DmfbUser) => {
       if (authUser !== undefined && authUser !== null) {
         this.authState = authUser;
         // this.setUserStatus('online');
         this.saveAuthUser();
-        // TODO save the user's information if it does not exits
+        if (authUser.active) {
+          this.router.navigate(['shop']);
+        } else {
+          this.router.navigate(['profile']);
+        }
+        window.location.reload();
       }
     });
   }

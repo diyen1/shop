@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ShopUser} from '../model/shop-user';
+import {DmfbUser} from '../model/dmfb-user';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AppService} from '../angular-services/app.service';
 import {Router} from '@angular/router';
@@ -12,7 +12,7 @@ import {AuthService} from '../modules/auth/services/auth.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user: ShopUser = new ShopUser();
+  user: DmfbUser = new DmfbUser();
 
   form: any;
   fields = [];
@@ -77,6 +77,7 @@ export class ProfileComponent implements OnInit {
   }
 
   update(data) {
+    data.active = true;
     this.authService.setUserData(data);
   }
 

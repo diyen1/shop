@@ -1,7 +1,7 @@
 <div class="chat-form-input">
 
   <a class="chat-button-attachment" (click)="send()">
-    <app-chat-messaged-file-upload></app-chat-messaged-file-upload>
+    <app-chat-messaged-file-upload [(ngModel)]="imageMessage"></app-chat-messaged-file-upload>
   </a>
 
   <input

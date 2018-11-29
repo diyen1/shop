@@ -4,7 +4,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {ChatMessage} from '../chat-message.model';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Observable} from 'rxjs';
-import {ShopUser} from '../../../model/shop-user';
+import {DmfbUser} from '../../../model/dmfb-user';
 import {AuthService} from '../../auth/services/auth.service';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class ChatService {
   feed: any;
   chatUserList: any[] = [];
 
-  private _currentChatUser: ShopUser;
+  private _currentChatUser: DmfbUser;
 
   set currentChatUser(user) {
     this._currentChatUser = user;
@@ -32,7 +32,7 @@ export class ChatService {
     this.chatUserList.unshift(user);
   }
 
-  get currentChatUser(): ShopUser {
+  get currentChatUser(): DmfbUser {
     return this._currentChatUser;
   }
 
@@ -55,9 +55,9 @@ export class ChatService {
     return this.user;
   }
 
-  sendMessage(msg: string) {
+  sendMessage(messageToSend: ChatMessage) {
     if (this._currentChatUser != null) {
-      const messageToSend: ChatMessage = new ChatMessage(msg, this._currentChatUser.uid, this.user.uid);
+      // const messageToSend: ChatMessage = new ChatMessage(msg, this._currentChatUser.uid, this.user.uid);
       this.chatMessages = this.getMessagesForUser(messageToSend.sender);
       this.chatMessages.push(messageToSend);
       this.chatMessages = this.getMessagesForUser(messageToSend.destination);
@@ -146,7 +146,7 @@ export class ChatService {
           for (let i = 0; i < tmpUserList.length; i++) {
 
             const tmpUserId = tmpUserList[i];
-            this.authService.getUserFromAuth(tmpUserId).subscribe((user: ShopUser) => {
+            this.authService.getUserFromAuth(tmpUserId).subscribe((user: DmfbUser) => {
               if (!this.userInChatUserList(tmpUserId)) {
                 user.lastChatMessage = tmpLastMessageList[i];
                 this.chatUserList.push(user);
