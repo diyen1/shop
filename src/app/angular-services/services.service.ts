@@ -32,7 +32,7 @@ export class ServicesService {
       });
   }
 
-  getServices(user: DmfbUser = null): Observable<any> {
+  /*getServices(user: DmfbUser = null): Observable<any> {
 
     this.loading = true;
 
@@ -65,6 +65,54 @@ export class ServicesService {
             service: data.service,
             mainPhotoUrl: data.mainPhotoUrl,
           });
+        });
+        observer.next(services);
+      });
+    });
+  }*/
+
+  getServices(user: DmfbUser = null): Observable<any> {
+
+    this.loading = true;
+
+    let ref: any = firebase.firestore().collection('services');
+
+    if (user && user != null) {
+      ref = ref.where('uid', '==', user.uid);
+    }
+
+    return new Observable((observer) => {
+      ref.onSnapshot((querySnapshot) => {
+        const services = [];
+        querySnapshot.forEach((doc: any) => {
+
+          const data = doc.data();
+
+          if (
+            (!(this.searchKey && this.searchKey !== ''))
+            || (
+              this.searchKey && this.searchKey !== ''
+            && (
+              data.service.toLowerCase().includes(this.searchKey.toLowerCase())
+              || data.price.toLowerCase().includes(this.searchKey.toLowerCase())
+              || data.time.toLowerCase().includes(this.searchKey.toLowerCase())
+              || data.description.toLowerCase().includes(this.searchKey.toLowerCase())
+              )
+            )
+          ) {
+            services.push({
+              id: doc.id,
+              imageUrl: data.imageUrl,
+              latestUpdateTimestamp: data.latestUpdateTimestamp,
+              price: data.price,
+              sid: data.sid,
+              time: data.time,
+              uid: data.uid,
+              description: data.description,
+              service: data.service,
+              mainPhotoUrl: data.mainPhotoUrl,
+            });
+          }
         });
         observer.next(services);
       });
