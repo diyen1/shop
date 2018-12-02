@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ShopService} from '../model/shop-service.model';
-import {ServicesService} from '../angular-services/services.service';
+import {DmfbCrudService} from '../modules/crud/services/dmfb-crud.service';
 import {AppService} from '../angular-services/app.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
   services: ShopService[];
   loading = false;
 
-  constructor(public servicesService: ServicesService, private appService: AppService) {
+  constructor(public servicesService: DmfbCrudService, private appService: AppService) {
   }
 
   ngOnInit() {

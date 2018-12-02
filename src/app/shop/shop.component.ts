@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicesService } from '../angular-services/services.service';
+import { DmfbCrudService } from '../modules/crud/services/dmfb-crud.service';
 import {ShopService} from '../model/shop-service.model';
 import {AppService} from '../angular-services/app.service';
 
@@ -12,7 +12,7 @@ export class ShopComponent implements OnInit {
 
   services: ShopService[];
 
-  constructor(public servicesService: ServicesService, private appService: AppService) {
+  constructor(public servicesService: DmfbCrudService, private appService: AppService) {
   }
 
   ngOnInit() {

@@ -1,0 +1,10 @@
+.uploaded-image {
+  width: 150px;
+  height: 150px;
+  background: lightblue;
+  background-size: cover;
+  display: inline-block;
+  &:hover {
+    cursor: pointer;
+  }
+}

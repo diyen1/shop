@@ -19,7 +19,7 @@
 
         <div class="mdl-typography--text-center">
           <button class="google-login-button" (click)="login('google')">
-            <img src="./assets/images/google_logo_300.png">
+            <img src="{{ appService.homeUrl }}/assets/images/google_logo_300.png">
             <span class="xx-small-space horizontal"></span>
             Login With Google
           </button>
@@ -34,7 +34,7 @@
 
         <div class="mdl-typography--text-center">
           <span>Don't have an account?</span>&nbsp;
-          <a href="/register"><strong>Register</strong></a>
+          <a href="{{ appService.homeUrl }}/register"><strong>Register</strong></a>
         </div>
         <div class="small-space"></div>
       </div>

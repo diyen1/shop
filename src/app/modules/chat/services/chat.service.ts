@@ -104,65 +104,66 @@ export class ChatService {
 
 
   initializeChatUserList() {
+    if (this.user && this.user != null && this.user.uid) {
+      const path = 'chats/' + this.user.uid;
+      const tmpUserList = [];
+      const tmpLastMessageList = [];
 
-    const path = 'chats/' + this.user.uid;
-    const tmpUserList = [];
-    const tmpLastMessageList = [];
+      // we are about to reinitialize
+      this.initializedChatUserList = false;
 
-    // we are about to reinitialize
-    this.initializedChatUserList = false;
-
-    for (let i = 0; i < this.chatUserList.length; i++) {
-      tmpUserList.push(this.chatUserList[i].uid);
-      tmpLastMessageList.push(new ChatMessage());
-    }
-
-    const userListListener = this.db.list(path, ref => ref).valueChanges();
-
-    // Hacky solution
-    userListListener.subscribe((chats: ChatMessage[]) => {
-
-      if (!this.initializedChatUserList) {
-        let currentUserId;
-
-        for (let i = chats.length - 1; i >= 0; i--) {
-          if (chats[i].sender === this.user.uid) {
-            currentUserId = chats[i].destination;
-          } else {
-            currentUserId = chats[i].sender;
-          }
-
-          const tmpIndex = tmpUserList.indexOf(currentUserId);
-
-          if (tmpIndex === -1) {
-            tmpUserList.push(currentUserId);
-            tmpLastMessageList.push(chats[i]);
-          }
-          /*else {
-            tmpLastMessageList[tmpIndex] = chats[i];
-          }*/
-        }
-
-        if (tmpUserList.length > 0) {
-          // this.chatUserList = [];
-          for (let i = 0; i < tmpUserList.length; i++) {
-
-            const tmpUserId = tmpUserList[i];
-            this.authService.getUserFromAuth(tmpUserId).subscribe((user: DmfbUser) => {
-              if (!this.userInChatUserList(tmpUserId)) {
-                user.lastChatMessage = tmpLastMessageList[i];
-                this.chatUserList.push(user);
-              }
-              if (i === 0) {
-                this._currentChatUser = user;
-                this.feed = this.getMessages().valueChanges();
-              }
-            });
-          }
-        }
-        this.initializedChatUserList = true;
+      for (let i = 0; i < this.chatUserList.length; i++) {
+        tmpUserList.push(this.chatUserList[i].uid);
+        tmpLastMessageList.push(new ChatMessage());
       }
-    });
+
+      const userListListener = this.db.list(path, ref => ref).valueChanges();
+
+      // Hacky solution
+      userListListener.subscribe((chats: ChatMessage[]) => {
+
+        if (!this.initializedChatUserList) {
+          let currentUserId;
+
+          for (let i = chats.length - 1; i >= 0; i--) {
+            if (chats[i].sender === this.user.uid) {
+              currentUserId = chats[i].destination;
+            } else {
+              currentUserId = chats[i].sender;
+            }
+
+            const tmpIndex = tmpUserList.indexOf(currentUserId);
+
+            if (tmpIndex === -1) {
+              tmpUserList.push(currentUserId);
+              tmpLastMessageList.push(chats[i]);
+            }
+            /*else {
+              tmpLastMessageList[tmpIndex] = chats[i];
+            }*/
+          }
+
+          if (tmpUserList.length > 0) {
+            // this.chatUserList = [];
+            for (let i = 0; i < tmpUserList.length; i++) {
+
+              const tmpUserId = tmpUserList[i];
+              this.authService.getUserFromAuth(tmpUserId).subscribe((user: DmfbUser) => {
+                if (!this.userInChatUserList(tmpUserId)) {
+                  user.lastChatMessage = tmpLastMessageList[i];
+                  this.chatUserList.push(user);
+                }
+                if (i === 0) {
+                  this._currentChatUser = user;
+                  this.feed = this.getMessages().valueChanges();
+                }
+              });
+            }
+          }
+          this.initializedChatUserList = true;
+        }
+      });
+    }
   }
 
   changeChat(chatUserId) {

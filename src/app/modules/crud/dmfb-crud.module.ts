@@ -3,18 +3,20 @@ import { NgModule } from '@angular/core';
 import {CrudCreateComponent} from './create/crud-create.component';
 import {MdlModule} from '@angular-mdl/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {environment} from '../../../environments/environment';
-import {AngularFireModule} from 'angularfire2';
-import {AngularFireDatabase} from 'angularfire2/database';
-import {AngularFireAuth} from 'angularfire2/auth';
 import {DmfbFileUploadModule} from '../file-upload/dmfb-file-upload.module';
 import {CrudReadAllComponent} from './read/read-all/crud-read-all.component';
 import {CrudReadSingleComponent} from './read/read-single/crud-read-single.component';
+import {ItemComponent} from './read/item/item.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {RouterModule} from '@angular/router';
+import {CrudAttributeDisplayComponent} from './read/attribute-display/crud-attribute-display.component';
 
 const components = [
   CrudCreateComponent,
   CrudReadAllComponent,
   CrudReadSingleComponent,
+  ItemComponent,
+  CrudAttributeDisplayComponent,
 ];
 
 @NgModule({
@@ -27,12 +29,12 @@ const components = [
     MdlModule,
     FormsModule,
     ReactiveFormsModule,
-    // AngularFireModule.initializeApp(environment.firebase),
+    InfiniteScrollModule,
+    RouterModule,
   ],
   exports: [
     ... components,
   ],
-  // providers: [AngularFireDatabase, AngularFireAuth],
   bootstrap: []
 })
 export class DmfbCrudModule { }

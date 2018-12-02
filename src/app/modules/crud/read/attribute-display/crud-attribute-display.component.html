@@ -1,0 +1,30 @@
+<div>
+  <!--<p>
+    <i class="material-icons" role="presentation">account_circle</i>
+    &lt;!&ndash;<mdl-textfield label="Full Names" name="fullNames" type="text" formControlName="fullNames" floating-label></mdl-textfield>&ndash;&gt;
+  </p>-->
+  <p *ngFor="let field of fields">
+  <span [ngSwitch]="field.type">
+
+    <span *ngSwitchCase="'image'" class="dmfb-crud-image">
+      <label class="dmfb-crud-image-label">{{ field.name }}</label>
+      <div class="small-space"></div>
+      <!--<dmfb-file-upload></dmfb-file-upload>-->
+       <label class="uploaded-image" [style.backgroundImage]="'url(' + field.value + ')'" ></label>
+    </span>
+
+    <span *ngSwitchCase="'image_array'">
+      <label>{{ field.name }}</label>
+      <div class="small-space"></div>
+      <span *ngFor="let imageField of [].constructor(field.image_count); let i = index">
+        <label class="uploaded-image" [style.backgroundImage]="'url(' + field.value + ')'" ></label>
+        <!--<dmfb-file-upload></dmfb-file-upload>-->
+        <!--formControlName="{{ field.key + '_' + i }}"-->
+        <span *ngIf="i !== field.image_count -1" class="x-small-space horizontal"></span>
+      </span>
+    </span>
+
+    <span *ngSwitchDefault>{{ field.name }}: {{ field.value }}</span>
+  </span>
+  </p>
+</div>

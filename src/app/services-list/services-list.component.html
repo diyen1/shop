@@ -19,7 +19,7 @@
     <div
       *ngFor="let service of servicesService.services; let i = index"
       class="mdl-cell mdl-cell--3-col mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone graybox">
-      <app-service *ngIf="i < offset" [service]="service"></app-service>
+      <app-item *ngIf="i < offset" [service]="service"></app-item>
     </div>
     <div *ngIf="servicesService.loading" class="loading-wrapper">
       <mdl-spinner [active]="true"></mdl-spinner>

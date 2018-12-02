@@ -1,6 +1,6 @@
 export class ShopService {
   id: number;
-  imageUrl: string;
+  imageUrl: string[];
   description: string;
   latestUpdateTimestamp: string;
   mainPhotoUrl: string;

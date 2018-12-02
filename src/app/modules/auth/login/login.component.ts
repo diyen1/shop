@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {AuthService} from '../services/auth.service';
+import {environment} from '../../../../environments/environment';
+import {AppService} from '../../../angular-services/app.service';
 
 @Component({
   selector: 'app-login-form',
@@ -25,11 +27,13 @@ export class LoginComponent implements OnInit {
     },
   ];
 
-  constructor(public authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService, private router: Router, public appService: AppService) { }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn) {
       this.router.navigate(['shop']);
+    } else {
+      this.appService.pageTitle = 'Login';
     }
   }
 

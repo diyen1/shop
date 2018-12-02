@@ -27,58 +27,61 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getAuthUser();
-    console.log('this.user', this.user);
     this.appService.pageTitle = 'Profile';
-
-    this.fields = [
-      {
-        key: 'profileImage',
-        name: 'Profile Image',
-        type: 'image',
-        value: this.user.profileImage,
-      },
-      {
-        key: 'fullNames',
-        name: 'Full Names',
-        type: 'text',
-        value: this.user.fullNames,
-      },
-      {
-        key: 'email',
-        name: 'Email',
-        type: 'hidden',
-        value: this.user.email,
-      },
-      {
-        key: 'city',
-        name: 'City',
-        type: 'text',
-        value: this.user.city,
-      },
-      {
-        key: 'country',
-        name: 'Country',
-        type: 'text',
-        value: this.user.country,
-      },
-      {
-        key: 'homePhone',
-        name: 'Home Phone',
-        type: 'phone',
-        value: this.user.homePhone,
-      },
-      {
-        key: 'mobilePhone',
-        name: 'Mobile Phone',
-        type: 'phone',
-        value: this.user.mobilePhone,
-      },
-    ];
+    if (!this.authService.isLoggedIn) {
+      this.router.navigate(['login']);
+    } else if (!this.user.active) {
+      this.router.navigate(['edit-profile']);
+    } else {
+      this.fields = [
+        {
+          key: 'profileImage',
+          name: 'Profile Image',
+          type: 'image',
+          value: this.user.profileImage,
+        },
+        {
+          key: 'fullNames',
+          name: 'Full Names',
+          type: 'text',
+          value: this.user.fullNames,
+        },
+        {
+          key: 'email',
+          name: 'Email',
+          type: 'hidden',
+          value: this.user.email,
+        },
+        {
+          key: 'city',
+          name: 'City',
+          type: 'text',
+          value: this.user.city,
+        },
+        {
+          key: 'country',
+          name: 'Country',
+          type: 'text',
+          value: this.user.country,
+        },
+        {
+          key: 'homePhone',
+          name: 'Home Phone',
+          type: 'phone',
+          value: this.user.homePhone,
+        },
+        {
+          key: 'mobilePhone',
+          name: 'Mobile Phone',
+          type: 'phone',
+          value: this.user.mobilePhone,
+        },
+      ];
+    }
   }
 
-  update(data) {
-    data.active = true;
-    this.authService.setUserData(data);
+  editProfile() {
+    this.router.navigate(['edit-profile']);
   }
 
 }

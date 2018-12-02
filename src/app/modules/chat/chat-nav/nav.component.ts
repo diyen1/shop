@@ -14,7 +14,7 @@ export class ChatNavComponent implements OnInit {
   @Input() title;
 
   constructor(
-    private router: Router,
+    public router: Router,
     public chatService: ChatService,
   ) {
   }
@@ -32,13 +32,14 @@ export class ChatNavComponent implements OnInit {
 
   goBack() {
     if (this.back && this.back != null) {
-      this.router.navigate([this.back]);
-      window.location.reload();
+      this.router.navigate([this.back]).then(() => {
+        window.location.reload();
+      });
     }
   }
 
   goHome() {
-    this.router.navigate(['home']);
+    this.router.navigate(['shop']);
   }
 
   goCategories() {

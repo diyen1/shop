@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
     },
   ];
 
-  constructor(private authService: AuthService, private router: Router, private appService: AppService) {
+  constructor(private authService: AuthService, private router: Router, public appService: AppService) {
   }
 
   signUp(formData) {

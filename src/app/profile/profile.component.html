@@ -1,6 +1,26 @@
 <div class="page-section-wrapper profile-wrapper">
-  <app-crud-create class="mdl-typography--text-center"
-                   [submitButtonText]="'Update'"
-                   [fields]="fields" (outputData)="update($event)"
-  ></app-crud-create>
+
+  <p style="float: right;">
+    <a class="dm-hover profile-action" (click)="editProfile()">
+      <div style="display: inline-block; float: left">
+        <i class="material-icons" role="presentation">edit</i>
+      </div>
+      <div style="display: inline-block; float: left">
+        <div class="xx-small-space horizontal"></div>
+        Edit profile
+      </div>
+      <div class="clearfix"></div>
+    </a>
+  </p>
+  <div class="clearfix"></div>
+
+
+  <crud-attribute-display [fields]="fields"></crud-attribute-display>
+
+
+  <div class="small-space"></div>
+
+  <h3>My Services</h3>
+
+  <app-services-list [user]="user"></app-services-list>
 </div>

@@ -1,98 +1,57 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CrudField} from '../../crud-field';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {ShopService} from '../../../../model/shop-service.model';
+import {DmfbUser} from '../../../../model/dmfb-user';
+import {DmfbCrudService} from '../../services/dmfb-crud.service';
 
 @Component({
   selector: 'app-crud-read-all',
   templateUrl: './crud-read-all.component.html',
-  styleUrls: ['./crud-read-all.component.css']
+  styleUrls: ['./crud-read-all.component.scss']
 })
 export class CrudReadAllComponent implements OnInit, OnChanges {
 
-  form: any;
+  lastItem = null;
+  services: ShopService[] = [];
+  loading = false;
+  isLastPage = false;
+  @Input() user: DmfbUser;
+  // @Input() searchKey: string;
+  @Input() collectionPath = 'items';
+  @Input() noItemsError = 'There are currently no items available';
 
-  @Input() fields: CrudField[] = [];
-
-  @Input() submitButtonText = 'Submit';
-
-  @Output() outputData: any = new EventEmitter<any>();
-
-  controlsConfig = {};
-
-  constructor(private fb: FormBuilder) {
+  constructor(public crudService: DmfbCrudService) {
   }
 
   ngOnInit() {
-    this.initializeForm();
+    this.loading = true;
+    this.crudService.getItems(this.collectionPath, this.lastItem).subscribe((items) => {
+      console.log(items);
+      this.services = [ ...this.services, ...items.data];
+      this.loading = false;
+      this.isLastPage = items.isLastPage;
+      this.lastItem = items.lastItem;
+      // this.offset = this.services[this.services.length - 1].id;
+    });
+  }
+
+  onScroll() {
+    this.loading = true;
+    console.log('onScroll this.isLastPage', this.isLastPage);
+    console.log('scrool this.lastItem', this.lastItem);
+    if (!this.isLastPage) {
+      // this.offset += this.crudService.PER_PAGE;
+      this.crudService.getItems(this.collectionPath, this.lastItem).subscribe((items) => {
+        this.services = [ ...this.services, ...items.data];
+        this.loading = false;
+        this.isLastPage = items.isLastPage;
+        this.lastItem = items.lastItem;
+      });
+    } else {
+      this.loading = false;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.initializeForm();
-  }
-
-  initializeForm(): void {
-
-    console.log('this.fields', this.fields);
-
-    for (let i = 0; i < this.fields.length; i++) {
-      const field = this.fields[i];
-
-      if (field.type === 'image_array') {
-
-        const imageCount = field.image_count;
-
-        for (i = 0; i < imageCount; i++) {
-          let value = '';
-          if (field.value && field.value[i]) {
-            value = field.value[i];
-          }
-          console.log(field.type + ' value', value);
-          this.controlsConfig[field.key + '_' + i] = [value];
-        }
-      } else {
-        const value = field.value || '';
-        console.log(field.type + ' value: ', value);
-        this.controlsConfig[field.key] = [value, Validators.required];
-      }
-    }
-
-    console.log(this.controlsConfig);
-
-    /*this.form = this.fb.group({
-      fullNames: ['', Validators.required],
-      mobilePhone: ['', Validators.required],
-      homePhone: ['', Validators.required],
-      town: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      country: ['', Validators.required],
-    });*/
-
-    this.form = this.fb.group(this.controlsConfig);
-  }
-
-  onSubmit(formData) {
-    console.log(formData);
-
-    for (let i = 0; i < this.fields.length; i++) {
-      const field = this.fields[i];
-
-      if (field.type === 'image_array') {
-        const imageCount = field.image_count;
-        formData[field.key] = [];
-        for (i = 0; i < imageCount; i++) {
-          if (formData[field.key + '_' + i] !== '') {
-            formData[field.key].push(formData[field.key + '_' + i]);
-          }
-          delete formData[field.key + '_' + i];
-        }
-      }
-    }
-    this.outputData.emit(formData);
-  }
-
-  fileAddedCallback() {
-    console.log('file added callback');
   }
 
 }

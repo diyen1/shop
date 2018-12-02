@@ -6,7 +6,8 @@ import {AppService} from './angular-services/app.service';
 import {ChatService} from './modules/chat/services/chat.service';
 import {delay, startWith, tap} from 'rxjs/operators';
 import {AuthService} from './modules/auth/services/auth.service';
-import {ServicesService} from './angular-services/services.service';
+import {DmfbCrudService} from './modules/crud/services/dmfb-crud.service';
+
 /*import {OnlineStatusService, OnlineStatusType} from 'ngx-online-status';
 import {st} from '@angular/core/src/render3';*/
 
@@ -23,12 +24,13 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     public router: Router,
     public appService: AppService,
-    public servicesService: ServicesService,
+    public servicesService: DmfbCrudService,
     // private onlineStatusService: OnlineStatusService,
-    ) {
+  ) {
   }
 
-  ngOnInit(): void {console.log('checking online status');
+  ngOnInit(): void {
+    console.log('checking online status');
     /*this.onlineStatusService.status.subscribe((status: OnlineStatusType) => {
       // use status
       console.log('status', status);
@@ -37,8 +39,9 @@ export class AppComponent implements OnInit {
   }
 
   get isFullScreenTemplate() {
-    const route = this.router.url;
-    return route === '/login' || route === '/register';
+    /*const route = this.router.url;
+    return route === '/login' || route === '/register';*/
+    return false;
   }
 
   get isCleanTemplate() {
@@ -48,7 +51,23 @@ export class AppComponent implements OnInit {
 
   displayPostButton() {
     const route = this.router.url;
-    return !(route.includes('/chat') || route.includes('/add-service'));
+    const routesWithoutPostButtons = [
+      '/chat',
+      '/add-service',
+      '/login',
+      '/register',
+    ];
+
+    for (let i = 0; i < routesWithoutPostButtons.length; i++) {
+      if (route.includes(routesWithoutPostButtons[i])) {
+        return false;
+      }
+    }
+
+    return true;
+    /*return !(route.includes('/chat') || route.includes('/add-service')
+      || route.includes('/login') || route.includes('/register'));*/
+
     /*const pageTitle = this.appService.pageTitle.toLowerCase();
     return !(pageTitle === 'chat');*/
   }
@@ -63,10 +82,8 @@ export class AppComponent implements OnInit {
 
   search(event) {
     // this.servicesService.searchKey = this.searchField;
-    this.servicesService.initializeServicesList();
-
+    this.servicesService.initializeItemsList('services');
     const route = this.router.url;
-
     if (route !== '/search') {
       this.router.navigate(['search']);
     }

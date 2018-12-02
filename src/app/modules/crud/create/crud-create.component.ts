@@ -5,7 +5,7 @@ import {CrudField} from '../crud-field';
 @Component({
   selector: 'app-crud-create',
   templateUrl: './crud-create.component.html',
-  styleUrls: ['./crud-create.component.css']
+  styleUrls: ['./crud-create.component.scss']
 })
 export class CrudCreateComponent implements OnInit, OnChanges {
 
@@ -32,8 +32,6 @@ export class CrudCreateComponent implements OnInit, OnChanges {
 
   initializeForm(): void {
 
-    console.log('this.fields', this.fields);
-
     for (let i = 0; i < this.fields.length; i++) {
       const field = this.fields[i];
 
@@ -46,17 +44,13 @@ export class CrudCreateComponent implements OnInit, OnChanges {
           if (field.value && field.value[i]) {
             value = field.value[i];
           }
-          console.log(field.type + ' value', value);
           this.controlsConfig[field.key + '_' + i] = [value];
         }
       } else {
         const value = field.value || '';
-        console.log(field.type + ' value: ', value);
         this.controlsConfig[field.key] = [value, Validators.required];
       }
     }
-
-    console.log(this.controlsConfig);
 
     /*this.form = this.fb.group({
       fullNames: ['', Validators.required],
@@ -72,7 +66,6 @@ export class CrudCreateComponent implements OnInit, OnChanges {
   }
 
   onSubmit(formData) {
-    console.log(formData);
 
     for (let i = 0; i < this.fields.length; i++) {
       const field = this.fields[i];

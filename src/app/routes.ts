@@ -11,6 +11,7 @@ import {SellerProfileComponent} from './seller-profile/seller-profile.component'
 import {AddServiceComponent} from './add-service/add-service.component';
 import {AuthGuard} from './auth.guard';
 import {EditServiceComponent} from './edit-service/edit-service.component';
+import {EditProfileComponent} from './edit-profile/edit-profile.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'shop', pathMatch: 'full'},
@@ -18,12 +19,13 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'shop', component: ShopComponent},
-  {path: 'add-service', component: AddServiceComponent, canActivate: [AuthGuard]},
-  {path: 'edit-service/:id', component: EditServiceComponent, canActivate: [AuthGuard]},
+  {path: 'add-service', component: AddServiceComponent},
+  {path: 'edit-service/:id', component: EditServiceComponent},
   {path: 'service/:id', component: ServiceSingleComponent},
   {path: 'search', component: SearchComponent},
-  {path: 'chat', component: ChatComponent, canActivate: [AuthGuard]},
-  {path: 'chat/:userId', component: ChatComponent, canActivate: [AuthGuard]},
-  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'chat', component: ChatComponent},
+  {path: 'chat/:userId', component: ChatComponent},
+  {path: 'profile', component: ProfileComponent},
+  {path: 'edit-profile', component: EditProfileComponent},
   {path: 'seller-profile/:id', component: SellerProfileComponent},
 ];

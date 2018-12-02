@@ -54,7 +54,8 @@ export class AuthService {
   }
 
   get currentUserId(): string {
-    return this.authState !== null ? this.authState.uid : '';
+    const authUser = this.getAuthUser();
+    return authUser !== null ? authUser.uid : '';
   }
 
   getUserFromAuth(authId) {
@@ -98,36 +99,46 @@ export class AuthService {
 
     const userRef = firebase.firestore().collection('users');
 
-    console.log('about to fetch user', authEmail);
-
     return new Observable((observer) => {
       userRef.where('email', '==', authEmail).get().then((querySnapshot: any) => {
-
-        querySnapshot.forEach((doc: any) => {
-          const data = doc.data();
-          const user = {
-            id: doc.id,
-            active: data.active,
-            email: data.email,
-            fcm_token: data.fcm_token,
-            fullNames: data.fullNames,
-            lastSeen: data.lastSeen,
-            sign_in_type: data.sign_in_type,
-            uid: data.uid,
-            city: data.city,
-            country: data.country,
-            homePhone: data.homePhone,
-            mobilePhone: data.mobilePhone,
-            profileImage: data.profileImage,
-          };
+        if (querySnapshot.size > 0) {
+          querySnapshot.forEach((doc: any) => {
+            const data = doc.data();
+            console.log('success', data);
+            const user = {
+              id: doc.id,
+              active: data.active,
+              email: data.email,
+              fcm_token: data.fcm_token,
+              fullNames: data.fullNames,
+              lastSeen: data.lastSeen,
+              sign_in_type: data.sign_in_type,
+              uid: data.uid,
+              city: data.city,
+              country: data.country,
+              homePhone: data.homePhone,
+              mobilePhone: data.mobilePhone,
+              profileImage: data.profileImage,
+            };
+            observer.next(user);
+            observer.complete();
+          });
+        } else {
+          console.log('failure');
+          const user = new DmfbUser();
+          user.email = authEmail;
+          user.sign_in_type = 'google';
+          user.uid = authUid;
+          user.active = false;
           observer.next(user);
           observer.complete();
-        });
+        }
       }).catch((error) => {
         const user = new DmfbUser();
         user.email = authEmail;
         user.sign_in_type = 'google';
         user.uid = authUid;
+        user.active = false;
         observer.next(user);
         observer.complete();
       });
@@ -156,17 +167,21 @@ export class AuthService {
   }
 
   setUpLoginAuth(user) {
+    console.log('settng up user', user);
     this.getUserFromAuthEmail(user.email, user.uid).subscribe((authUser: DmfbUser) => {
       if (authUser !== undefined && authUser !== null) {
         this.authState = authUser;
         // this.setUserStatus('online');
         this.saveAuthUser();
         if (authUser.active) {
-          this.router.navigate(['shop']);
+          this.router.navigate(['shop']).then(() => {
+            window.location.reload();
+          });
         } else {
-          this.router.navigate(['profile']);
+          this.router.navigate(['profile']).then(() => {
+            window.location.reload();
+          });
         }
-        window.location.reload();
       }
     });
   }
@@ -188,7 +203,7 @@ export class AuthService {
       }).catch(error => console.log(error));
   }
 
-  setUserData(data, status?: string): void {
+  setUserData(data, status?: string) {
 
     const currentUserId = this.currentUserId;
 
@@ -210,7 +225,7 @@ export class AuthService {
 
     const path = `users/${currentUserId}`;
 
-    this.db.object(path).update(data)
+    return this.db.object(path).update(data)
       .catch(error => console.log(error));
   }
 

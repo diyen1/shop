@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ShopService} from '../model/shop-service.model';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {ServicesService} from '../angular-services/services.service';
+import {DmfbCrudService} from '../modules/crud/services/dmfb-crud.service';
 import {AppService} from '../angular-services/app.service';
+import {AuthService} from '../modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-service-single',
@@ -13,12 +14,16 @@ export class ServiceSingleComponent implements OnInit {
 
   service: ShopService;
   loading = false;
+  currentImageUrl = '';
+  zoomed = false;
+  galleries: string[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private fsService: ServicesService,
+    private crudService: DmfbCrudService,
     private appService: AppService,
     private router: Router,
+    private authService: AuthService,
   ) {
   }
 
@@ -29,11 +34,16 @@ export class ServiceSingleComponent implements OnInit {
         this.loading = true;
         const id = params['id'];
 
-        this.fsService.getService(id).subscribe(
+        this.crudService.getItem('services', id).subscribe(
           (service: ShopService) => {
             this.service = service;
+            this.currentImageUrl = this.service.mainPhotoUrl;
             this.appService.pageTitle = service.service;
             this.loading = false;
+            this.galleries.push(this.service.mainPhotoUrl);
+            this.service.imageUrl.forEach((image) => {
+              this.galleries.push(image);
+            });
           },
           () => {
             this.loading = false;
@@ -47,5 +57,17 @@ export class ServiceSingleComponent implements OnInit {
     if (this.service && this.service.uid) {
       this.router.navigate(['/seller-profile/' + this.service.uid]);
     }
+  }
+
+  change(photoUrl) {
+    this.currentImageUrl = photoUrl;
+  }
+
+  toggleZoom() {
+    this.zoomed = !this.zoomed;
+  }
+
+  isMyItem() {
+    return this.service.uid === this.authService.currentUserId;
   }
 }

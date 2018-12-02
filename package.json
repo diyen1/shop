@@ -26,9 +26,11 @@
     "core-js": "^2.5.4",
     "firebase": "^5.5.7",
     "ng2-slim-loading-bar": "latest",
-    "ngx-online-status": "^1.0.0",
+    "ng-simple-slideshow": "^1.2.4",
     "ngx-infinite-scroll": "^6.0.1",
-    "rxjs": "~6.2.0",
+    "ngx-online-status": "^1.0.0",
+    "rxjs": "^6.3.3",
+    "rxjs-compat": "^6.3.3",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

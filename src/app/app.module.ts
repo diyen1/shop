@@ -1,19 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {MdlModule} from '@angular-mdl/core';
-import { RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { routes } from './routes';
-import { ShopComponent } from './shop/shop.component';
-import { SearchComponent } from './search/search.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ServiceComponent } from './service/service.component';
-import { ServiceSingleComponent } from './service-single/service-single.component';
+import {RouterModule} from '@angular/router';
+import {HomeComponent} from './home/home.component';
+import {routes} from './routes';
+import {ShopComponent} from './shop/shop.component';
+import {SearchComponent} from './search/search.component';
+import {ProfileComponent} from './profile/profile.component';
+import {ServiceSingleComponent} from './service-single/service-single.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { SellerProfileComponent } from './seller-profile/seller-profile.component';
-import { AddServiceComponent } from './add-service/add-service.component';
+import {SellerProfileComponent} from './seller-profile/seller-profile.component';
+import {AddServiceComponent} from './add-service/add-service.component';
 import {environment} from '../environments/environment';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabase} from 'angularfire2/database';
@@ -26,6 +25,11 @@ import {DmfbChatModule} from './modules/chat/dmfb-chat.module';
 import {EditServiceComponent} from './edit-service/edit-service.component';
 import {ServicesListComponent} from './services-list/services-list.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {TokenInterceptor} from './interceptors/token.interceptor';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {SlideshowModule} from 'ng-simple-slideshow';
+import {EditProfileComponent} from './edit-profile/edit-profile.component';
+
 // import {OnlineStatusModule} from 'ngx-online-status';
 
 @NgModule({
@@ -35,13 +39,13 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
     ShopComponent,
     SearchComponent,
     ProfileComponent,
-    ServiceComponent,
     ServiceSingleComponent,
     ProfileComponent,
     SellerProfileComponent,
     AddServiceComponent,
     EditServiceComponent,
     ServicesListComponent,
+    EditProfileComponent,
   ],
   imports: [
     DmfbCrudModule,
@@ -53,11 +57,17 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
     ReactiveFormsModule,
     UtilsModule,
     InfiniteScrollModule,
+    SlideshowModule,
     // OnlineStatusModule,
     RouterModule.forRoot(routes),
     AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [AngularFireDatabase, AngularFireAuth, AuthGuard],
+  providers: [
+    AngularFireDatabase,
+    AngularFireAuth,
+    AuthGuard,
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
