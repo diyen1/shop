@@ -68,3 +68,6 @@
   cursor: pointer;
 }
 
+.slideshow-container .slides:not(.link) {
+  background-size: contain !important;
+}
