@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DmfbUser} from '../model/dmfb-user';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AppService} from '../angular-services/app.service';
@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   user: DmfbUser = new DmfbUser();
 
   form: any;
+  profileImageFields = [];
   fields = [];
 
   constructor(
@@ -22,7 +23,7 @@ export class ProfileComponent implements OnInit {
     private appService: AppService,
     private authService: AuthService,
     private router: Router,
-    ) {
+  ) {
   }
 
   ngOnInit() {
@@ -33,13 +34,16 @@ export class ProfileComponent implements OnInit {
     } else if (!this.user.active) {
       this.router.navigate(['edit-profile']);
     } else {
-      this.fields = [
+      this.profileImageFields = [
         {
           key: 'profileImage',
           name: 'Profile Image',
           type: 'image',
           value: this.user.profileImage,
         },
+      ];
+
+      this.fields = [
         {
           key: 'fullNames',
           name: 'Full Names',
