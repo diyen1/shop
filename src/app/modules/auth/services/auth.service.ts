@@ -70,7 +70,7 @@ export class AuthService {
         const data = doc.data();
         if (data && data != null) {
           observer.next({
-            id: doc.id,
+            // id: doc.id,
             active: data.active,
             email: data.email,
             fcm_token: data.fcm_token,
@@ -78,6 +78,9 @@ export class AuthService {
             lastSeen: data.lastSeen,
             sign_in_type: data.sign_in_type,
             uid: data.uid,
+            id: data.uid,
+            services: data.services,
+            state: data.state,
             city: data.city,
             country: data.country,
             homePhone: data.homePhone,
@@ -106,7 +109,7 @@ export class AuthService {
             const data = doc.data();
             console.log('success', data);
             const user = {
-              id: doc.id,
+              // id: doc.id,
               active: data.active,
               email: data.email,
               fcm_token: data.fcm_token,
@@ -114,6 +117,9 @@ export class AuthService {
               lastSeen: data.lastSeen,
               sign_in_type: data.sign_in_type,
               uid: data.uid,
+              id: data.id,
+              services: data.services,
+              state: data.state,
               city: data.city,
               country: data.country,
               homePhone: data.homePhone,
@@ -129,6 +135,7 @@ export class AuthService {
           user.email = authEmail;
           user.sign_in_type = 'google';
           user.uid = authUid;
+          user.id = authUid;
           user.active = false;
           observer.next(user);
           observer.complete();
@@ -138,6 +145,7 @@ export class AuthService {
         user.email = authEmail;
         user.sign_in_type = 'google';
         user.uid = authUid;
+        user.id = authUid;
         user.active = false;
         observer.next(user);
         observer.complete();
@@ -208,9 +216,9 @@ export class AuthService {
     const currentUserId = this.currentUserId;
 
     data.active = true;
-    data.id = currentUserId;
     data.uid = currentUserId;
-    data.lastSeen = new Date();
+    data.id = currentUserId;
+    data.lastSeen = 0;
     data.sign_in_type = '';
 
     this.authState = data;

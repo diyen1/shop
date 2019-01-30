@@ -20,7 +20,9 @@ export class ChatFormComponent implements OnInit {
   send() {
     let messageToSend: ChatMessage;
     if (this.imageMessage && this.imageMessage != null && this.imageMessage.trim() !== '') {
-      messageToSend = new ChatMessage(this.imageMessage, this.chat.currentChatUser.uid, this.chat.getUser().uid, 'image');
+      messageToSend = new ChatMessage('', this.chat.currentChatUser.uid, this.chat.getUser().uid, 'image');
+      delete messageToSend.message;
+      messageToSend.imageUrl = this.imageMessage;
       this.chat.sendMessage(messageToSend);
       this.clearFields();
     } else if (this.message && this.message != null && this.message.trim() !== '') {

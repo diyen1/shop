@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyA4pCo2xwb4A7jIDxk0Xxi4oixojTKKoSo',
-    authDomain: 'tuprofession-2e0a8.firebaseapp.com',
-    databaseURL: 'https://tuprofession-2e0a8.firebaseio.com',
-    projectId: 'tuprofession-2e0a8',
-    storageBucket: 'tuprofession-2e0a8.appspot.com',
-    messagingSenderId: '486196316768'
+    apiKey: 'AIzaSyDmjzsCHlO7sDJt_w0Fi64XBaR9aN2arck',
+    authDomain: 'tuprofesion-62eda.firebaseapp.com',
+    databaseURL: 'https://tuprofesion-62eda.firebaseio.com',
+    projectId: 'tuprofesion-62eda',
+    storageBucket: 'tuprofesion-62eda.appspot.com',
+    messagingSenderId: '656911010176'
   },
   homeUrl: 'http://localhost:4200',
   /*production: false,

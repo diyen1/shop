@@ -32,9 +32,15 @@ export class ChatNavComponent implements OnInit {
 
   goBack() {
     if (this.back && this.back != null) {
-      this.router.navigate([this.back]).then(() => {
-        window.location.reload();
-      });
+      const mobileWidth = (window.screen.width);
+      if (mobileWidth >= 992 || this.chatService.blockToDisplay === 'master') {
+        this.chatService.blockToDisplay = 'master';
+        this.router.navigate([this.back]).then(() => {
+          window.location.reload();
+        });
+      } else {
+        this.chatService.blockToDisplay = 'master';
+      }
     }
   }
 

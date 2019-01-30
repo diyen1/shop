@@ -1,17 +1,80 @@
 .chat-wrapper {
 
+  width: 100%;
+  position: fixed;
+  right: 0;
 
   .chat-form-wrapper {
-    z-index: 100;
+    //z-index: 100;
     position: fixed;
     bottom: 0;
-    width: 80%;
+    width: 100%;
     border-top: #ccc solid 1px;
     padding: 7px 0;
     background: #FFF;
   }
+
+  &.master {
+    z-index: 1;
+
+    .chat-form-wrapper {
+      display: none;
+    }
+  }
+
+  &.detail {
+    z-index: 2;
+  }
+}
+
+.user-list-wrapper {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  height: 100vh;
+  border-right: #ccc solid 1px;
+
+  &.master {
+    z-index: 2;
+  }
+
+  &.detail {
+    z-index: 1;
+  }
 }
 
 .chat-room-wrapper {
+
+}
+
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .chat-wrapper {
+    width: calc(100% - 360px);
+    .chat-form-wrapper {
+      width: calc(100% - 360px);
+    }
+  }
+  .user-list-wrapper {
+    width: 360px;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
 
 }

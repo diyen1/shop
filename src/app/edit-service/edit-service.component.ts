@@ -69,11 +69,11 @@ export class EditServiceComponent implements OnInit {
                   value: service.mainPhotoUrl,
                 },
                 {
-                  key: 'imageUrl',
+                  key: 'imagesUrl',
                   name: 'Gallery Images',
                   type: 'image_array',
                   image_count: 5,
-                  value: service.imageUrl,
+                  value: service.imagesUrl,
                 },
               ];
               this.loading = false;
@@ -91,7 +91,7 @@ export class EditServiceComponent implements OnInit {
 
     console.log('prepared:', formData);
 
-    this.crudService.updateItem('services', '' + this.service.id, formData).subscribe((id) => {
+    this.crudService.updateItem('services', '' + this.service.sid, formData).subscribe((id) => {
       console.log(id);
 
       // TODO display success message

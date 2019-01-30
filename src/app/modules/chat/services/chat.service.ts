@@ -17,6 +17,7 @@ export class ChatService {
   initializedChatUserList = false;
   feed: any;
   chatUserList: any[] = [];
+  blockToDisplay = 'master'; // master or detail
 
   private _currentChatUser: DmfbUser;
 
@@ -58,11 +59,17 @@ export class ChatService {
   sendMessage(messageToSend: ChatMessage) {
     if (this._currentChatUser != null) {
       // const messageToSend: ChatMessage = new ChatMessage(msg, this._currentChatUser.uid, this.user.uid);
-      this.chatMessages = this.getMessagesForUser(messageToSend.sender);
+      this.chatMessages = this.getMessagesForUser(messageToSend.sender, messageToSend.destination);
       this.chatMessages.push(messageToSend);
-      this.chatMessages = this.getMessagesForUser(messageToSend.destination);
+      this.chatMessages = this.getMessagesForUser(messageToSend.destination, messageToSend.sender);
       this.chatMessages.push(messageToSend);
       console.log('send message', messageToSend);
+
+      // last message
+      let path = 'last-message/' + messageToSend.sender;
+      this.db.database.ref(path).set(messageToSend);
+      path = 'last-message/' + messageToSend.destination;
+      this.db.database.ref(path).set(messageToSend);
 
       // Move user to the top of the list
       for (let i = 0; i < this.chatUserList.length; i++) {
@@ -70,7 +77,6 @@ export class ChatService {
           /*delete this.chatUserList[i];
           this.chatUserList.unshift(this.chatUserList[i]);*/
           this.chatUserList[i].lastChatMessage = messageToSend;
-          console.log('this.chatUserList', this.chatUserList);
           this.chatUserList.push(...this.chatUserList.splice(0, i));
           return;
         }
@@ -84,28 +90,31 @@ export class ChatService {
     // query to create our message feed binding
 
     let messages;
-    const path = 'chats/' + this.user.uid;
 
     // messages = this.db.list(path, ref => ref.orderByKey());
 
     if (this._currentChatUser) {
+      const path = 'chat/' + this.user.uid + '/' + this._currentChatUser.uid;
       // messages = this.db.list(path, ref => ref.orderByChild('destination').equalTo(this._currentChatUser.uid));
       messages = this.db.list(path, ref => ref);
+
+      return messages;
     } else {
-      messages = this.db.list(path, ref => ref.orderByChild('destination').equalTo('none'));
+      alert('Big error');
     }
-    return messages;
+
+    return null;
   }
 
-  getMessagesForUser(userId): any {
-    const path = 'chats/' + userId;
+  getMessagesForUser(sender, destination): any {
+    const path = 'chat/' + sender + '/' + destination;
     return this.db.list(path, ref => ref);
   }
 
 
   initializeChatUserList() {
     if (this.user && this.user != null && this.user.uid) {
-      const path = 'chats/' + this.user.uid;
+      const path = 'chat/' + this.user.uid;
       const tmpUserList = [];
       const tmpLastMessageList = [];
 
@@ -120,28 +129,56 @@ export class ChatService {
       const userListListener = this.db.list(path, ref => ref).valueChanges();
 
       // Hacky solution
-      userListListener.subscribe((chats: ChatMessage[]) => {
+      userListListener.subscribe((chats: any) => {
+
+        console.log(chats);
 
         if (!this.initializedChatUserList) {
+
           let currentUserId;
 
           for (let i = chats.length - 1; i >= 0; i--) {
-            if (chats[i].sender === this.user.uid) {
-              currentUserId = chats[i].destination;
+            const chat = Object.keys(chats[i]).map(function (key) {
+              return [key, chats[i][key]];
+            });
+
+            const lastMessage = chat[chat.length - 1][1];
+
+            if (lastMessage.sender === this.user.uid) {
+              currentUserId = lastMessage.destination;
             } else {
-              currentUserId = chats[i].sender;
+              currentUserId = lastMessage.sender;
             }
 
             const tmpIndex = tmpUserList.indexOf(currentUserId);
 
             if (tmpIndex === -1) {
               tmpUserList.push(currentUserId);
-              tmpLastMessageList.push(chats[i]);
+              tmpLastMessageList.push(lastMessage);
             }
-            /*else {
-              tmpLastMessageList[tmpIndex] = chats[i];
-            }*/
           }
+
+          console.log('tmpUserList', tmpUserList);
+
+
+          //
+          // for (let i = chats.length - 1; i >= 0; i--) {
+          //   if (chats[i].sender === this.user.uid) {
+          //     currentUserId = chats[i].destination;
+          //   } else {
+          //     currentUserId = chats[i].sender;
+          //   }
+          //
+          //   const tmpIndex = tmpUserList.indexOf(currentUserId);
+          //
+          //   if (tmpIndex === -1) {
+          //     tmpUserList.push(currentUserId);
+          //     tmpLastMessageList.push(chats[i]);
+          //   }
+          //   /*else {
+          //     tmpLastMessageList[tmpIndex] = chats[i];
+          //   }*/
+          // }
 
           if (tmpUserList.length > 0) {
             // this.chatUserList = [];
@@ -167,14 +204,14 @@ export class ChatService {
   }
 
   changeChat(chatUserId) {
-
+    this.blockToDisplay = 'detail';
     for (let i = 0; i < this.chatUserList.length; i++) {
       if (this.chatUserList[i].uid === chatUserId) {
         this._currentChatUser = this.chatUserList[i];
         return;
       }
     }
-    const path = 'chats/' + chatUserId;
+    const path = 'chat/' + chatUserId;
     this.feed = this.getMessages().valueChanges();
   }
 

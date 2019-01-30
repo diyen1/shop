@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppService} from '../../../angular-services/app.service';
 import {AuthService} from '../../auth/services/auth.service';
 import {Router} from '@angular/router';
+import {ChatService} from '../services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -10,7 +11,13 @@ import {Router} from '@angular/router';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(public appService: AppService, public authService: AuthService, private router: Router) { }
+  constructor(
+    public appService: AppService,
+    public authService: AuthService,
+    private router: Router,
+    public chatService: ChatService,
+  ) {
+  }
 
   ngOnInit() {
     if (!this.authService.isLoggedIn) {

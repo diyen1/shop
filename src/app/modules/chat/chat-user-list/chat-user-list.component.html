@@ -1,12 +1,17 @@
 <div class="chat-user-list-wrapper">
+  <div *ngIf="chatService.initializedChatUserList && chatService.chatUserList.length > 0">
+    <app-chat-user [user]="user" *ngFor="let user of chatService.chatUserList"></app-chat-user>
+  </div>
+  <div *ngIf="chatService.initializedChatUserList && chatService.chatUserList.length <= 0" style="padding: 25px">
+    You have no chats yet
+  </div>
+
+  <!--<div class="chat-user-wrapper" *ngFor="let user of chatService.chatUserList">
+
+  </div>-->
 
   <div *ngIf="!chatService.initializedChatUserList" class="mdl-typography--text-center">
     <div class="medium-space"></div>
     <mdl-spinner [active]="true"></mdl-spinner>
   </div>
-
-  <app-chat-user [user]="user" *ngFor="let user of chatService.chatUserList"></app-chat-user>
-  <!--<div class="chat-user-wrapper" *ngFor="let user of chatService.chatUserList">
-
-  </div>-->
 </div>

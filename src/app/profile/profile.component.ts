@@ -59,6 +59,12 @@ export class ProfileComponent implements OnInit {
           value: this.user.city,
         },
         {
+          key: 'state',
+          name: 'State',
+          type: 'text',
+          value: this.user.state,
+        },
+        {
           key: 'country',
           name: 'Country',
           type: 'text',
@@ -75,6 +81,12 @@ export class ProfileComponent implements OnInit {
           name: 'Mobile Phone',
           type: 'phone',
           value: this.user.mobilePhone,
+        },
+        {
+          key: 'services',
+          name: 'Services',
+          type: 'text',
+          value: this.user.services,
         },
       ];
     }

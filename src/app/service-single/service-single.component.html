@@ -23,7 +23,7 @@
           <div class="service-image" [style.backgroundImage]="'url(' + service.mainPhotoUrl + ')'"></div>
         </div>
         <div
-          *ngFor="let image of service.imageUrl"
+          *ngFor="let image of service.imagesUrl"
           (click)="change(image)"
           class="dm-hover mdl-cell mdl-cell--3-col mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone graybox">
           <div class="service-image" [style.backgroundImage]="'url(' + image + ')'"></div>
@@ -76,7 +76,7 @@
         <div class="service-image" [style.backgroundImage]="'url(' + service.mainPhotoUrl + ')'"></div>
       </div>
       <div
-        *ngFor="let image of service.imageUrl"
+        *ngFor="let image of service.imagesUrl"
         (click)="change(image)"
         class="dm-hover mdl-cell mdl-cell&#45;&#45;1-col mdl-cell&#45;&#45;1-col-desktop mdl-cell&#45;&#45;4-col-tablet mdl-cell&#45;&#45;4-col-phone graybox">
         <div class="service-image" [style.backgroundImage]="'url(' + image + ')'"></div>

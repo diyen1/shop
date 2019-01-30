@@ -54,6 +54,12 @@ export class EditProfileComponent implements OnInit {
         value: this.user.email,
       },
       {
+        key: 'state',
+        name: 'State',
+        type: 'text',
+        value: this.user.state,
+      },
+      {
         key: 'city',
         name: 'City',
         type: 'text',
@@ -76,6 +82,12 @@ export class EditProfileComponent implements OnInit {
         name: 'Mobile Phone',
         type: 'phone',
         value: this.user.mobilePhone,
+      },
+      {
+        key: 'services',
+        name: 'Services',
+        type: 'text_area',
+        value: this.user.services,
       },
     ];
   }

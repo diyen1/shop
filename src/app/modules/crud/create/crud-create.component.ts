@@ -15,6 +15,8 @@ export class CrudCreateComponent implements OnInit, OnChanges {
 
   @Input() submitButtonText = 'Submit';
 
+  @Input() loading = false;
+
   @Output() outputData: any = new EventEmitter<any>();
 
   controlsConfig = {};

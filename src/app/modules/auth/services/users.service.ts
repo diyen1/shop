@@ -22,13 +22,17 @@ export class UsersService {
         querySnapshot.forEach((doc: any) => {
           const data = doc.data();
           services.push({
-            id: doc.id,
             active: data.active,
             email: data.email,
             fcm_token: data.fcm_token,
             fullNames: data.fullNames,
             lastSeen: data.lastSeen,
             sign_in_type: data.sign_in_type,
+            city: data.city,
+            country: data.country,
+            homePhone: data.homePhone,
+            mobilePhone: data.mobilePhone,
+            profileImage: data.profileImage,
             uid: data.uid,
           });
         });
@@ -42,7 +46,6 @@ export class UsersService {
       this.ref.doc(id).get().then((doc: any) => {
         const data = doc.data();
         observer.next({
-          id: doc.id,
           active: data.active,
           email: data.email,
           fcm_token: data.fcm_token,

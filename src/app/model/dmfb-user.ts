@@ -1,6 +1,7 @@
 import {ChatMessage} from '../modules/chat/chat-message.model';
 
 export class DmfbUser {
+  id: string;
   active = false;
   email = '';
   fcm_token = '';
@@ -8,8 +9,10 @@ export class DmfbUser {
   lastSeen = 0;
   sign_in_type = '';
   uid = '';
+  state = '';
   city = '';
   country = '';
+  services = '';
   homePhone = '';
   mobilePhone = '';
   profileImage = '';

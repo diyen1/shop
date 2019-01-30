@@ -19,7 +19,7 @@
       name="{{ field.key }}"
       type="hidden"
       formControlName="{{ field.key }}"
-      floating-label />
+      floating-label/>
 
     <!--<dmfb-file-upload
       *ngSwitchCase="'image'"
@@ -83,8 +83,10 @@
                    floating-label></mdl-textfield>
   </p>-->
   <p>
-    <button mdl-button [disabled]="!form.valid" mdl-button-type="raised" mdl-ripple mdl-colored="primary">
+    <button mdl-button [disabled]="!form.valid || loading" mdl-button-type="raised" mdl-ripple mdl-colored="primary">
       {{ submitButtonText }}
     </button>
+    <span class="small-space"></span>
+    <mdl-spinner [active]="loading"></mdl-spinner>
   </p>
 </form>

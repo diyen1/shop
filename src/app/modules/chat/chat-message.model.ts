@@ -14,6 +14,7 @@ export class ChatMessage {
   destination?: string;
   sender?: string;
   message?: string;
+  imageUrl?: string;
   timestamp = DateManipulations.getTimeStamp();
   type = 'text';
 

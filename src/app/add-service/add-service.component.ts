@@ -15,13 +15,18 @@ import {MdlSnackbarService} from '@angular-mdl/core';
 export class AddServiceComponent implements OnInit {
 
   fields = [
-    {
+    /*{
       key: 'service',
       name: 'Title',
       type: 'text',
     },
     {
       key: 'description',
+      name: 'Description',
+      type: 'text_area',
+    },*/
+    {
+      key: 'service',
       name: 'Description',
       type: 'text_area',
     },
@@ -36,12 +41,14 @@ export class AddServiceComponent implements OnInit {
       type: 'image',
     },
     {
-      key: 'imageUrl',
+      key: 'imagesUrl',
       name: 'Gallery Images',
       type: 'image_array',
       image_count: 5,
     },
   ];
+
+  loading = false;
 
   constructor(
     private appService: AppService,
@@ -59,16 +66,17 @@ export class AddServiceComponent implements OnInit {
   }
 
   addService(formData) {
-    // formData.imageUrl is auto generated
+    this.loading = true;
+    // formData.imagesUrl is auto generated
     // formData.service is auto generated
     // formData.mainPhotoUrl is auto generated
-    formData.id = generateFirebaseId(); // firestore.FieldPath.documentId();
-    formData.sid = formData.id;
+    formData.sid = generateFirebaseId(); // firestore.FieldPath.documentId();
     formData.time = firestore.FieldValue.serverTimestamp();
     formData.latestUpdateTimestamp = firestore.FieldValue.serverTimestamp();
     formData.uid = this.authService.getAuthUser().uid;
 
     this.servicesService.postItem('services', formData).subscribe(() => {
+      this.loading = false;
       // console.log(id);
       // this.router.navigate(['edit-service/' + id]);
       this.router.navigate(['shop']).then(() => {

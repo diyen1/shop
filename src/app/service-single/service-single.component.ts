@@ -41,7 +41,7 @@ export class ServiceSingleComponent implements OnInit {
             this.appService.pageTitle = service.service;
             this.loading = false;
             this.galleries.push(this.service.mainPhotoUrl);
-            this.service.imageUrl.forEach((image) => {
+            this.service.imagesUrl.forEach((image) => {
               this.galleries.push(image);
             });
           },

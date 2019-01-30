@@ -57,8 +57,7 @@ export class DmfbCrudService {
           let newLastItem = null;
           if (i < this.PER_PAGE) {
             items.push({
-              id: doc.id,
-              imageUrl: data.imageUrl,
+              imagesUrl: data.imagesUrl,
               latestUpdateTimestamp: data.latestUpdateTimestamp,
               price: data.price,
               sid: data.sid,
@@ -70,8 +69,7 @@ export class DmfbCrudService {
             });
           } else {
             newLastItem = {
-              id: doc.id,
-              imageUrl: data.imageUrl,
+              imagesUrl: data.imagesUrl,
               latestUpdateTimestamp: data.latestUpdateTimestamp,
               price: data.price,
               sid: data.sid,
@@ -118,8 +116,7 @@ export class DmfbCrudService {
 
             if (i < this.PER_PAGE) {
               items.push({
-                id: doc.id,
-                imageUrl: data.imageUrl,
+                imagesUrl: data.imagesUrl,
                 latestUpdateTimestamp: data.latestUpdateTimestamp,
                 price: data.price,
                 sid: data.sid,
@@ -131,8 +128,7 @@ export class DmfbCrudService {
               });
             } else {
               newLastItem = {
-                id: doc.id,
-                imageUrl: data.imageUrl,
+                imagesUrl: data.imagesUrl,
                 latestUpdateTimestamp: data.latestUpdateTimestamp,
                 price: data.price,
                 sid: data.sid,
@@ -192,8 +188,7 @@ export class DmfbCrudService {
               || (data.description && data.description.toLowerCase().includes(this.searchKey.toLowerCase()))
             ) {
               items.push({
-                id: doc.id,
-                imageUrl: data.imageUrl,
+                imagesUrl: data.imagesUrl,
                 latestUpdateTimestamp: data.latestUpdateTimestamp,
                 price: data.price,
                 sid: data.sid,
@@ -207,8 +202,7 @@ export class DmfbCrudService {
             }
           } else {
             newLastItem = {
-              id: doc.id,
-              imageUrl: data.imageUrl,
+              imagesUrl: data.imagesUrl,
               latestUpdateTimestamp: data.latestUpdateTimestamp,
               price: data.price,
               sid: data.sid,
@@ -239,8 +233,7 @@ export class DmfbCrudService {
       ref.doc(id).get().then((doc: any) => {
         const data = doc.data();
         observer.next({
-          id: doc.id,
-          imageUrl: data.imageUrl,
+          imagesUrl: data.imagesUrl,
           latestUpdateTimestamp: data.latestUpdateTimestamp,
           price: data.price,
           sid: data.sid,
@@ -260,9 +253,7 @@ export class DmfbCrudService {
       /*ref.add(data).then((doc) => {
         observer.next(doc.id);
       });*/
-      console.log(data);
-      console.log(data.id);
-      ref.doc(data.id).set(data).then(() => {
+      ref.doc(data.sid).set(data).then(() => {
         observer.next();
       }).catch(error => console.log(error));
     });
