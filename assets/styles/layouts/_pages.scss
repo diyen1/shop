@@ -71,3 +71,11 @@
 .slideshow-container .slides:not(.link) {
   background-size: contain !important;
 }
+
+.nav-wrapper {
+  background: unquote("rgb(#{$color-primary})");
+}
+
+.uploaded-image {
+  background: unquote("rgba(#{$color-primary}, 0.5)") !important;
+}
