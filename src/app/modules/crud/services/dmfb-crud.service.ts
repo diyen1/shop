@@ -52,41 +52,47 @@ export class DmfbCrudService {
       ref.onSnapshot((querySnapshot) => {
         const items = [];
         const fetchDataLength = querySnapshot.size;
-        querySnapshot.forEach((doc: any) => {
-          const data = doc.data();
-          let newLastItem = null;
-          if (i < this.PER_PAGE) {
-            items.push({
-              imagesUrl: data.imagesUrl,
-              latestUpdateTimestamp: data.latestUpdateTimestamp,
-              price: data.price,
-              sid: data.sid,
-              time: data.time,
-              uid: data.uid,
-              description: data.description,
-              service: data.service,
-              mainPhotoUrl: data.mainPhotoUrl,
-            });
-          } else {
-            newLastItem = {
-              imagesUrl: data.imagesUrl,
-              latestUpdateTimestamp: data.latestUpdateTimestamp,
-              price: data.price,
-              sid: data.sid,
-              time: data.time,
-              uid: data.uid,
-              description: data.description,
-              service: data.service,
-              mainPhotoUrl: data.mainPhotoUrl,
-            };
-          }
-          i++;
-          if (i === fetchDataLength) {
-            const isLastPage = (i !== this.PER_PAGE + 1);
-            observer.next({data: items, isLastPage: isLastPage, lastItem: newLastItem});
-            observer.complete();
-          }
-        });
+        console.log("i", i);console.log("fetchDataLength", fetchDataLength);
+        if (fetchDataLength > 0) {
+          querySnapshot.forEach((doc: any) => {
+            const data = doc.data();
+            let newLastItem = null;
+            if (i < this.PER_PAGE) {
+              items.push({
+                imagesUrl: data.imagesUrl,
+                latestUpdateTimestamp: data.latestUpdateTimestamp,
+                price: data.price,
+                sid: data.sid,
+                time: data.time,
+                uid: data.uid,
+                description: data.description,
+                service: data.service,
+                mainPhotoUrl: data.mainPhotoUrl,
+              });
+            } else {
+              newLastItem = {
+                imagesUrl: data.imagesUrl,
+                latestUpdateTimestamp: data.latestUpdateTimestamp,
+                price: data.price,
+                sid: data.sid,
+                time: data.time,
+                uid: data.uid,
+                description: data.description,
+                service: data.service,
+                mainPhotoUrl: data.mainPhotoUrl,
+              };
+            }
+            i++;
+            if (i === fetchDataLength) {
+              const isLastPage = (i !== this.PER_PAGE + 1);
+              observer.next({data: items, isLastPage: isLastPage, lastItem: newLastItem});
+              observer.complete();
+            }
+          });
+        } else {
+          observer.next({data: items, isLastPage: true, lastItem: null});
+          observer.complete();
+        }
       });
     });
   }

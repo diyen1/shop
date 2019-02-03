@@ -15,7 +15,7 @@ export class ServicesListComponent implements OnInit {
   services: ShopService[];
   @Input() user: DmfbUser;
 
-  constructor(public servicesService: DmfbCrudService) {
+  constructor(public servicesService: DmfbCrudService, public appService: AppService) {
   }
 
   ngOnInit() {

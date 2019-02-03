@@ -77,5 +77,5 @@
 }
 
 .uploaded-image {
-  background: unquote("rgba(#{$color-primary}, 0.5)") !important;
+  background-color: unquote("rgba(#{$color-primary}, 0.5)") !important;
 }

@@ -1,0 +1,18 @@
+<mdl-card class="shop-service full-width" mdl-shadow="2">
+  <!--<mdl-card-title mdl-card-expand>-->
+  <!--<img class="full-width" src="{{ service.mainPhotoUrl }}" />-->
+  <div class="service-image" [style.backgroundImage]="'url(' + service.mainPhotoUrl + ')'"></div>
+  <!--</mdl-card-title>-->
+  <mdl-card-supporting-text>
+    <div>{{ service.service }}</div>
+    <div><strong>Price: {{ service.price | currency }}</strong></div>
+  </mdl-card-supporting-text>
+  <mdl-card-actions mdl-card-border>
+    <button mdl-button mdl-colored mdl-ripple routerLink="/service/{{ service.sid }}">
+      View
+    </button>
+    <button mdl-button mdl-colored mdl-ripple (click)="deleteItem()">
+      Delete
+    </button>
+  </mdl-card-actions>
+</mdl-card>

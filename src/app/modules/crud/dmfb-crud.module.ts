@@ -10,12 +10,14 @@ import {ItemComponent} from './read/item/item.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {RouterModule} from '@angular/router';
 import {CrudAttributeDisplayComponent} from './read/attribute-display/crud-attribute-display.component';
+import {MyItemComponent} from './read/my-item/my-item.component';
 
 const components = [
   CrudCreateComponent,
   CrudReadAllComponent,
   CrudReadSingleComponent,
   ItemComponent,
+  MyItemComponent,
   CrudAttributeDisplayComponent,
 ];
 
