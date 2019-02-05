@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {ChatService} from '../services/chat.service';
 
 @Component({
@@ -6,9 +6,10 @@ import {ChatService} from '../services/chat.service';
   templateUrl: './chat-feed.component.html',
   styleUrls: ['./chat-feed.component.scss']
 })
-export class ChatFeedComponent implements OnInit, OnChanges {
+export class ChatFeedComponent implements OnInit, OnChanges, AfterViewInit {
 
   feed: any = [];
+  feedLength = 0;
   currentMessageDate = '';
   @ViewChild('chatScroller') private myScrollContainer: ElementRef;
 
@@ -18,6 +19,30 @@ export class ChatFeedComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.scrollToBottom();
+  }
+
+  ngAfterViewInit(): void {
+    const chatInterval = setInterval(() => {
+      // console.log('setInterval');
+      // if (this.chatService.initializedChatUserList) {
+      //   clearInterval(chatInterval);
+      //   console.log('setTimeout');
+      //   setTimeout(() => {
+      //     console.log('timeout executed');
+      //     this.scrollToBottom();
+      //   }, 3000);
+      // }
+      if (this.chatService.feed && this.chatService.feed != null) {
+        clearInterval(chatInterval);
+        this.chatService.feed.subscribe((change) => {
+          if (this.feedLength < change.length) {
+            this.scrollToBottom();
+          }
+          this.feedLength = change.length;
+        });
+      }
+    }, 1000);
   }
 
   getDateHeading(message, index) {
@@ -52,14 +77,14 @@ export class ChatFeedComponent implements OnInit, OnChanges {
 
       if (lastHeading !== heading) {
         this.currentMessageDate = heading;
-        this.scrollToBottom();
+        // this.scrollToBottom();
         return heading;
       } else {
-        this.scrollToBottom();
+        // this.scrollToBottom();
         return '';
       }
     } else {
-      this.scrollToBottom();
+      // this.scrollToBottom();
       return heading;
     }
   }

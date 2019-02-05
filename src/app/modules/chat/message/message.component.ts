@@ -3,6 +3,7 @@ import {ChatMessage} from '../chat-message.model';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {User} from '../../../model/user.model';
 import {ChatService} from '../services/chat.service';
+import {MdlSnackbarService} from '@angular-mdl/core';
 
 @Component({
   selector: 'app-message',
@@ -17,6 +18,7 @@ export class MessageComponent implements OnInit {
   constructor(
     private  db: AngularFireDatabase,
     private  chatService: ChatService,
+    private  mdlSnackbarService: MdlSnackbarService,
   ) {
     this.user = this.chatService.getUser();
   }
@@ -41,4 +43,12 @@ export class MessageComponent implements OnInit {
     return dateArray[3] + ':' + dateArray[4];
   }
 
+  deleteMessage() {
+    if (confirm('Are you sure you wan to delete this message?')) {
+      this.chatService.deleteMessage(this.chatMessage);
+      this.mdlSnackbarService.showSnackbar({
+        message: 'Message successfully deleted',
+      });
+    }
+  }
 }

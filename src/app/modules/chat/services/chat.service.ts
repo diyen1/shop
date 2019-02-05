@@ -3,9 +3,10 @@ import * as firebase from 'firebase/app';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {ChatMessage} from '../chat-message.model';
 import {AngularFireDatabase} from 'angularfire2/database';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {DmfbUser} from '../../../model/dmfb-user';
 import {AuthService} from '../../auth/services/auth.service';
+import {database} from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class ChatService {
   feed: any;
   chatUserList: any[] = [];
   blockToDisplay = 'master'; // master or detail
+  messageList;
 
   private _currentChatUser: DmfbUser;
 
@@ -52,6 +54,10 @@ export class ChatService {
     });*/
   }
 
+  initializeTheDisplayBlock() {
+    this.blockToDisplay = window.innerWidth >= 992 ? 'detail' : 'master';
+  }
+
   getUser() {
     return this.user;
   }
@@ -60,15 +66,25 @@ export class ChatService {
     if (this._currentChatUser != null) {
       // const messageToSend: ChatMessage = new ChatMessage(msg, this._currentChatUser.uid, this.user.uid);
       this.chatMessages = this.getMessagesForUser(messageToSend.sender, messageToSend.destination);
-      this.chatMessages.push(messageToSend);
+      this.chatMessages.push(messageToSend).then((createdMessage) => {
+        const newMessage = messageToSend;
+        newMessage.id = createdMessage.key;
+        const newPath = 'chat/' + messageToSend.sender + '/' + messageToSend.destination + '/' + createdMessage.key;
+        this.db.database.ref(newPath).set(newMessage);
+      });
       this.chatMessages = this.getMessagesForUser(messageToSend.destination, messageToSend.sender);
-      this.chatMessages.push(messageToSend);
+      this.chatMessages.push(messageToSend).then((createdMessage) => {
+        const newMessage = messageToSend;
+        newMessage.id = createdMessage.key;
+        const newPath = 'chat/' + messageToSend.destination + '/' + messageToSend.sender + '/' + createdMessage.key;
+        this.db.database.ref(newPath).set(newMessage);
+      });
       console.log('send message', messageToSend);
 
       // last message
-      let path = 'last-message/' + messageToSend.sender;
+      let path = 'last-message/' + messageToSend.sender + '/' + messageToSend.destination;
       this.db.database.ref(path).set(messageToSend);
-      path = 'last-message/' + messageToSend.destination;
+      path = 'last-message/' + messageToSend.destination + '/' + messageToSend.sender;
       this.db.database.ref(path).set(messageToSend);
 
       // Move user to the top of the list
@@ -84,6 +100,69 @@ export class ChatService {
     } else {
       console.log('failed to send message');
     }
+  }
+
+  deleteMessage(message: ChatMessage) {
+    if (this._currentChatUser != null) {
+      let path = 'chat/' + message.sender + '/' + message.destination + '/' + message.id;
+      this.db.object(path).remove().then((senderRes) => {
+        // console.log('senderRes', senderRes);
+
+        let lastMessage = null;
+
+        // last message
+        path = message.sender + '/' + message.destination; // path end
+        this.updateLastMessage(path).subscribe((res) => {
+          lastMessage = res;
+
+          // Move user to the top of the list
+          for (let i = 0; i < this.chatUserList.length; i++) {
+            if (this.chatUserList[i].uid === lastMessage.destination) {
+              /*delete this.chatUserList[i];
+              this.chatUserList.unshift(this.chatUserList[i]);*/
+              this.chatUserList[i].lastChatMessage = lastMessage;
+              // this.chatUserList.push(...this.chatUserList.splice(0, i));
+              this.sortUsers();
+              break;
+            }
+          }
+        });
+
+        path = 'chat/' + message.destination + '/' + message.sender + '/' + message.id;
+        this.db.object(path).remove().then((receiverRes) => {
+          // last message
+          path = message.destination + '/' + message.sender; // path end
+          this.updateLastMessage(path);
+        });
+      });
+    } else {
+      console.log('failed to send message');
+    }
+  }
+
+  private updateLastMessage(pathEnd): Observable<any> {
+    // messages = this.db.list(path, ref => ref.orderByChild('destination').equalTo(this._currentChatUser.uid));
+    return new Observable((observer) => {
+      this.db.list('chat/' + pathEnd, ref => ref).valueChanges().subscribe(
+        (messages) => {
+          if (messages.length > 0) {
+            const lastMessage = messages[messages.length - 1];
+            this.db.database.ref('last-message/' + pathEnd).set(lastMessage).then(() => {
+              observer.next(lastMessage);
+              observer.complete();
+            });
+          } else {
+            this.db.database.ref('last-message/' + pathEnd).remove().then(() => {
+              observer.next(null);
+              observer.complete();
+            });
+          }
+        },
+        (error) => {
+
+        });
+    });
+
   }
 
   getMessages(): any {
@@ -126,12 +205,12 @@ export class ChatService {
         tmpLastMessageList.push(new ChatMessage());
       }
 
-      const userListListener = this.db.list(path, ref => ref).valueChanges();
+      this.messageList = this.db.list(path, ref => ref);
+
+      const userListListener = this.messageList.valueChanges();
 
       // Hacky solution
       userListListener.subscribe((chats: any) => {
-
-        console.log(chats);
 
         if (!this.initializedChatUserList) {
 
@@ -190,8 +269,12 @@ export class ChatService {
                   user.lastChatMessage = tmpLastMessageList[i];
                   this.chatUserList.push(user);
                 }
-                if (i === 0) {
-                  this._currentChatUser = user;
+                this.sortUsers();
+                if (this.chatUserList.length > 0) {
+                  // if (i === 0) {
+                  // this._currentChatUser = user;
+                  this._currentChatUser = this.chatUserList[0];
+                  this.initializeTheDisplayBlock();
                   this.feed = this.getMessages().valueChanges();
                 }
               });
@@ -203,15 +286,22 @@ export class ChatService {
     }
   }
 
+  private sortUsers() {
+    this.chatUserList.sort((a, b) => (a.lastChatMessage.timestamp < b.lastChatMessage.timestamp) ? 1
+      : ((b.lastChatMessage.timestamp < a.lastChatMessage.timestamp) ? -1
+        : 0));
+  }
+
   changeChat(chatUserId) {
     this.blockToDisplay = 'detail';
     for (let i = 0; i < this.chatUserList.length; i++) {
       if (this.chatUserList[i].uid === chatUserId) {
         this._currentChatUser = this.chatUserList[i];
+        this.feed = this.getMessages().valueChanges();
         return;
       }
     }
-    const path = 'chat/' + chatUserId;
+    // const path = 'chat/' + chatUserId;
     this.feed = this.getMessages().valueChanges();
   }
 
