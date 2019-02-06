@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
 
@@ -48,11 +48,11 @@ export class RegisterComponent implements OnInit {
       name: 'Mobile Phone',
       type: 'phone',
     },
-    {
-      key: 'profileImage',
-      name: 'Profile Image',
-      type: 'image',
-    },
+    // {
+    //   key: 'profileImage',
+    //   name: 'Profile Image',
+    //   type: 'image',
+    // },
   ];
 
   constructor(private authService: AuthService, private router: Router, public appService: AppService) {

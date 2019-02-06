@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChatService} from '../services/chat.service';
 import {DmfbUser} from '../../../model/dmfb-user';
+import {MdlSnackbarService} from '@angular-mdl/core';
 
 @Component({
   selector: 'app-chat-user',
@@ -11,7 +12,10 @@ export class ChatUserComponent implements OnInit {
 
   @Input() user: DmfbUser;
 
-  constructor(public chatService: ChatService) {
+  constructor(
+    public chatService: ChatService,
+    public mdlSnackbarService: MdlSnackbarService,
+  ) {
   }
 
   ngOnInit() {
@@ -25,5 +29,12 @@ export class ChatUserComponent implements OnInit {
 
   userIsActive(): boolean {
     return !!(this.chatService.currentChatUser != null && this.user != null && this.chatService.currentChatUser.uid === this.user.uid);
+  }
+
+  deleteChatList(user: DmfbUser) {
+    this.chatService.deleteChatList(user);
+    this.mdlSnackbarService.showSnackbar({
+      message: 'Chat successfully deleted',
+    });
   }
 }

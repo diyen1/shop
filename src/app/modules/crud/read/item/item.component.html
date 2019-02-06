@@ -4,8 +4,10 @@
   <div class="service-image" [style.backgroundImage]="'url(' + service.mainPhotoUrl + ')'"></div>
   <!--</mdl-card-title>-->
   <mdl-card-supporting-text>
-    <div>{{ service.service }}</div>
-    <div><strong>Price: {{ service.price | currency }}</strong></div>
+    <div class="item-details-wrapper">
+      <div>{{ service.service | slice:0:35 }} {{ (service.service.length > 35) ? '...' : '' }}</div>
+      <div class="item-details-price"><strong>Price: {{ service.price | currency }}</strong></div>
+    </div>
   </mdl-card-supporting-text>
   <!--<mdl-card-actions mdl-card-border>
     <button mdl-button mdl-colored mdl-ripple>

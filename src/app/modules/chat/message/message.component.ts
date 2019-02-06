@@ -43,9 +43,9 @@ export class MessageComponent implements OnInit {
     return dateArray[3] + ':' + dateArray[4];
   }
 
-  deleteMessage() {
+  deleteMessage(isOwner) {
     if (confirm('Are you sure you wan to delete this message?')) {
-      this.chatService.deleteMessage(this.chatMessage);
+      this.chatService.deleteMessage(this.chatMessage, isOwner);
       this.mdlSnackbarService.showSnackbar({
         message: 'Message successfully deleted',
       });

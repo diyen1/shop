@@ -7,6 +7,7 @@ import {Observable, of} from 'rxjs';
 import {DmfbUser} from '../../../model/dmfb-user';
 import {AuthService} from '../../auth/services/auth.service';
 import {database} from 'firebase';
+import {User} from '../../../model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -102,17 +103,24 @@ export class ChatService {
     }
   }
 
-  deleteMessage(message: ChatMessage) {
+  deleteMessage(message: ChatMessage, isOwner = false) {
     if (this._currentChatUser != null) {
-      let path = 'chat/' + message.sender + '/' + message.destination + '/' + message.id;
+
+      let pathMiddle = message.sender + '/' + message.destination;
+
+      if (!isOwner) {
+        pathMiddle = message.destination + '/' + message.sender;
+      }
+
+      const path = 'chat/' + pathMiddle + '/' + message.id;
+
       this.db.object(path).remove().then((senderRes) => {
         // console.log('senderRes', senderRes);
 
         let lastMessage = null;
 
         // last message
-        path = message.sender + '/' + message.destination; // path end
-        this.updateLastMessage(path).subscribe((res) => {
+        this.updateLastMessage(pathMiddle).subscribe((res) => {
           lastMessage = res;
 
           // Move user to the top of the list
@@ -127,12 +135,33 @@ export class ChatService {
             }
           }
         });
+      });
+    } else {
+      console.log('failed to send message');
+    }
+  }
 
-        path = 'chat/' + message.destination + '/' + message.sender + '/' + message.id;
-        this.db.object(path).remove().then((receiverRes) => {
-          // last message
-          path = message.destination + '/' + message.sender; // path end
-          this.updateLastMessage(path);
+  deleteChatList(user: DmfbUser) {
+    if (this._currentChatUser != null) {
+
+      const path = 'chat/' + this.user.uid + '/' + user.uid;
+
+      console.log(path);
+
+      this.db.list(path).remove().then((senderRes) => {
+        // last message
+        this.updateLastMessage(this._currentChatUser.uid + '/' + user.uid).subscribe((res) => {
+          // Move user to the top of the list
+          for (let i = 0; i < this.chatUserList.length; i++) {
+            if (this.chatUserList[i].uid === user.uid) {
+              this.chatUserList.splice(i, 1);
+              this.sortUsers();
+              break;
+            }
+          }
+
+          this._currentChatUser = this.chatUserList[0];
+          this.changeChat(this._currentChatUser.uid);
         });
       });
     } else {
@@ -287,9 +316,10 @@ export class ChatService {
   }
 
   private sortUsers() {
-    this.chatUserList.sort((a, b) => (a.lastChatMessage.timestamp < b.lastChatMessage.timestamp) ? 1
-      : ((b.lastChatMessage.timestamp < a.lastChatMessage.timestamp) ? -1
-        : 0));
+    this.chatUserList.sort((a, b) => (a.lastChatMessage && b.lastChatMessage)
+      ? (a.lastChatMessage.timestamp < b.lastChatMessage.timestamp) ? 1
+        : ((b.lastChatMessage.timestamp < a.lastChatMessage.timestamp) ? -1 : 0)
+      : 1);
   }
 
   changeChat(chatUserId) {

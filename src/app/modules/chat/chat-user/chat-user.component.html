@@ -6,10 +6,20 @@
       <div class="chat-user-profile-image" [style.background-image]="'url(' + user.profileImage + ')'"></div>
     </div>
     <div
-      class="mdl-cell mdl-cell--10-col mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone graybox">
+      class="mdl-cell mdl-cell--10-col mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone graybox chat-user-details">
+
       <div class="chat-user-name">{{ user.fullNames }}</div>
       <div class="chat-last-message" *ngIf="user.lastChatMessage && user.lastChatMessage.type == 'image'">Image attachment</div>
       <div class="chat-last-message" *ngIf="user.lastChatMessage && user.lastChatMessage.type != 'image'">{{ user.lastChatMessage.message }}</div>
+
+      <button class="more-button" mdl-button #btn1="mdlButton" (click)="m1.toggle($event, btn1)" mdl-button-type="icon" mdl-ripple><mdl-icon>more_vert</mdl-icon></button>
+      <mdl-menu #m1="mdlMenu" mdl-menu-position="bottom-right">
+        <mdl-menu-item mdl-ripple (click)="deleteChatList(user)">Delete</mdl-menu-item>
+        <!--<mdl-menu-item mdl-ripple mdl-menu-item-full-bleed-divider>Another Action</mdl-menu-item>-->
+        <!--<mdl-menu-item mdl-ripple disabled>Disabled Action</mdl-menu-item>-->
+        <!--<mdl-menu-item>Yet Another Action</mdl-menu-item>-->
+      </mdl-menu>
+
       <div></div>
     </div>
   </div>

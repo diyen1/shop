@@ -3,3 +3,18 @@ mdl-card {
     cursor: pointer;
   }
 }
+
+mdl-card-supporting-text {
+
+}
+
+.item-details-wrapper {
+  position: relative;
+  min-height: 65px;
+
+  .item-details-price {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}

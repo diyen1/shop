@@ -1,5 +1,6 @@
 <div *ngIf="isValidMessage">
   <div *ngIf="!isOwnMessage" class="chat-message-item-wrapper" id="chat-{{ chatMessage.$key }}">
+
     <div class="chat-message-item-content">
       <!--<p>{{ chatMessage.email }}</p>-->
       <div>{{ chatMessage.message }}</div>
@@ -8,6 +9,15 @@
     <!--<div class="xx-small-space horizontal"></div>-->
 
     <span>{{ getFormattedTime(chatMessage.timestamp) }}</span>
+
+    <button class="more-button" mdl-button #btn1="mdlButton" (click)="m1.toggle($event, btn1)" mdl-button-type="icon" mdl-ripple><mdl-icon>more_vert</mdl-icon></button>
+    <mdl-menu #m1="mdlMenu" mdl-menu-position="bottom-right">
+      <mdl-menu-item mdl-ripple (click)="deleteMessage(false)">Delete</mdl-menu-item>
+      <!--<mdl-menu-item mdl-ripple mdl-menu-item-full-bleed-divider>Another Action</mdl-menu-item>-->
+      <!--<mdl-menu-item mdl-ripple disabled>Disabled Action</mdl-menu-item>-->
+      <!--<mdl-menu-item>Yet Another Action</mdl-menu-item>-->
+    </mdl-menu>
+
   </div>
 
 
@@ -15,7 +25,7 @@
 
     <button class="more-button" mdl-button #btn1="mdlButton" (click)="m1.toggle($event, btn1)" mdl-button-type="icon" mdl-ripple><mdl-icon>more_vert</mdl-icon></button>
     <mdl-menu #m1="mdlMenu" mdl-menu-position="bottom-right">
-      <mdl-menu-item mdl-ripple (click)="deleteMessage()">Delete</mdl-menu-item>
+      <mdl-menu-item mdl-ripple (click)="deleteMessage(true)">Delete</mdl-menu-item>
       <!--<mdl-menu-item mdl-ripple mdl-menu-item-full-bleed-divider>Another Action</mdl-menu-item>-->
       <!--<mdl-menu-item mdl-ripple disabled>Disabled Action</mdl-menu-item>-->
       <!--<mdl-menu-item>Yet Another Action</mdl-menu-item>-->
