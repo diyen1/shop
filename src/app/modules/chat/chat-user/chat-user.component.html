@@ -10,7 +10,7 @@
 
       <div class="chat-user-name">{{ user.fullNames }}</div>
       <div class="chat-last-message" *ngIf="user.lastChatMessage && user.lastChatMessage.type == 'image'">Image attachment</div>
-      <div class="chat-last-message" *ngIf="user.lastChatMessage && user.lastChatMessage.type != 'image'">{{ user.lastChatMessage.message }}</div>
+      <div class="chat-last-message" *ngIf="user.lastChatMessage && user.lastChatMessage.type != 'image'">{{ user.lastChatMessage.message | slice:0:20 }}</div>
 
       <button class="more-button" mdl-button #btn1="mdlButton" (click)="m1.toggle($event, btn1)" mdl-button-type="icon" mdl-ripple><mdl-icon>more_vert</mdl-icon></button>
       <mdl-menu #m1="mdlMenu" mdl-menu-position="bottom-right">

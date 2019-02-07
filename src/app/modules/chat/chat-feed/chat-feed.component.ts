@@ -10,6 +10,7 @@ export class ChatFeedComponent implements OnInit, OnChanges, AfterViewInit {
 
   feed: any = [];
   feedLength = 0;
+  feedLastMessage = null;
   currentMessageDate = '';
   @ViewChild('chatScroller') private myScrollContainer: ElementRef;
 
@@ -34,15 +35,16 @@ export class ChatFeedComponent implements OnInit, OnChanges, AfterViewInit {
       //   }, 3000);
       // }
       if (this.chatService.feed && this.chatService.feed != null) {
-        clearInterval(chatInterval);
+        // clearInterval(chatInterval);
         this.chatService.feed.subscribe((change) => {
-          if (this.feedLength < change.length) {
+          if (this.feedLength !== change.length || this.feedLastMessage.id !== change[change.length - 1].id) {
             this.scrollToBottom();
+            this.feedLength = change.length;
+            this.feedLastMessage = change[change.length - 1];
           }
-          this.feedLength = change.length;
         });
       }
-    }, 1000);
+    }, 100);
   }
 
   getDateHeading(message, index) {
