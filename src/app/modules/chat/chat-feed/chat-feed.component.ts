@@ -38,9 +38,17 @@ export class ChatFeedComponent implements OnInit, OnChanges, AfterViewInit {
         // clearInterval(chatInterval);
         this.chatService.feed.subscribe((change) => {
           if (this.feedLength !== change.length || this.feedLastMessage.id !== change[change.length - 1].id) {
-            this.scrollToBottom();
-            this.feedLength = change.length;
-            this.feedLastMessage = change[change.length - 1];
+            if (change[change.length - 1].type !== 'text' || !this.feedLastMessage || this.feedLastMessage == null ) {
+              setTimeout(() => {
+                this.scrollToBottom();
+                this.feedLength = change.length;
+                this.feedLastMessage = change[change.length - 1];
+              }, 1000);
+            } else {
+              this.scrollToBottom();
+              this.feedLength = change.length;
+              this.feedLastMessage = change[change.length - 1];
+            }
           }
         });
       }
