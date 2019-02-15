@@ -13,7 +13,7 @@ import {ServiceSingleComponent} from './service-single/service-single.component'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SellerProfileComponent} from './seller-profile/seller-profile.component';
 import {AddServiceComponent} from './add-service/add-service.component';
-import {environment} from '../environments/environment';
+import {environment} from './environments/environment';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {AngularFireAuth} from 'angularfire2/auth';
