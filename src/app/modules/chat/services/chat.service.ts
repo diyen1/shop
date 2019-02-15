@@ -21,6 +21,7 @@ export class ChatService {
   chatUserList: any[] = [];
   blockToDisplay = 'master'; // master or detail
   messageList;
+  initializingMessages = true;
 
   private _currentChatUser: DmfbUser;
 
@@ -160,8 +161,13 @@ export class ChatService {
             }
           }
 
-          this._currentChatUser = this.chatUserList[0];
-          this.changeChat(this._currentChatUser.uid);
+          if (this.chatUserList.length > 0) {
+            this._currentChatUser = this.chatUserList[0];
+            this.changeChat(this._currentChatUser.uid);
+          } else {
+            this._currentChatUser = null;
+            this.blockToDisplay = 'master';
+          }
         });
       });
     } else {
@@ -290,26 +296,45 @@ export class ChatService {
 
           if (tmpUserList.length > 0) {
             // this.chatUserList = [];
-            for (let i = 0; i < tmpUserList.length; i++) {
 
-              const tmpUserId = tmpUserList[i];
-              this.authService.getUserFromAuth(tmpUserId).subscribe((user: DmfbUser) => {
-                if (!this.userInChatUserList(tmpUserId)) {
-                  user.lastChatMessage = tmpLastMessageList[i];
-                  this.chatUserList.push(user);
-                }
-                this.sortUsers();
-                if (this.chatUserList.length > 0) {
-                  // if (i === 0) {
-                  // this._currentChatUser = user;
-                  this._currentChatUser = this.chatUserList[0];
-                  this.initializeTheDisplayBlock();
-                  this.feed = this.getMessages().valueChanges();
-                }
-              });
+            let numberOfUsersLoaded = 0;
+
+            if (tmpUserList.length > 0) {
+              for (let i = 0; i < tmpUserList.length; i++) {
+
+                const tmpUserId = tmpUserList[i];
+                this.authService.getUserFromAuth(tmpUserId).subscribe((user: DmfbUser) => {
+                  if (!this.userInChatUserList(tmpUserId)) {
+                    user.lastChatMessage = tmpLastMessageList[i];
+                    this.chatUserList.push(user);
+                  }
+                  this.sortUsers();
+                  if (this.chatUserList.length > 0) {
+                    // if (i === 0) {
+                    // this._currentChatUser = user;
+                    this._currentChatUser = this.chatUserList[0];
+                    this.initializeTheDisplayBlock();
+                    this.feed = this.getMessages().valueChanges();
+                  }
+                  numberOfUsersLoaded++;
+                  if (numberOfUsersLoaded === tmpUserList.length) {
+                    this.initializedChatUserList = true;
+                  }
+                },
+                () => {
+                  numberOfUsersLoaded++;
+                  if (numberOfUsersLoaded === tmpUserList.length) {
+                    this.initializedChatUserList = true;
+                  }
+                });
+              }
+            } else {
+              this.initializedChatUserList = true;
             }
+          } else {
+            this.initializedChatUserList = true;
+            this.initializingMessages = false;
           }
-          this.initializedChatUserList = true;
         }
       });
     }
@@ -324,15 +349,19 @@ export class ChatService {
 
   changeChat(chatUserId) {
     this.blockToDisplay = 'detail';
-    for (let i = 0; i < this.chatUserList.length; i++) {
-      if (this.chatUserList[i].uid === chatUserId) {
-        this._currentChatUser = this.chatUserList[i];
-        this.feed = this.getMessages().valueChanges();
-        return;
+    if (this._currentChatUser.uid !== chatUserId) {
+      for (let i = 0; i < this.chatUserList.length; i++) {
+        if (this.chatUserList[i].uid === chatUserId) {
+          this._currentChatUser = this.chatUserList[i];
+          this.feed = this.getMessages().valueChanges();
+          this.initializingMessages = true;
+          return;
+        }
       }
+      // const path = 'chat/' + chatUserId;
+      this.feed = this.getMessages().valueChanges();
+      this.initializingMessages = true;
     }
-    // const path = 'chat/' + chatUserId;
-    this.feed = this.getMessages().valueChanges();
   }
 
   userInChatUserList(userId) {

@@ -9,3 +9,12 @@
   </div>
   <div class="small-space"></div>
 </div>
+
+<!--<div *ngIf="!initializing" class="chat-feed-loading mdl-typography&#45;&#45;text-center">-->
+  <!--<div class="medium-space"></div>-->
+  <!--<mdl-spinner [active]="true"></mdl-spinner>-->
+<!--</div>-->
+<div *ngIf="this.chatService.initializingMessages" class="chat-feed-loading mdl-typography--text-center">
+  <div class="medium-space"></div>
+  <mdl-spinner [active]="true"></mdl-spinner>
+</div>

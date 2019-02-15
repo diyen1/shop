@@ -12,18 +12,21 @@ export class ChatFeedComponent implements OnInit, OnChanges, AfterViewInit {
   feedLength = 0;
   feedLastMessage = null;
   currentMessageDate = '';
+
   @ViewChild('chatScroller') private myScrollContainer: ElementRef;
 
   constructor(public chatService: ChatService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.scrollToBottom();
   }
 
   ngAfterViewInit(): void {
+
+    let slowlyWaitingForInitialization = false;
+
     const chatInterval = setInterval(() => {
       // console.log('setInterval');
       // if (this.chatService.initializedChatUserList) {
@@ -37,17 +40,27 @@ export class ChatFeedComponent implements OnInit, OnChanges, AfterViewInit {
       if (this.chatService.feed && this.chatService.feed != null) {
         // clearInterval(chatInterval);
         this.chatService.feed.subscribe((change) => {
-          if (this.feedLength !== change.length || this.feedLastMessage.id !== change[change.length - 1].id) {
+          if ((change && change.length && change.length > 0) && (this.feedLength !== change.length || this.feedLastMessage.id !== change[change.length - 1].id)) {
             if (change[change.length - 1].type !== 'text' || !this.feedLastMessage || this.feedLastMessage == null ) {
+              this.feedLength = change.length;
+              this.feedLastMessage = change[change.length - 1];
+              slowlyWaitingForInitialization = true;
               setTimeout(() => {
+                this.scrollToBottom();
+                this.chatService.initializingMessages = false;
+                slowlyWaitingForInitialization = false;
+              }, 1000);
+            } else {
+              if (!slowlyWaitingForInitialization) {
                 this.scrollToBottom();
                 this.feedLength = change.length;
                 this.feedLastMessage = change[change.length - 1];
-              }, 1000);
-            } else {
-              this.scrollToBottom();
-              this.feedLength = change.length;
-              this.feedLastMessage = change[change.length - 1];
+                this.chatService.initializingMessages = false;
+              }
+            }
+          } else {
+            if (!slowlyWaitingForInitialization) {
+              this.chatService.initializingMessages = false;
             }
           }
         });

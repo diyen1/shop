@@ -6,9 +6,10 @@
         <mdl-icon>arrow_backward</mdl-icon>
       </button>
 
-      <h4 *ngIf="title && title != null && profileImage && profileImage !== ''" class="nav-title mdl-color-text--white">
-        <img class="" style="width: 35px; height: 35px; border-radius: 50%;" src="{{ profileImage }}"/>
-        {{ userName }}
+      <h4 class="nav-title mdl-color-text--white">
+        <img *ngIf="profileImage && profileImage !== ''" class="" style="width: 35px; height: 35px; border-radius: 50%;" src="{{ profileImage }}"/>
+        <span *ngIf="userName && userName !== ''">{{ userName }}</span>
+        <span *ngIf="!(userName && userName !== '') || !(profileImage && profileImage !== '')">Chats</span>
       </h4>
 
       <button mdl-button class="nav-menu mdl-color-text--white" #btn2="mdlButton" (click)="m2.toggle($event, btn2)"

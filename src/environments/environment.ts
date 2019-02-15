@@ -5,6 +5,14 @@
 export const environment = {
   production: false,
   firebase: {
+    apiKey: 'AIzaSyCvVKLJeQ8fRR9J_lbkeYVw1hTSjIfjl5E',
+    authDomain: 'tuprofes.firebaseapp.com',
+    databaseURL: 'https://tuprofes.firebaseio.com',
+    projectId: 'tuprofes',
+    storageBucket: 'tuprofes.appspot.com',
+    messagingSenderId: '1077137355187'
+  },
+  /*firebase: {
     apiKey: 'AIzaSyDmjzsCHlO7sDJt_w0Fi64XBaR9aN2arck',
     authDomain: 'tuprofesion-62eda.firebaseapp.com',
     databaseURL: 'https://tuprofesion-62eda.firebaseio.com',
@@ -12,7 +20,6 @@ export const environment = {
     storageBucket: 'tuprofesion-62eda.appspot.com',
     messagingSenderId: '656911010176'
   },
-  homeUrl: 'http://localhost:4200',
   /*production: false,
   firebase: {
     apiKey: 'AIzaSyDp6dMZP5PnKQEB3NTS2HGsQKpPcGyafWw',
@@ -22,6 +29,7 @@ export const environment = {
     storageBucket: 'shop-dbd98.appspot.com',
     messagingSenderId: '486196316768'
   },*/
+  homeUrl: 'http://localhost:4200',
 };
 
 /*

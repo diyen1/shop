@@ -37,4 +37,9 @@ export class ChatUserComponent implements OnInit {
       message: 'Chat successfully deleted',
     });
   }
+
+  getUserImage() {
+    return (this.user.profileImage && this.user.profileImage != null)
+      ? this.user.profileImage : './assets/images/baseline-account_circle-24px.svg';
+  }
 }

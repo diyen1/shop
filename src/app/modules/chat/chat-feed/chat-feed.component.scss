@@ -4,3 +4,21 @@
   background: #f7f7f7;
   overflow-y: scroll;
 }
+
+.chat-feed-loading {
+  position: fixed;
+  top: 0;
+  padding-top: 70px;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+  background: #fff;
+}
+
+@media (min-width: 992px) {
+  .chat-feed-loading {
+    left: 360px;
+    width: calc(100% - 360px);
+  }
+}
