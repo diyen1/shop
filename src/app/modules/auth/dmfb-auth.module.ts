@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import {MdlModule} from '@angular-mdl/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {environment} from '../../environments/environment';
+import {environment} from '../../../environments/environment';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {AngularFireAuth} from 'angularfire2/auth';

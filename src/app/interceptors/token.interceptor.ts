@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject, EMPTY, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError, filter, finalize, switchMap, take, tap} from 'rxjs/operators';
-import {environment} from '../environments/environment';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
