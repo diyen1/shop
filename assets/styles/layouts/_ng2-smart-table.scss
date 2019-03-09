@@ -1,0 +1,23 @@
+.ng2-smart-action {
+  padding: 10px;
+
+  &.ng2-smart-action-delete-delete {
+    color: #a00;
+  }
+}
+
+.ng2-smart-title {
+  text-align: left;
+}
+
+.ng2-smart-pagination-nav {
+  //float: right;
+  .ng2-smart-page-link {
+    display: inline-block;
+    padding: 5px 7px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
