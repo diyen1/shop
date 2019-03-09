@@ -2,10 +2,10 @@ export class ShopService {
   sid: string;
   imagesUrl: string[];
   description: string;
-  latestUpdateTimestamp: string;
+  latestUpdateTimestamp: any;
   mainPhotoUrl: string;
   price: string;
-  time: string;
+  time: any;
   uid: string;
   service: string;
 }

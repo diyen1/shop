@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {CrudCreateComponent} from './create/crud-create.component';
 import {MdlModule} from '@angular-mdl/core';
@@ -11,6 +10,8 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {RouterModule} from '@angular/router';
 import {CrudAttributeDisplayComponent} from './read/attribute-display/crud-attribute-display.component';
 import {MyItemComponent} from './read/my-item/my-item.component';
+import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {CommonModule} from '@angular/common';
 
 const components = [
   CrudCreateComponent,
@@ -26,7 +27,8 @@ const components = [
     ... components,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
+    Ng2SmartTableModule,
     DmfbFileUploadModule,
     MdlModule,
     FormsModule,

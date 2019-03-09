@@ -52,7 +52,8 @@ export class DmfbCrudService {
       ref.onSnapshot((querySnapshot) => {
         const items = [];
         const fetchDataLength = querySnapshot.size;
-        console.log("i", i);console.log("fetchDataLength", fetchDataLength);
+        console.log('i', i);
+        console.log('fetchDataLength', fetchDataLength);
         if (fetchDataLength > 0) {
           querySnapshot.forEach((doc: any) => {
             const data = doc.data();
@@ -155,6 +156,40 @@ export class DmfbCrudService {
         });
       });
     }
+  }
+
+  getAllItems(collectionPath: string): Observable<any> {
+
+    this.loading = true;
+    let i = 0;
+    // const ref: any = firebase.firestore().collection(collectionPath).orderBy('time').startAt(offset).limit(this.PER_PAGE + 1);
+    const ref: any = firebase.firestore().collection(collectionPath).orderBy('time', 'desc');
+
+    return new Observable((observer) => {
+      ref.onSnapshot((querySnapshot) => {
+        const items = [];
+        const fetchDataLength = querySnapshot.size;
+        querySnapshot.forEach((doc: any) => {
+          const data = doc.data();
+          items.push({
+            imagesUrl: data.imagesUrl,
+            latestUpdateTimestamp: data.latestUpdateTimestamp,
+            price: data.price,
+            sid: data.sid,
+            time: data.time,
+            uid: data.uid,
+            description: data.description,
+            service: data.service,
+            mainPhotoUrl: data.mainPhotoUrl,
+          });
+          i++;
+          if (i === fetchDataLength) {
+            observer.next(items);
+            observer.complete();
+          }
+        });
+      });
+    });
   }
 
 

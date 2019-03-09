@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
 
   get isCleanTemplate() {
     const route = this.router.url;
-    return route.includes('/chat');
+    return route.includes('/chat') || route.includes('/admin');
   }
 
   displayPostButton() {

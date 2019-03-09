@@ -29,6 +29,7 @@ import {TokenInterceptor} from './interceptors/token.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {SlideshowModule} from 'ng-simple-slideshow';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
+import {DmfbAdminModule} from './modules/admin/dmfb-admin.module';
 
 // import {OnlineStatusModule} from 'ngx-online-status';
 

@@ -4,12 +4,6 @@
 </div>
 
 <div >
-  <!--<div
-    *ngFor="let service of servicesService.services"
-    class="mdl-cell mdl-cell&#45;&#45;3-col mdl-cell&#45;&#45;3-col-desktop mdl-cell&#45;&#45;4-col-tablet mdl-cell&#45;&#45;4-col-phone graybox">
-    <app-service [service]="service"></app-service>
-  </div>
--->
   <div class="items-wrapper mdl-grid mdlc-row" *ngIf="!loading && (services && services.length > 0)"
        infiniteScroll
        [infiniteScrollDistance]="2"

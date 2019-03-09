@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {MdlModule} from '@angular-mdl/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -12,6 +11,7 @@ import {AuthService} from './services/auth.service';
 import {DmfbCrudModule} from '../crud/dmfb-crud.module';
 import {DmfbFileUploadModule} from '../file-upload/dmfb-file-upload.module';
 import {UsersService} from './services/users.service';
+import {CommonModule} from '@angular/common';
 
 
 @NgModule({
@@ -20,7 +20,7 @@ import {UsersService} from './services/users.service';
     RegisterComponent,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     MdlModule,
     FormsModule,
     ReactiveFormsModule,

@@ -23,6 +23,7 @@ export class UsersService {
           const data = doc.data();
           services.push({
             active: data.active,
+            userType: data.userType,
             email: data.email,
             fcm_token: data.fcm_token,
             fullNames: data.fullNames,
@@ -47,6 +48,7 @@ export class UsersService {
         const data = doc.data();
         observer.next({
           active: data.active,
+          userType: data.userType,
           email: data.email,
           fcm_token: data.fcm_token,
           fullNames: data.fullNames,

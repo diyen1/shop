@@ -24,9 +24,22 @@ export class CrudReadAllComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.loading = true;
+    console.log('init');
     this.crudService.getItems(this.collectionPath, this.lastItem).subscribe((items) => {
       console.log(items);
-      this.services = [ ...this.services, ...items.data];
+      this.services = [...this.services, ...items.data];
+
+      // const formatter = new Intl.NumberFormat('en-US', {
+      //   style: 'currency',
+      //   currency: 'USD',
+      // });
+      //
+      // for (let i = 0; i < this.services.length; i++) {
+      //   this.services[i].latestUpdateTimestamp = new Date(this.services[i].latestUpdateTimestamp.seconds).toLocaleString();
+      //   this.services[i].time = new Date(this.services[i].time.seconds).toLocaleString();
+      //   this.services[i].price = '<div class="mdl-textfield--align-right">' + formatter.format(+this.services[i].price) + '</div>';
+      // }
+
       this.loading = false;
       this.isLastPage = items.isLastPage;
       this.lastItem = items.lastItem;
@@ -41,7 +54,7 @@ export class CrudReadAllComponent implements OnInit, OnChanges {
     if (!this.isLastPage) {
       // this.offset += this.crudService.PER_PAGE;
       this.crudService.getItems(this.collectionPath, this.lastItem).subscribe((items) => {
-        this.services = [ ...this.services, ...items.data];
+        this.services = [...this.services, ...items.data];
         this.loading = false;
         this.isLastPage = items.isLastPage;
         this.lastItem = items.lastItem;

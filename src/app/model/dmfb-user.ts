@@ -3,6 +3,7 @@ import {ChatMessage} from '../modules/chat/chat-message.model';
 export class DmfbUser {
   id: string;
   active = false;
+  userType = 'CUSTOMER';
   email = '';
   fcm_token = '';
   fullNames = '';
@@ -18,10 +19,11 @@ export class DmfbUser {
   profileImage = '';
   lastChatMessage: ChatMessage = new ChatMessage();
 
-  constructor(active?: boolean, email?: string, fcm_token?: string, fullNames?: string, lastSeen?: number, sign_in_type?: string,
+  constructor(active?: boolean, userType?: string, email?: string, fcm_token?: string, fullNames?: string, lastSeen?: number, sign_in_type?: string,
               uid?: string, city?: string, country?: string, homePhone?: string, mobilePhone?: string,
               profileImage?: string, lastChatMessage?: ChatMessage) {
     this.active = active;
+    this.userType = userType;
     this.email = email;
     this.fcm_token = fcm_token;
     this.fullNames = fullNames;

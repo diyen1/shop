@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChatComponent } from './chat.component';
+import { PriceCellComponent } from './date-cell.component';
 
-describe('DmfbAdminComponent', () => {
-  let component: ChatComponent;
-  let fixture: ComponentFixture<ChatComponent>;
+describe('PriceCellComponent', () => {
+  let component: PriceCellComponent;
+  let fixture: ComponentFixture<PriceCellComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChatComponent ]
+      declarations: [ PriceCellComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChatComponent);
+    fixture = TestBed.createComponent(PriceCellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

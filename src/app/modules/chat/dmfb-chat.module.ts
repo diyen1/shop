@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {MdlModule} from '@angular-mdl/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -12,6 +11,7 @@ import {MessageComponent} from './message/message.component';
 import {DmfbAuthModule} from '../auth/dmfb-auth.module';
 import {ChatUserComponent} from './chat-user/chat-user.component';
 import {ChatMessageFileUploadComponent} from './chat-message-file-upload/chat-message-file-upload.component';
+import {CommonModule} from '@angular/common';
 
 
 
@@ -27,7 +27,7 @@ import {ChatMessageFileUploadComponent} from './chat-message-file-upload/chat-me
     ChatMessageFileUploadComponent,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     DmfbFileUploadModule,
     DmfbAuthModule,
     MdlModule,

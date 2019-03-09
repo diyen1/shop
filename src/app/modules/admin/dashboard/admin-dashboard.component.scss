@@ -1,0 +1,25 @@
+@import '../../../../styles';
+
+mdl-card {
+  justify-content: center;
+
+  i {
+    font-size: 3rem;
+
+    &:hover {
+      color: unquote("rgb(#{$color-primary})");
+    }
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: unquote("rgb(#{$color-primary})");
+    }
+  }
+
+  &:hover {
+    color: unquote("rgb(#{$color-primary})");
+  }
+}

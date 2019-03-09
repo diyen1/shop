@@ -1,0 +1,15 @@
+<div *ngIf="loading" class="mdl-typography--text-center">
+  <div class="medium-space"></div>
+  <mdl-spinner [active]="true"></mdl-spinner>
+</div>
+
+<ng2-smart-table
+  *ngIf="!loading"
+  [settings]="settings"
+  [source]="services"
+  (editConfirm)="editConfirm($event)"
+  (deleteConfirm)="deleteConfirm($event)"></ng2-smart-table>
+
+<div *ngIf="!loading && !(services && services.length > 0)">
+  {{ noItemsError }}
+</div>

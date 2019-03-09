@@ -111,6 +111,7 @@ export class AuthService {
             const user = {
               // id: doc.id,
               active: data.active,
+              userType: data.userType,
               email: data.email,
               fcm_token: data.fcm_token,
               fullNames: data.fullNames,
@@ -175,15 +176,16 @@ export class AuthService {
   }
 
   setUpLoginAuth(user) {
-    console.log('settng up user', user);
     this.getUserFromAuthEmail(user.email, user.uid).subscribe((authUser: DmfbUser) => {
       if (authUser !== undefined && authUser !== null) {
         this.authState = authUser;
         // this.setUserStatus('online');
         this.saveAuthUser();
         if (authUser.active) {
-          this.router.navigate(['shop']).then(() => {
-            window.location.reload();
+          const route = (authUser.userType === 'ADMIN') ? 'admin' : 'shop';
+          console.log('route', route);
+          this.router.navigate([route]).then(() => {
+            // window.location.reload();
           });
         } else {
           this.router.navigate(['profile']).then(() => {

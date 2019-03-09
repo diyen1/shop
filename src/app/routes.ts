@@ -9,7 +9,6 @@ import {LoginComponent} from './modules/auth/login/login.component';
 import {RegisterComponent} from './modules/auth/register/register.component';
 import {SellerProfileComponent} from './seller-profile/seller-profile.component';
 import {AddServiceComponent} from './add-service/add-service.component';
-import {AuthGuard} from './auth.guard';
 import {EditServiceComponent} from './edit-service/edit-service.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 
@@ -28,4 +27,6 @@ export const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'edit-profile', component: EditProfileComponent},
   {path: 'seller-profile/:id', component: SellerProfileComponent},
+
+  {path: 'admin', loadChildren: './modules/admin/dmfb-admin.module#DmfbAdminModule'},
 ];
