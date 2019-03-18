@@ -14,6 +14,7 @@ import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {DateCellComponent} from './date-cell/date-cell.component';
 import {PriceCellComponent} from './price-cell/price-cell.component';
 import {AdminDashboardComponent} from './dashboard/admin-dashboard.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {AdminDashboardComponent} from './dashboard/admin-dashboard.component';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     Ng2SmartTableModule,
     DmfbFileUploadModule,
     DmfbAuthModule,
@@ -38,7 +40,7 @@ import {AdminDashboardComponent} from './dashboard/admin-dashboard.component';
     FormsModule,
     DmfbCrudModule,
     ReactiveFormsModule,
-    AdminRoutingModule,
+    // AdminRoutingModule,
   ],
   exports: [
     AdminNavComponent,

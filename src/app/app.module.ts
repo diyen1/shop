@@ -59,9 +59,9 @@ import {DmfbAdminModule} from './modules/admin/dmfb-admin.module';
     UtilsModule,
     InfiniteScrollModule,
     SlideshowModule,
-    DmfbAdminModule,
     // OnlineStatusModule,
     AngularFireModule.initializeApp(environment.firebase),
+    DmfbAdminModule,
     RouterModule.forRoot(routes),
   ],
   providers: [

@@ -33,9 +33,7 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit() {
     this.appService.pageTitle = 'Shop';
     this.loading = true;
-    console.log('init here');
     this.crudService.getAllItems(this.collectionPath).subscribe((items) => {
-      console.log(items);
       this.services = items;
 
       this.loading = false;

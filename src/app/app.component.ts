@@ -80,6 +80,10 @@ export class AppComponent implements OnInit {
     this.authService.logout();
   }
 
+  isAdmin() {
+    return !!(this.authService.getAuthUser() && this.authService.getAuthUser().userType === 'ADMIN');
+  }
+
   search(event) {
     // this.servicesService.searchKey = this.searchField;
     this.servicesService.initializeItemsList('services');

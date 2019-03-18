@@ -15,7 +15,7 @@ const routes: Routes = [{
       component: AdminDashboardComponent,
     },
     {
-      path: 'shop',
+      path: 'services',
       component: AdminShopComponent,
     },
     {
@@ -27,7 +27,7 @@ const routes: Routes = [{
       redirectTo: 'dashboard',
       pathMatch: 'full',
     },
-    { path: '**', component: AdminDashboardComponent },
+    // { path: '**', component: AdminDashboardComponent },
   ],
 }];
 

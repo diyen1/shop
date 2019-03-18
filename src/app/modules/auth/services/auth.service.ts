@@ -185,7 +185,9 @@ export class AuthService {
   logout() {
     this.clearAuthUser();
     this.afAuth.auth.signOut();
-    this.router.navigate(['login']);
+    this.router.navigate(['login']).then(() => {
+      window.location.reload();
+    });;
   }
 
   signUp(data) {

@@ -22,12 +22,12 @@ export class DmfbAdminComponent implements OnInit {
   ngOnInit() {
     if (!this.authService.isLoggedIn) {
       this.router.navigate(['login']).then(() => {
-        window.location.reload();
+        // window.location.reload();
       });
     }
     if (!(this.authService.getAuthUser() && this.authService.getAuthUser().userType === 'ADMIN')) {
       this.router.navigate(['shop']).then(() => {
-        window.location.reload();
+        // window.location.reload();
       });
     }
     this.appService.pageTitle = 'Services';
