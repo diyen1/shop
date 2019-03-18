@@ -32,13 +32,13 @@ import {AdminDashboardComponent} from './dashboard/admin-dashboard.component';
   imports: [
     CommonModule,
     Ng2SmartTableModule,
-    AdminRoutingModule,
     DmfbFileUploadModule,
     DmfbAuthModule,
     MdlModule,
     FormsModule,
     DmfbCrudModule,
     ReactiveFormsModule,
+    AdminRoutingModule,
   ],
   exports: [
     AdminNavComponent,

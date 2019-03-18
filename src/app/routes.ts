@@ -28,5 +28,5 @@ export const routes: Routes = [
   {path: 'edit-profile', component: EditProfileComponent},
   {path: 'seller-profile/:id', component: SellerProfileComponent},
 
-  {path: 'admin', loadChildren: 'src/app/modules/admin/dmfb-admin.module#DmfbAdminModule'}
+  {path: 'admin', loadChildren: './modules/admin/dmfb-admin.module#DmfbAdminModule'}
 ];
