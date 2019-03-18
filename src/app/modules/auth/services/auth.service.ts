@@ -69,30 +69,35 @@ export class AuthService {
       userRef.doc(authId).get().then((doc: any) => {
         const data = doc.data();
         if (data && data != null) {
-          observer.next({
-            // id: doc.id,
-            active: data.active,
-            email: data.email,
-            fcm_token: data.fcm_token,
-            fullNames: data.fullNames,
-            lastSeen: data.lastSeen,
-            sign_in_type: data.sign_in_type,
-            uid: data.uid,
-            id: data.uid,
-            services: data.services,
-            state: data.state,
-            city: data.city,
-            country: data.country,
-            homePhone: data.homePhone,
-            mobilePhone: data.mobilePhone,
-            profileImage: data.profileImage,
-          });
+          observer.next(this.createdFormattedUser(data));
         } else {
           observer.error({'message': 'failed to fetch user' });
         }
         observer.complete();
       });
     });
+  }
+
+  createdFormattedUser(data) {
+    return {
+      // id: doc.id,
+      active: data.active,
+      userType: data.userType,
+      email: data.email,
+      fcm_token: data.fcm_token,
+      fullNames: data.fullNames,
+      lastSeen: data.lastSeen,
+      sign_in_type: data.sign_in_type,
+      uid: data.uid,
+      id: data.uid,
+      services: data.services,
+      state: data.state,
+      city: data.city,
+      country: data.country,
+      homePhone: data.homePhone,
+      mobilePhone: data.mobilePhone,
+      profileImage: data.profileImage,
+    };
   }
 
   getUserFromAuthEmail(authEmail, authUid) {
@@ -107,31 +112,11 @@ export class AuthService {
         if (querySnapshot.size > 0) {
           querySnapshot.forEach((doc: any) => {
             const data = doc.data();
-            console.log('success', data);
-            const user = {
-              // id: doc.id,
-              active: data.active,
-              userType: data.userType,
-              email: data.email,
-              fcm_token: data.fcm_token,
-              fullNames: data.fullNames,
-              lastSeen: data.lastSeen,
-              sign_in_type: data.sign_in_type,
-              uid: data.uid,
-              id: data.id,
-              services: data.services,
-              state: data.state,
-              city: data.city,
-              country: data.country,
-              homePhone: data.homePhone,
-              mobilePhone: data.mobilePhone,
-              profileImage: data.profileImage,
-            };
+            const user = this.createdFormattedUser(data);
             observer.next(user);
             observer.complete();
           });
         } else {
-          console.log('failure');
           const user = new DmfbUser();
           user.email = authEmail;
           user.sign_in_type = 'google';
@@ -182,6 +167,7 @@ export class AuthService {
         // this.setUserStatus('online');
         this.saveAuthUser();
         if (authUser.active) {
+          console.log('authUser.userType', authUser.userType);
           const route = (authUser.userType === 'ADMIN') ? 'admin' : 'shop';
           console.log('route', route);
           this.router.navigate([route]).then(() => {

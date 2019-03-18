@@ -25,6 +25,11 @@ export class DmfbAdminComponent implements OnInit {
         window.location.reload();
       });
     }
+    if (!(this.authService.getAuthUser() && this.authService.getAuthUser().userType === 'ADMIN')) {
+      this.router.navigate(['shop']).then(() => {
+        window.location.reload();
+      });
+    }
     this.appService.pageTitle = 'Services';
     // this.chatService.postMessage({'key': 'hey'});
   }

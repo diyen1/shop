@@ -4,24 +4,24 @@
 </div>
 
 <div >
-  <div class="items-wrapper mdl-grid mdlc-row" *ngIf="!loading && (services && services.length > 0)"
+  <div class="items-wrapper mdl-grid mdlc-row" *ngIf="!loading && (crudService.services && crudService.services.length > 0)"
        infiniteScroll
        [infiniteScrollDistance]="2"
        [infiniteScrollThrottle]="50"
        [scrollWindow]="false"
        (scrolled)="onScroll()">
     <div
-      *ngFor="let service of services; let i = index"
+      *ngFor="let service of crudService.services; let i = index"
       class="mdl-cell mdl-cell--3-col mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone graybox">
       <app-item [service]="service"></app-item>
     </div>
-    <div *ngIf="loading" class="loading-wrapper">
+    <div *ngIf="loadingMore" class="loading-wrapper" style="margin: auto">
       <mdl-spinner [active]="true"></mdl-spinner>
     </div>
   </div>
 
 </div>
 
-<div *ngIf="!loading && !(services && services.length > 0)">
+<div *ngIf="!loading && !(crudService.services && crudService.services.length > 0)">
   {{ noItemsError }}
 </div>

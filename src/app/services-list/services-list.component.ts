@@ -7,26 +7,24 @@ import {DmfbUser} from '../model/dmfb-user';
 @Component({
   selector: 'app-services-list',
   templateUrl: './services-list.component.html',
-  styleUrls: ['./services-list.component.css']
+  styleUrls: ['./services-list.component.scss']
 })
 export class ServicesListComponent implements OnInit {
 
-  offset = 20;
+  offset = this.servicesService.PER_PAGE;
   services: ShopService[];
-  @Input() user: DmfbUser;
+  @Input() user: DmfbUser = null;
 
   constructor(public servicesService: DmfbCrudService, public appService: AppService) {
   }
 
   ngOnInit() {
-    this.servicesService.initializeItemsList('services', this.user);
+    this.servicesService.initializeItemsList('services', this.user, );
   }
 
   onScroll() {
-    console.log('onScroll');
     if (this.offset < this.servicesService.services.length) {
-      this.offset += 20;
+      this.offset += this.servicesService.PER_PAGE;
     }
   }
-
 }
