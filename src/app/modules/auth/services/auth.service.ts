@@ -171,7 +171,7 @@ export class AuthService {
           const route = (authUser.userType === 'ADMIN') ? 'admin' : 'shop';
           console.log('route', route);
           this.router.navigate([route]).then(() => {
-            // window.location.reload();
+            window.location.reload();
           });
         } else {
           this.router.navigate(['profile']).then(() => {
