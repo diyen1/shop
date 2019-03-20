@@ -15,6 +15,17 @@
   height: 100vh;
 }
 
+.center-all {
+  text-align: center;
+  * {
+    text-align: center;
+  }
+}
+
+.block {
+  display: block;
+}
+
 .page-section-wrapper {
   padding: 15px 40px;
 }
