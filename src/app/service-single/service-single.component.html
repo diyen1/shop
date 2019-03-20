@@ -43,15 +43,15 @@
       <div class="small-space"></div>
 
       <div>
-        <button [disabled]="isMyItem()" mdl-button mdl-button-type="raised" mdl-colored="accent" (click)="viewSellerProfile()">
+        <button [disabled]="appService.isMyItem(service)" mdl-button mdl-button-type="raised" mdl-colored="accent" (click)="viewSellerProfile()">
           View Seller Profile
         </button>
       </div>
 
-      <div *ngIf="!isMyItem()">
+      <div *ngIf="!appService.isMyItem(service)">
         <div class="small-space"></div>
         <button mdl-button mdl-button-type="raised" (click)="reportItem()">
-          Report Item
+          Report Service
         </button>
       </div>
     </div>

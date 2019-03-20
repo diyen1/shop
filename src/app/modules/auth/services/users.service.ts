@@ -21,21 +21,7 @@ export class UsersService {
         const services = [];
         querySnapshot.forEach((doc: any) => {
           const data = doc.data();
-          services.push({
-            active: data.active,
-            userType: data.userType,
-            email: data.email,
-            fcm_token: data.fcm_token,
-            fullNames: data.fullNames,
-            lastSeen: data.lastSeen,
-            sign_in_type: data.sign_in_type,
-            city: data.city,
-            country: data.country,
-            homePhone: data.homePhone,
-            mobilePhone: data.mobilePhone,
-            profileImage: data.profileImage,
-            uid: data.uid,
-          });
+          services.push(this.getFormattedUser(data));
         });
         observer.next(services);
       });
@@ -46,23 +32,28 @@ export class UsersService {
     return new Observable((observer) => {
       this.ref.doc(id).get().then((doc: any) => {
         const data = doc.data();
-        observer.next({
-          active: data.active,
-          userType: data.userType,
-          email: data.email,
-          fcm_token: data.fcm_token,
-          fullNames: data.fullNames,
-          lastSeen: data.lastSeen,
-          sign_in_type: data.sign_in_type,
-          city: data.city,
-          country: data.country,
-          homePhone: data.homePhone,
-          mobilePhone: data.mobilePhone,
-          profileImage: data.profileImage,
-          uid: data.uid,
-        });
+        observer.next(this.getFormattedUser(data));
       });
     });
+  }
+
+  getFormattedUser(data: any) {
+    return {
+      active: data.active,
+      userType: data.userType,
+      email: data.email,
+      fcm_token: data.fcm_token,
+      fullNames: data.fullNames,
+      lastSeen: data.lastSeen,
+      sign_in_type: data.sign_in_type,
+      city: data.city,
+      country: data.country,
+      homePhone: data.homePhone,
+      mobilePhone: data.mobilePhone,
+      profileImage: data.profileImage,
+      uid: data.uid,
+      reported: !!data.reported,
+    };
   }
 
   postUser(data): Observable<any> {

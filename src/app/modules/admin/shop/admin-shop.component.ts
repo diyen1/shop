@@ -167,6 +167,7 @@ export class AdminShopComponent implements OnInit {
      */
     if (!(
       event.data.service === event.newData.service &&
+      event.data.reported === event.newData.reported &&
       event.data.price === event.newData.price
     )) {
       const newData = ShopService.defineUndefinedShopValues(event.newData);

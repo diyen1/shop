@@ -82,6 +82,29 @@ export class AdminUsersComponent implements OnInit {
           }
         },
       },
+      reported: {
+        title: 'Reported',
+        width: '100px',
+        type: 'custom',
+        sort: false,
+        class: 'center-all',
+        editor: {
+          type: 'checkbox',
+        },
+        filter: {
+          type: 'checkbox',
+          config: {
+            true: 'true',
+            false: 'false',
+          }
+        },
+        renderComponent: YesNoCellComponent,
+        onComponentInitFunction(instance) {
+          instance.save.subscribe(row => {
+            //
+          });
+        },
+      },
     },
     actions: {
       add: false,
@@ -122,7 +145,8 @@ export class AdminUsersComponent implements OnInit {
       event.data.fullNames && event.newData.fullNames && event.data.fullNames === event.newData.fullNames &&
       event.data.email && event.newData.email && event.data.email === event.newData.email &&
       event.data.userType && event.newData.userType && event.data.userType === event.newData.userType &&
-      event.data.active && event.newData.active && event.data.active === event.newData.active
+      event.data.active && event.newData.active && event.data.active === event.newData.active &&
+      event.data.reported && event.newData.reported && event.data.reported === event.newData.reported
     )) {
       const newData = this.defineUndefinedUserValues(event.newData);
 

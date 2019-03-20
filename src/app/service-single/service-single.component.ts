@@ -23,9 +23,9 @@ export class ServiceSingleComponent implements OnInit {
   galleries: string[] = [];
 
   constructor(
+    public appService: AppService,
     private activatedRoute: ActivatedRoute,
     private crudService: DmfbCrudService,
-    private appService: AppService,
     private router: Router,
     private authService: AuthService,
     private dialogService: MdlDialogService,
@@ -109,9 +109,5 @@ export class ServiceSingleComponent implements OnInit {
 
   toggleZoom() {
     this.zoomed = !this.zoomed;
-  }
-
-  isMyItem() {
-    return this.service.uid === this.authService.currentUserId;
   }
 }

@@ -4,6 +4,8 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AppService} from '../angular-services/app.service';
 import {UsersService} from '../modules/auth/services/users.service';
 import {ChatService} from '../modules/chat/services/chat.service';
+import {MdlDialogService, MdlSnackbarService} from '@angular-mdl/core';
+import {DmfbCrudService} from '../modules/crud/services/dmfb-crud.service';
 
 @Component({
   selector: 'app-seller-profile',
@@ -15,6 +17,7 @@ export class SellerProfileComponent implements OnInit {
   user: DmfbUser = new DmfbUser();
   loading = false;
   shopUserId = '';
+  collectionPath = 'users';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,6 +25,9 @@ export class SellerProfileComponent implements OnInit {
     private appService: AppService,
     private router: Router,
     private chatService: ChatService,
+    private crudService: DmfbCrudService,
+    private dialogService: MdlDialogService,
+    private mdlSnackbarService: MdlSnackbarService,
   ) { }
 
   ngOnInit() {
@@ -51,6 +57,27 @@ export class SellerProfileComponent implements OnInit {
     this.chatService.currentChatUser = this.user;
 
     this.router.navigate(['/chat']);
+  }
+
+  reportUser() {
+    this.user.reported = true;
+
+    const result = this.dialogService.confirm('Do you want to report this user?', 'No', 'Yes');
+    result.subscribe(() => {
+        console.log('confirmed');
+
+        this.user = DmfbUser.defineUndefinedUserValues(this.user);
+
+        this.crudService.updateItem(this.collectionPath, this.user.uid, this.user).subscribe(() => {
+          this.mdlSnackbarService.showSnackbar({
+            message: 'Successfully reported user, ' + this.user.fullNames,
+          });
+        });
+      },
+      (err: any) => {
+        // console.log('declined');
+      }
+    );
   }
 
 }

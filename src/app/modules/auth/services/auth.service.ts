@@ -187,7 +187,7 @@ export class AuthService {
     this.afAuth.auth.signOut();
     this.router.navigate(['login']).then(() => {
       window.location.reload();
-    });;
+    });
   }
 
   signUp(data) {
@@ -210,6 +210,7 @@ export class AuthService {
     data.id = currentUserId;
     data.lastSeen = 0;
     data.sign_in_type = '';
+    data.reported = false;
 
     this.authState = data;
     this.saveAuthUser();
