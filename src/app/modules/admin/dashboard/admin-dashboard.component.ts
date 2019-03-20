@@ -5,8 +5,8 @@ import {ShopService} from '../../../model/shop-service.model';
 import {DmfbUser} from '../../../model/dmfb-user';
 import {MdlDialogService, MdlSnackbarService} from '@angular-mdl/core';
 import {firestore} from 'firebase';
-import {DateCellComponent} from '../date-cell/date-cell.component';
-import {PriceCellComponent} from '../price-cell/price-cell.component';
+import {DateCellComponent} from '../cells/date-cell/date-cell.component';
+import {PriceCellComponent} from '../cells/price-cell/price-cell.component';
 
 @Component({
   selector: 'app-admin-shop',
@@ -24,7 +24,7 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(
     public crudService: DmfbCrudService,
-    private appService: AppService,
+    public appService: AppService,
     private mdlSnackbarService: MdlSnackbarService,
     private dialogService: MdlDialogService,
   ) {

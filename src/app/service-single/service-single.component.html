@@ -13,7 +13,7 @@
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone graybox">
       <div>
         <mdl-card class="shop-service full-width" mdl-shadow="2">
-        <img (click)="toggleZoom()" class="dm-hover full-width" [src]="currentImageUrl" />
+        <img *ngIf="currentImageUrl && currentImageUrl != ''" (click)="toggleZoom()" class="dm-hover full-width" [src]="currentImageUrl" />
         </mdl-card>
       </div>
 
@@ -42,9 +42,18 @@
 
       <div class="small-space"></div>
 
-      <button [disabled]="isMyItem()" mdl-button mdl-button-type="raised" mdl-colored="accent" (click)="viewSellerProfile()">
-        View Seller Profile
-      </button>
+      <div>
+        <button [disabled]="isMyItem()" mdl-button mdl-button-type="raised" mdl-colored="accent" (click)="viewSellerProfile()">
+          View Seller Profile
+        </button>
+      </div>
+
+      <div *ngIf="!isMyItem()">
+        <div class="small-space"></div>
+        <button mdl-button mdl-button-type="raised" (click)="reportItem()">
+          Report Item
+        </button>
+      </div>
     </div>
     </div>
   </div>

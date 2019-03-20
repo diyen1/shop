@@ -1,19 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {AppService} from '../angular-services/app.service';
-import {generateFirebaseId} from '../functions/generate-firebase-id';
-import {AuthService} from '../modules/auth/services/auth.service';
-import {DmfbCrudService} from '../modules/crud/services/dmfb-crud.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {ShopService} from '../model/shop-service.model';
 import {MdlSnackbarService} from '@angular-mdl/core';
+import {AppService} from '../../../angular-services/app.service';
+import {AuthService} from '../../auth/services/auth.service';
+import {ShopService} from '../../../model/shop-service.model';
+import {DmfbCrudService} from '../../crud/services/dmfb-crud.service';
 
 @Component({
-  selector: 'app-edit-service',
-  templateUrl: './edit-service.component.html',
-  styleUrls: ['./edit-service.component.css']
+  selector: 'app-profile',
+  templateUrl: './admin-edit-service.component.html',
+  styleUrls: ['./admin-edit-service.component.scss']
 })
-export class EditServiceComponent implements OnInit {
-
+export class AdminEditServiceComponent implements OnInit {
   fields = [];
 
   loading = false;
@@ -60,6 +58,12 @@ export class EditServiceComponent implements OnInit {
                   value: service.price,
                 },
                 {
+                  key: 'reported',
+                  name: 'Reported',
+                  type: 'checkbox',
+                  value: service.reported,
+                },
+                {
                   key: 'mainPhotoUrl',
                   name: 'Service Main Image',
                   type: 'image',
@@ -93,6 +97,7 @@ export class EditServiceComponent implements OnInit {
     this.service.price = formData.price;
     this.service.mainPhotoUrl = formData.mainPhotoUrl;
     this.service.imagesUrl = formData.imagesUrl;
+    this.service.reported = formData.reported;
 
     this.service = ShopService.defineUndefinedShopValues(this.service);
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileComponent } from './profile.component';
+import { ImageCellComponent } from './image-cell.component';
 
-describe('ReportDialogComponent', () => {
-  let component: ProfileComponent;
-  let fixture: ComponentFixture<ProfileComponent>;
+describe('ImageCellComponent', () => {
+  let component: ImageCellComponent;
+  let fixture: ComponentFixture<ImageCellComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ]
+      declarations: [ ImageCellComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfileComponent);
+    fixture = TestBed.createComponent(ImageCellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

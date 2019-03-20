@@ -48,6 +48,9 @@ export class CrudCreateComponent implements OnInit, OnChanges {
           }
           this.controlsConfig[field.key + '_' + i] = [value];
         }
+      } else if (field.type === 'checkbox') {
+        const value = field.value || false;
+        this.controlsConfig[field.key] = [value, Validators.required];
       } else {
         const value = field.value || '';
         this.controlsConfig[field.key] = [value, Validators.required];

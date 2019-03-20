@@ -22,7 +22,7 @@
       <!--<app-item *ngIf="i < offset && !appService.isMyItem(service)" [service]="service"></app-item>-->
       <app-item *ngIf="i < offset && user == null" [service]="service"></app-item>
       <app-my-item
-        *ngIf="i < offset && user != null && appService.isMyItem(service)"
+        *ngIf="i < offset && user != null && isUserItem(service)"
         [service]="service"
         [user]="user"></app-my-item>
     </div>

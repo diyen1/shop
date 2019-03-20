@@ -40,6 +40,11 @@
           <i class="material-icons" role="presentation">supervised_user_circle</i>
           Users
         </a>
+        <a class="mdl-navigation__link" [routerLinkActive]="['is-active']"
+           (click)="appService.goToMainSite(); shopMdlLayout.closeDrawer()">
+          <i class="material-icons" role="presentation">home</i>
+          Site home
+        </a>
         <!--<a class="mdl-navigation__link" [routerLink]="['/profile']" [routerLinkActive]="['is-active']"-->
            <!--(click)="shopMdlLayout.closeDrawer()">-->
           <!--<i class="material-icons" role="presentation">account_circle</i>-->

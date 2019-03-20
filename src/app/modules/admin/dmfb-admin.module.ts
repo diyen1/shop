@@ -11,10 +11,14 @@ import {AdminShopComponent} from './shop/admin-shop.component';
 import {DmfbAdminComponent} from './dmfb-admin.component';
 import {AdminUsersComponent} from './users/admin-users.component';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
-import {DateCellComponent} from './date-cell/date-cell.component';
-import {PriceCellComponent} from './price-cell/price-cell.component';
+import {DateCellComponent} from './cells/date-cell/date-cell.component';
+import {PriceCellComponent} from './cells/price-cell/price-cell.component';
 import {AdminDashboardComponent} from './dashboard/admin-dashboard.component';
 import {RouterModule} from '@angular/router';
+import {ImageCellComponent} from './cells/image-cell/image-cell.component';
+import {PrimaryCellComponent} from './cells/primary-cell/primary-cell.component';
+import {AdminEditServiceComponent} from './admin-edit-profile/admin-edit-service.component';
+import {YesNoCellComponent} from './cells/yes-no-cell/yes-no-cell.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +27,19 @@ import {RouterModule} from '@angular/router';
     AdminShopComponent,
     AdminNavComponent,
     AdminUsersComponent,
+    AdminEditServiceComponent,
     DateCellComponent,
     PriceCellComponent,
+    ImageCellComponent,
+    PrimaryCellComponent,
+    YesNoCellComponent,
   ],
   entryComponents: [
     DateCellComponent,
     PriceCellComponent,
+    ImageCellComponent,
+    PrimaryCellComponent,
+    YesNoCellComponent,
   ],
   imports: [
     CommonModule,

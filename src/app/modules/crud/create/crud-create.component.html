@@ -1,4 +1,4 @@
-<form novalidate [formGroup]="form" (submit)="onSubmit(form.value)">
+<form *ngIf="fields.length > 0" novalidate [formGroup]="form" (submit)="onSubmit(form.value)">
   <!--<p>
     <i class="material-icons" role="presentation">account_circle</i>
     &lt;!&ndash;<mdl-textfield label="Full Names" name="fullNames" type="text" formControlName="fullNames" floating-label></mdl-textfield>&ndash;&gt;
@@ -46,6 +46,13 @@
       </span>
     </span>
 
+    <mdl-checkbox
+      *ngSwitchCase="'checkbox'"
+      formControlName="{{ field.key }}"
+      [mdl-ripple]="true">
+      {{ field.name }}
+    </mdl-checkbox>
+
     <mdl-textfield
       *ngSwitchDefault
       label="{{ field.name }}"
@@ -90,3 +97,7 @@
     <mdl-spinner [active]="loading"></mdl-spinner>
   </p>
 </form>
+
+<div>
+  <mdl-spinner [active]="fields.length <= 0"></mdl-spinner>
+</div>

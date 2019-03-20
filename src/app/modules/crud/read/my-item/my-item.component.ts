@@ -24,6 +24,9 @@ export class MyItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  editItem() {
+  }
+
   deleteItem() {
     if (confirm('Are you sure you wan to delete this service?')) {
       this.crudService.deleteItem('services', this.service.sid).subscribe((response) => {

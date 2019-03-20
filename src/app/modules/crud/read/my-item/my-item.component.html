@@ -11,7 +11,10 @@
     <button mdl-button mdl-colored mdl-ripple routerLink="/service/{{ service.sid }}">
       View
     </button>
-    <button mdl-button mdl-colored mdl-ripple (click)="deleteItem()">
+    <button mdl-button mdl-colored mdl-ripple routerLink="/edit-service/{{ service.sid }}">
+      Edit
+    </button>
+    <button mdl-button mdl-colored mdl-ripple (click)="deleteItem()" class="delete">
       Delete
     </button>
   </mdl-card-actions>

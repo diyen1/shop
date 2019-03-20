@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnInit, SecurityContext} from '@angular/core';
 import * as firebase from 'firebase';
 import {
   ControlValueAccessor,
@@ -34,6 +34,7 @@ export class DmfbFileUploadComponent implements OnInit, ControlValueAccessor {
   value = '';
   fileField;
   downloadURL;
+  backgroundImage;
   fileToUploadId = 'file-to-upload-' + uuid();
   loading = false;
   validateFn: any = () => {};
@@ -90,6 +91,9 @@ export class DmfbFileUploadComponent implements OnInit, ControlValueAccessor {
         storageRef.getDownloadURL().then((downloadURL) => {
           // this.value = downloadURL;
           this.downloadURL = downloadURL;
+          this.backgroundImage = (this.downloadURL && this.downloadURL != null && this.downloadURL !== '')
+            ? this.domSanitizer.sanitize(SecurityContext.STYLE, 'url(' + this.downloadURL + ')')
+            : this.domSanitizer.sanitize(SecurityContext.STYLE, 'none');
           this.onChange(downloadURL);
         });
         this.loading = false;
@@ -102,8 +106,10 @@ export class DmfbFileUploadComponent implements OnInit, ControlValueAccessor {
       value = '';
     }
     this.value = value;
-    console.log('write vlue:', value);
     this.downloadURL = value;
+    this.backgroundImage = (this.downloadURL && this.downloadURL != null && this.downloadURL !== '')
+      ? this.domSanitizer.sanitize(SecurityContext.STYLE, 'url(' + this.downloadURL + ')')
+      : this.domSanitizer.sanitize(SecurityContext.STYLE, 'none');
     this.form.get('fileField').setValue(this.value);
   }
 

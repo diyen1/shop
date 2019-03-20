@@ -19,12 +19,17 @@ export class ServicesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.servicesService.initializeItemsList('services', this.user, );
+    console.log('ServicesListComponent user', this.user);
+    this.servicesService.initializeItemsList('services', this.user);
   }
 
   onScroll() {
     if (this.offset < this.servicesService.services.length) {
       this.offset += this.servicesService.PER_PAGE;
     }
+  }
+
+  isUserItem(service) {
+    return ShopService.isUserItem(service, this.user);
   }
 }

@@ -3,5 +3,5 @@
   <input type="file" value="" class="file-to-upload-file"
     id="{{ fileToUploadId }}" (change)="uploadFile(file)" #file>
   <input formControlName="fileField" type="hidden" />
-  <label for="{{ fileToUploadId }}" class="uploaded-image" [style.backgroundImage]="'url(' + downloadURL + ')'" ></label>
+  <label for="{{ fileToUploadId }}" class="uploaded-image" [style.backgroundImage]="backgroundImage" ></label>
 </form>

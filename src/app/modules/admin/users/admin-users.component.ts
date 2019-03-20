@@ -6,6 +6,7 @@ import {DmfbUser} from '../../../model/dmfb-user';
 import {User} from '../../../model/user.model';
 import {UsersService} from '../../auth/services/users.service';
 import {MdlDialogService, MdlSnackbarService} from '@angular-mdl/core';
+import {YesNoCellComponent} from '../cells/yes-no-cell/yes-no-cell.component';
 
 @Component({
   selector: 'app-admin-shop',
@@ -23,11 +24,11 @@ export class AdminUsersComponent implements OnInit {
 
   settings = {
     columns: {
-      uid: {
-        title: 'UID',
-        width: '250px',
-        editable: false,
-      },
+      // uid: {
+      //   title: 'UID',
+      //   width: '250px',
+      //   editable: false,
+      // },
       fullNames: {
         title: 'Name',
       },
@@ -40,16 +41,33 @@ export class AdminUsersComponent implements OnInit {
         //   return value ? 'YES' : 'NO';
         // },
         width: '100px',
+        class: 'center-all',
+        sort: false,
         editor: {
           type: 'checkbox',
           // config: {
           //   true: 'Yes',
           //   false: 'No',
           // }
-        }
+        },
+        filter: {
+          type: 'checkbox',
+          config: {
+            true: 'true',
+            false: 'false',
+          }
+        },
+        type: 'custom',
+        renderComponent: YesNoCellComponent,
+        onComponentInitFunction(instance) {
+          instance.save.subscribe(row => {
+            //
+          });
+        },
       },
       userType: {
         title: 'User Type',
+        sort: false,
         valuePrepareFunction: (value) => {
           return value ? value : 'CUSTOMER';
         },

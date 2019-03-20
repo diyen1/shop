@@ -5,8 +5,11 @@ import {ShopService} from '../../../model/shop-service.model';
 import {DmfbUser} from '../../../model/dmfb-user';
 import {MdlDialogService, MdlSnackbarService} from '@angular-mdl/core';
 import {firestore} from 'firebase';
-import {DateCellComponent} from '../date-cell/date-cell.component';
-import {PriceCellComponent} from '../price-cell/price-cell.component';
+import {DateCellComponent} from '../cells/date-cell/date-cell.component';
+import {PriceCellComponent} from '../cells/price-cell/price-cell.component';
+import {ImageCellComponent} from '../cells/image-cell/image-cell.component';
+import {PrimaryCellComponent} from '../cells/primary-cell/primary-cell.component';
+import {YesNoCellComponent} from '../cells/yes-no-cell/yes-no-cell.component';
 
 @Component({
   selector: 'app-admin-shop',
@@ -24,20 +27,37 @@ export class AdminShopComponent implements OnInit {
 
   settings = {
     columns: {
-      sid: {
-        title: 'SID',
-        width: '200px',
-        editable: false,
-      },
-      service: {
-        title: 'Service'
-      },
+      // sid: {
+      //   title: 'SID',
+      //   width: '200px',
+      //   editable: false,
+      // },
       // imagesUrl: {
       //   title: 'ImagesUrl'
       // },
-      // mainPhotoUrl: {
-      //   title: 'MainPhotoUrl'
-      // },
+      mainPhotoUrl: {
+        title: 'Main Photo',
+        type: 'custom',
+        width: '100px',
+        sort: false,
+        filter: false,
+        renderComponent: ImageCellComponent,
+        onComponentInitFunction(instance) {
+          instance.save.subscribe(row => {
+            //
+          });
+        },
+      },
+      service: {
+        title: 'Service',
+        type: 'custom',
+        renderComponent: PrimaryCellComponent,
+        onComponentInitFunction(instance) {
+          instance.save.subscribe(row => {
+            //
+          });
+        },
+      },
       // description: {
       //   title: 'Description'
       // },
@@ -52,30 +72,53 @@ export class AdminShopComponent implements OnInit {
           });
         },
       },
-      latestUpdateTimestamp: {
-        title: 'LatestUpdateTimestamp',
-        width: '180px',
-        editable: false,
+      reported: {
+        title: 'Reported',
+        width: '100px',
         type: 'custom',
-        renderComponent: DateCellComponent,
+        sort: false,
+        class: 'center-all',
+        editor: {
+          type: 'checkbox',
+        },
+        filter: {
+          type: 'checkbox',
+          config: {
+            true: 'true',
+            false: 'false',
+          }
+        },
+        renderComponent: YesNoCellComponent,
         onComponentInitFunction(instance) {
           instance.save.subscribe(row => {
             //
           });
         },
       },
-      time: {
-        title: 'Time',
-        width: '180px',
-        editable: false,
-        type: 'custom',
-        renderComponent: DateCellComponent,
-        onComponentInitFunction(instance) {
-          instance.save.subscribe(row => {
-            //
-          });
-        },
-      },
+      // latestUpdateTimestamp: {
+      //   title: 'LatestUpdateTimestamp',
+      //   width: '180px',
+      //   editable: false,
+      //   type: 'custom',
+      //   renderComponent: PrimaryCellComponent,
+      //   onComponentInitFunction(instance) {
+      //     instance.save.subscribe(row => {
+      //       //
+      //     });
+      //   },
+      // },
+      // time: {
+      //   title: 'Time',
+      //   width: '180px',
+      //   editable: false,
+      //   type: 'custom',
+      //   renderComponent: PrimaryCellComponent,
+      //   onComponentInitFunction(instance) {
+      //     instance.save.subscribe(row => {
+      //       //
+      //     });
+      //   },
+      // },
       // uid: {
       //   title: 'UserId'
       // },
@@ -126,7 +169,7 @@ export class AdminShopComponent implements OnInit {
       event.data.service === event.newData.service &&
       event.data.price === event.newData.price
     )) {
-      const newData = this.defineUndefinedShopValues(event.newData);
+      const newData = ShopService.defineUndefinedShopValues(event.newData);
 
       if (newData.sid !== '') {
         this.crudService.updateItem(this.collectionPath, newData.sid, newData).subscribe(() => {
@@ -148,7 +191,7 @@ export class AdminShopComponent implements OnInit {
         this.crudService.deleteItem(this.collectionPath, event.data.sid).subscribe(() => {
           event.confirm.resolve();
           this.mdlSnackbarService.showSnackbar({
-            message: 'Successfully delete user, ' + event.data.service,
+            message: 'Successfully delete service, ' + event.data.service,
           });
         });
       },
@@ -158,16 +201,5 @@ export class AdminShopComponent implements OnInit {
     );
   }
 
-  private defineUndefinedShopValues(data) {
-    data.description = (data.description) ? data.description : null;
-    data.imagesUrl = (data.imagesUrl) ? data.imagesUrl : null;
-    data.latestUpdateTimestamp = firestore.FieldValue.serverTimestamp();
-    data.mainPhotoUrl = (data.mainPhotoUrl) ? data.mainPhotoUrl : null;
-    data.price = (data.price) ? data.price : null;
-    data.service = (data.service) ? data.service : null;
-    data.sid = (data.sid) ? data.sid : null;
-    data.time = (data.time) ? data.time : null;
-    data.uid = (data.uid) ? data.uid : null;
-    return data;
-  }
+
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PriceCellComponent } from './date-cell.component';
+import { YesNoCellComponent } from './yes-no-cell.component';
 
-describe('PriceCellComponent', () => {
-  let component: PriceCellComponent;
-  let fixture: ComponentFixture<PriceCellComponent>;
+describe('ImageCellComponent', () => {
+  let component: YesNoCellComponent;
+  let fixture: ComponentFixture<YesNoCellComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PriceCellComponent ]
+      declarations: [ YesNoCellComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PriceCellComponent);
+    fixture = TestBed.createComponent(YesNoCellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

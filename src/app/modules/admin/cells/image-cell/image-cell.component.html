@@ -1,0 +1,17 @@
+<div class="custom-table-image-wrapper">
+  <!--<div *ngIf="getValueType() === 'array'">-->
+  <!--{{ value | currency }}-->
+  <!--</div>-->
+  <div
+    *ngIf="getValueType() === 'string'"
+    class="custom-table-image"
+    [style.backgroundImage]="componentValue">
+    <!-- [style.backgroundImage]="'url(' + value + ')'" -->
+  </div>
+  <!--<div class="custom-table-image-overlay">-->
+    <!--<a *ngIf="!(componentValue && componentValue !== '')">Add</a>-->
+    <!--<a *ngIf="componentValue && componentValue !== ''">Change</a>-->
+    <!--<span>|</span>-->
+    <!--<a (click)="removeImage()">Remove</a>-->
+  <!--</div>-->
+</div>

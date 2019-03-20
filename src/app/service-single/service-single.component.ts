@@ -1,9 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, InjectionToken, OnInit} from '@angular/core';
 import {ShopService} from '../model/shop-service.model';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {DmfbCrudService} from '../modules/crud/services/dmfb-crud.service';
 import {AppService} from '../angular-services/app.service';
 import {AuthService} from '../modules/auth/services/auth.service';
+import {MdlDialogReference, MdlDialogService, MdlSnackbarService} from '@angular-mdl/core';
+import {ReportDialogComponent} from '../dialogs/report-dialog/report-dialog.component';
+import {SERVICE} from '../model/injection-service';
 
 @Component({
   selector: 'app-service-single',
@@ -14,6 +17,7 @@ export class ServiceSingleComponent implements OnInit {
 
   service: ShopService;
   loading = false;
+  collectionPath = 'services';
   currentImageUrl = '';
   zoomed = false;
   galleries: string[] = [];
@@ -24,6 +28,8 @@ export class ServiceSingleComponent implements OnInit {
     private appService: AppService,
     private router: Router,
     private authService: AuthService,
+    private dialogService: MdlDialogService,
+    private mdlSnackbarService: MdlSnackbarService,
   ) {
   }
 
@@ -40,10 +46,15 @@ export class ServiceSingleComponent implements OnInit {
             this.currentImageUrl = this.service.mainPhotoUrl;
             this.appService.pageTitle = service.service;
             this.loading = false;
-            this.galleries.push(this.service.mainPhotoUrl);
-            this.service.imagesUrl.forEach((image) => {
-              this.galleries.push(image);
-            });
+            if (this.service.mainPhotoUrl && this.service.mainPhotoUrl != null) {
+              this.galleries.push(this.service.mainPhotoUrl);
+            }
+
+            if (this.service.imagesUrl && this.service.imagesUrl != null) {
+              this.service.imagesUrl.forEach((image) => {
+                this.galleries.push(image);
+              });
+            }
           },
           () => {
             this.loading = false;
@@ -57,6 +68,39 @@ export class ServiceSingleComponent implements OnInit {
     if (this.service && this.service.uid) {
       this.router.navigate(['/seller-profile/' + this.service.uid]);
     }
+  }
+
+  reportItem() {
+
+    // const pDialog = this.dialogService.showCustomDialog({
+    //   component: ReportDialogComponent,
+    //   providers: [{provide: SERVICE, useValue: this.service}],
+    //   isModal: true,
+    //   styles: {'width': '350px'},
+    //   clickOutsideToClose: true,
+    //   enterTransitionDuration: 400,
+    //   leaveTransitionDuration: 400
+    // });
+    //
+    // pDialog.subscribe( (dialogReference: MdlDialogReference) => {
+    //   console.log('dialog visible', dialogReference);
+    // });
+
+    this.service.reported = true;
+
+    const result = this.dialogService.confirm('Do you want to report this service?', 'No', 'Yes');
+    result.subscribe(() => {
+        // console.log('confirmed');
+        this.crudService.updateItem(this.collectionPath, this.service.sid, this.service).subscribe(() => {
+          this.mdlSnackbarService.showSnackbar({
+            message: 'Successfully reported service, ' + this.service.service,
+          });
+        });
+      },
+      (err: any) => {
+        // console.log('declined');
+      }
+    );
   }
 
   change(photoUrl) {

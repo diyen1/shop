@@ -154,6 +154,7 @@ export class DmfbCrudService {
       uid: data.uid,
       description: data.description,
       service: data.service,
+      reported: !! data.reported,
       mainPhotoUrl: data.mainPhotoUrl,
     };
   }

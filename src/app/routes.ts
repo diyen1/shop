@@ -15,6 +15,7 @@ import {DmfbAdminComponent} from './modules/admin/dmfb-admin.component';
 import {AdminDashboardComponent} from './modules/admin/dashboard/admin-dashboard.component';
 import {AdminShopComponent} from './modules/admin/shop/admin-shop.component';
 import {AdminUsersComponent} from './modules/admin/users/admin-users.component';
+import {AdminEditServiceComponent} from './modules/admin/admin-edit-profile/admin-edit-service.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'shop', pathMatch: 'full'},
@@ -37,27 +38,15 @@ export const routes: Routes = [
     path: 'admin',
     component: DmfbAdminComponent,
     children: [
-      {
-        path: 'dashboard',
-        component: AdminDashboardComponent,
-      },
-      {
-        path: 'services',
-        component: AdminShopComponent,
-      },
-      {
-        path: 'users',
-        component: AdminUsersComponent,
-      },
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
-      },
-      { path: '**', component: AdminDashboardComponent },
+      {path: 'dashboard', component: AdminDashboardComponent},
+      {path: 'services', component: AdminShopComponent},
+      {path: 'users', component: AdminUsersComponent},
+      {path: 'edit-service/:id', component: AdminEditServiceComponent},
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      {path: '**', component: AdminDashboardComponent},
     ],
   },
 
-  { path: '', redirectTo: 'shop', pathMatch: 'full' },
-  { path: '**', redirectTo: 'shop' },
+  {path: '', redirectTo: 'shop', pathMatch: 'full'},
+  {path: '**', redirectTo: 'shop'},
 ];

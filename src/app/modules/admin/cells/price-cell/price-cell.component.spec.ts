@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateCellComponent } from './date-cell.component';
+import { PriceCellComponent } from './price-cell.component';
 
-describe('PriceCellComponent', () => {
-  let component: DateCellComponent;
-  let fixture: ComponentFixture<DateCellComponent>;
+describe('ImageCellComponent', () => {
+  let component: PriceCellComponent;
+  let fixture: ComponentFixture<PriceCellComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DateCellComponent ]
+      declarations: [ PriceCellComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DateCellComponent);
+    fixture = TestBed.createComponent(PriceCellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

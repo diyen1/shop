@@ -13,7 +13,7 @@
     </a>
   </mdl-card>
   <mdl-card class="mdl-card mdl-cell mdl-cell--3-col mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone" mdl-shadow="2">
-    <a [routerLink]="['/shop']">
+    <a (click)="appService.goToMainSite()">
       <div><i class="material-icons" role="presentation">home</i></div>
       <div>Visit site home</div>
     </a>
