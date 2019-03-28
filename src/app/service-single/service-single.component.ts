@@ -4,9 +4,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {DmfbCrudService} from '../modules/crud/services/dmfb-crud.service';
 import {AppService} from '../angular-services/app.service';
 import {AuthService} from '../modules/auth/services/auth.service';
-import {MdlDialogReference, MdlDialogService, MdlSnackbarService} from '@angular-mdl/core';
-import {ReportDialogComponent} from '../dialogs/report-dialog/report-dialog.component';
-import {SERVICE} from '../model/injection-service';
+import {MdlDialogService, MdlSnackbarService} from '@angular-mdl/core';
 
 @Component({
   selector: 'app-service-single',

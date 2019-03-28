@@ -9,7 +9,6 @@ import {DmfbCrudService} from '../../crud/services/dmfb-crud.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './admin-edit-service.component.html',
-  styleUrls: ['./admin-edit-service.component.scss']
 })
 export class AdminEditServiceComponent implements OnInit {
   fields = [];

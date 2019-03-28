@@ -9,7 +9,6 @@ import {MdlSnackbarService} from '@angular-mdl/core';
 @Component({
   selector: 'app-profile',
   templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
 

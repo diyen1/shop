@@ -6,7 +6,6 @@ import {MdlDialogService, MdlSnackbarService} from '@angular-mdl/core';
 @Component({
   selector: 'app-primary-cell',
   templateUrl: './primary-cell.component.html',
-  styleUrls: ['./primary-cell.component.scss']
 })
 export class PrimaryCellComponent implements OnInit {
 

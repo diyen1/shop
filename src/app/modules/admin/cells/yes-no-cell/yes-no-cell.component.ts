@@ -3,7 +3,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 @Component({
   selector: 'app-date-cell',
   templateUrl: './yes-no-cell.component.html',
-  styleUrls: ['./yes-no-cell.component.scss']
 })
 export class YesNoCellComponent implements OnInit {
 

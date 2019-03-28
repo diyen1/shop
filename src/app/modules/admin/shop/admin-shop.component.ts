@@ -14,7 +14,6 @@ import {YesNoCellComponent} from '../cells/yes-no-cell/yes-no-cell.component';
 @Component({
   selector: 'app-admin-shop',
   templateUrl: './admin-shop.component.html',
-  styleUrls: ['./admin-shop.component.css']
 })
 export class AdminShopComponent implements OnInit {
 

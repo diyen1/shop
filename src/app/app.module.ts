@@ -30,7 +30,6 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {SlideshowModule} from 'ng-simple-slideshow';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 import {DmfbAdminModule} from './modules/admin/dmfb-admin.module';
-import {ReportDialogComponent} from './dialogs/report-dialog/report-dialog.component';
 
 // import {OnlineStatusModule} from 'ngx-online-status';
 
@@ -48,10 +47,6 @@ import {ReportDialogComponent} from './dialogs/report-dialog/report-dialog.compo
     EditServiceComponent,
     ServicesListComponent,
     EditProfileComponent,
-    ReportDialogComponent,
-  ],
-  entryComponents: [
-    ReportDialogComponent,
   ],
   imports: [
     DmfbCrudModule,

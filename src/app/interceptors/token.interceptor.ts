@@ -5,8 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor, HttpErrorResponse,
 } from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject, EMPTY, throwError} from 'rxjs';
+import {Observable, BehaviorSubject, EMPTY, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError, filter, finalize, switchMap, take, tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
